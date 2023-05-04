@@ -17,12 +17,12 @@ using UnityEngine.Events;
 public class PlayerActor : Actor, IFilterLoggerTarget {
     [SerializeField, AutoProperty(AutoPropertyMode.Parent)] private PlayerStateMachine _stateMachine;
     [SerializeField, AutoProperty(AutoPropertyMode.Parent)] private BoxCollider2D _collider;
-    [SerializeField] private SpriteRenderer _sprite;
+    [SerializeField] private SpriteRenderer sprite;
 
     private bool _hitWallCoroutineRunning;
     private float _hitWallPrevSpeed;
 
-    public int Facing => _sprite.flipX ? -1 : 1;    //-1 is facing left, 1 is facing right
+    public int Facing => sprite.flipX ? -1 : 1;    //-1 is facing left, 1 is facing right
 
     [Foldout("Movement Events", true)]
     public PlayerEvent OnJumpFromGround;

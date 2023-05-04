@@ -5,7 +5,8 @@ namespace Player
 {
     public class PlayerScreenShakeActivator : ScreenShakeActivator
     {
-        private PlayerSpawnManager _spawnManager;
+        private PlayerCore _core;
+        private PlayerSpawnManager _spawnManager => _core.SpawnManager;
         
         public ScreenShakeDataBurst DeathData;
         public ScreenShakeDataContinuous DiveData;
@@ -14,7 +15,7 @@ namespace Player
 
         private void Awake()
         {
-            _spawnManager = GetComponentInChildren<PlayerSpawnManager>();
+            _core = GetComponent<PlayerCore>();
         }
 
         private void OnEnable()
