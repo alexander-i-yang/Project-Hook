@@ -1,0 +1,9 @@
+./Automap/automap.tmx
+./Automap/automapBranches.tmx
+./Automap/automapBreakable.tmx
+./Automap/automapDirt.tmx
+./Automap/automapLava.tmx
+./Automap/automapWater.tmx
+./Automap/automapSemisolids.tmx
+./Automap/automapSpikes.tmx
+./Automap/automapStalagtites.tmx
