@@ -3,11 +3,13 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Tilesets/Branches.tsx",
+    "activeFile": "Testing/Testing.tmx",
     "automapping.whileDrawing": true,
     "expandedProjectPaths": [
-        ".",
-        "Tilesets"
+        "Tilesets",
+        "Testing",
+        "Automap",
+        "."
     ],
     "fileStates": {
         ":/automap-tiles.tsx": {
@@ -141,8 +143,8 @@
             "scale": 1.714453125,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 188.39826839826839,
-                "y": 108.19776714513554
+                "x": 187.2317156527683,
+                "y": 107.6144907723855
             }
         },
         "Tilesets/Branches.tsx": {
@@ -207,15 +209,16 @@
     "map.tileWidth": 8,
     "map.width": 48,
     "openFiles": [
-        "Tilesets/Branches.tsx"
+        "Testing/Testing.tmx",
+        "Tilesets/Mechanics.tsx"
     ],
     "project": "Project Hook.tiled-project",
     "recentFiles": [
+        "Tilesets/Mechanics.tsx",
         "Testing/Testing.tmx",
         "Tilesets/Rocks.tsx",
         "Tilesets/Branches.tsx",
         "Tilesets/Water.tsx",
-        "Tilesets/Mechanics.tsx",
         "Automap/automapStalagtites.tmx",
         "Automap/automapWater.tmx",
         "Automap/automapToDecorBack.tmx",
