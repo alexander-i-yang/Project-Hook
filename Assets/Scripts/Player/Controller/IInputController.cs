@@ -15,4 +15,8 @@ public interface IInputController
     public abstract bool DiveStarted();
     public abstract bool DiveFinished();
     public abstract bool PausePressed();
+
+    public abstract bool GetGrappleInput();
+    public abstract bool GrappleStarted();
+    public abstract bool GrappleFinished();
 }

@@ -101,6 +101,21 @@ namespace Player
             return inputActions.Dive.WasReleasedThisFrame();
         }
 
+        public bool GetGrappleInput()
+        {
+            return inputActions.Grapple.IsPressed();
+        }
+
+        public bool GrappleStarted()
+        {
+            return inputActions.Grapple.WasPressedThisFrame();
+        }
+
+        public bool GrappleFinished()
+        {
+            return inputActions.Grapple.WasReleasedThisFrame();
+        }
+
         public void AddToPauseAction(System.Action action)
         {
             PauseAction += action;
