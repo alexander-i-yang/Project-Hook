@@ -65,7 +65,7 @@ namespace TiledUtil {
                 { "Dirt", ImportGround },
                 //{ "Breakable", ImportBreakable },
                 //{ "GlowingMushrooms", ImportGlowingMushroom },
-                { "Stalagtites", ImportStalagtites },
+                // { "Stalagtites", ImportStalagtites },
                 //{ "Lava", ImportLava },
                 //{ "Water", ImportWater },
                 //{ "Doors", ImportDoors },
@@ -198,7 +198,6 @@ namespace TiledUtil {
 
         private void ImportGround(GameObject g, int index) {
             var ret = ImportTileToPrefab(g, index, "Ground");
-            Debug.Log(ret);
             // AddWaterfalCollision(ret.gameObject, ret.collisionPts);
             LIL.SetLayer(ret.gameObject, "Ground");
         }
@@ -210,11 +209,10 @@ namespace TiledUtil {
             ret.gameObject.transform.localScale = new Vector3(Mathf.Round(UnityEngine.Random.value)*2-1, 1, 1);
         }
 
-        private void ImportStalagtites(GameObject g, int index)
-        {
-            var ret = ImportTileToPrefab(g, index, "PS_Teardrop");
-            ret.gameObject.transform.position = ret.collisionPts[2] + new Vector2(0.5f, -8.5f);
-        }
+        // private void ImportStalagtites(GameObject g, int index)
+        // {
+            
+        // }
         
         private void ImportSemisolid(GameObject g, int index) {
             var ret = ImportTileToPrefab(g, index, "Semisolid");

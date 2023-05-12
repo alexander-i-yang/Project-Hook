@@ -1,0 +1,23 @@
+{
+    "name": "Editor",
+    "rootNamespace": "",
+    "references": [
+        "Project",
+        "Cinemachine",
+        "ASKEditor",
+        "ASKRuntime",
+        "SuperTiled2Unity",
+        "SuperTiled2UnityEditor",
+        "MyBox",
+        "Unity.RenderPipelines.Universal.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

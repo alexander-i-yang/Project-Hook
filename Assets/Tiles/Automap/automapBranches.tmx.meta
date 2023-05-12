@@ -12,7 +12,11 @@ ScriptedImporter:
   - :/automap-tiles.tsx
   errors:
   - 'Missing tileset asset: :/automap-tiles.tsx'
-  warnings: []
+  warnings:
+  - Pixels Per Unit mismatch between map (100) and tileset '../Tilesets/Rocks.tsx'
+    (1)
+  - Pixels Per Unit mismatch between map (100) and tileset '../Tilesets/Branches.tsx'
+    (1)
   missingSortingLayers: []
   missingLayers: []
   missingTags: []

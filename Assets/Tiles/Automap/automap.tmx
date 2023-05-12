@@ -8,7 +8,6 @@
  <tileset firstgid="6" source="../Tilesets/Rocks.tsx"/>
  <tileset firstgid="42" source="../Tilesets/Mechanics.tsx"/>
  <tileset firstgid="51" source="../Tilesets/Branches.tsx"/>
- <tileset firstgid="81" source="Static Decorations.tsx"/>
  <layer id="2" name="regions" width="30" height="20">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

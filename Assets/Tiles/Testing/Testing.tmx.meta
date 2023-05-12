@@ -9,28 +9,13 @@ ScriptedImporter:
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 1fa25d03934ea624a82bf2fcee6f0873, type: 3}
   missingFiles: []
-  errors:
-  - "Custom importer 'TileImporter' threw an exception. Message = 'The given key
-    'PS_Teardrop' was not present in the dictionary.', Stack:\n  at System.Collections.Generic.Dictionary`2[TKey,TValue].get_Item
-    (TKey key) [0x0001e] in <cbc72d4a9767498db39486e941a498e3>:0 \r\n  at TiledUtil.TileImporter.ImportTileToPrefab
-    (UnityEngine.GameObject g, System.Int32 index, System.String prefabName) [0x00000]
-    in C:\\Users\\uncle\\Unity\\Project Hook\\Assets\\Editor\\TiledUtil\\TileImporter.cs:167
-    \r\n  at TiledUtil.TileImporter.ImportStalagtites (UnityEngine.GameObject g,
-    System.Int32 index) [0x00000] in C:\\Users\\uncle\\Unity\\Project Hook\\Assets\\Editor\\TiledUtil\\TileImporter.cs:215
-    \r\n  at ASK.Helpers.Helper.ForEachChild (UnityEngine.Transform t, System.Action`2[T1,T2]
-    f) [0x0000b] in .\\Library\\PackageCache\\com.theuncleofmistersir.alexs-starter-kit@bbe06d9302\\Runtime\\Helpers\\Helper.cs:287
-    \r\n  at TiledUtil.TileImporter.ResolveTileLayerImports (UnityEngine.Transform
-    layer, System.Action`2[T1,T2] import) [0x00010] in C:\\Users\\uncle\\Unity\\Project
-    Hook\\Assets\\Editor\\TiledUtil\\TileImporter.cs:329 \r\n  at TiledUtil.TileImporter.TmxAssetImported
-    (SuperTiled2Unity.Editor.TmxAssetImportedArgs data) [0x001d3] in C:\\Users\\uncle\\Unity\\Project
-    Hook\\Assets\\Editor\\TiledUtil\\TileImporter.cs:87 \r\n  at SuperTiled2Unity.Editor.TmxAssetImporter.RunCustomImporterType
-    (System.Type type) [0x00048] in C:\\Users\\uncle\\Unity\\Project Hook\\Assets\\SuperTiled2Unity\\Scripts\\Editor\\Importers\\TmxAssetImporter.cs:493 "
+  errors: []
   warnings: []
   missingSortingLayers: []
   missingLayers: []
   missingTags: []
   importerVersion: 26
-  pixelsPerUnit: 100
+  pixelsPerUnit: 1
   edgesPerEllipse: 32
   numberOfObjectsImported: 2
   tilesAsObjects: 0
