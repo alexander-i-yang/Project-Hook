@@ -32,8 +32,11 @@ namespace TiledUtil {
         {
             var typePrefabReplacements = data.AssetImporter.SuperImportContext.Settings.PrefabReplacements;
             _prefabReplacements = typePrefabReplacements.ToDictionary(so => so.m_TypeName, so => so.m_Prefab);
-
-            SuperMap map = data.ImportedSuperMap;
+            SuperMap map = data.ImportedSuperMap;            
+            
+            //Don't import automap Tilesets
+            if (map.gameObject.name.StartsWith("automap")) return;
+            
             var args = data.AssetImporter;
             var layers = map.GetComponentsInChildren<SuperLayer>();
             var objects = map.GetComponentsInChildren<SuperObject>();
@@ -145,47 +148,12 @@ namespace TiledUtil {
 
         private void AddVCamToRoom(Transform room, PolygonCollider2D boundingShape)
         {
-            /*string[] guids = AssetDatabase.FindAssets("t:prefab " + vcamPrefabName, new string[] { vcamPrefabPath });
-            if (guids.Length == 0)
-            {
-                Debug.LogError("Could not find VCam_Room Prefab. Make sure the prefab exists in the Assets/Prefabs directory and is named correctly.");
-                return;
-            }
-
-            GameObject vcamPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(AssetDatabase.GUIDToAssetPath(guids[0]));
-            GameObject instance = InstantiationExtension.InstantiateKeepPrefab(vcamPrefab);
-            */
             GameObject instance = _prefabReplacements["VCam"];
             instance = (GameObject)PrefabUtility.InstantiatePrefab(instance);
             instance.transform.SetParent(room);
 
             var confiner = instance.GetComponent<CinemachineConfiner2D>();
             confiner.m_BoundingShape2D = boundingShape;
-        }
-
-        private (GameObject gameObject, Vector2[] collisionPts) ImportTileToPrefab(GameObject g, int index, String prefabName) {
-            GameObject replacer = _prefabReplacements[prefabName];
-            Vector2[] points = LIL.EdgeToPoints(g);
-
-            g = LIL.ConvertToPrefab(g, replacer, index);
-            
-            //Set collider points
-            if (g.GetComponent<EdgeCollider2D>() != null)
-            {
-                LIL.SetEdgeCollider2DPoints(g, points);
-            }
-            else if (g.GetComponent<BoxCollider2D>() != null)
-            {
-                Vector2[] rectanglePoints = LIL.ColliderPointsToRectanglePoints(g, points);
-                LIL.SetBoxColliderPoints(g, rectanglePoints);
-            }
-            
-            //Set shadowcaster points
-            if (g.GetComponent<ShadowCaster2D>() != null) LIL.AddShadowCast(g, points.ToVector3());
-            
-            //Set Layer (kinda hacky I know)
-            LIL.SetLayer(g, "Interactable");
-            return (g, points);
         }
 
         private GameObject AddWaterfalCollision(GameObject g, Vector2[] points)
@@ -197,14 +165,14 @@ namespace TiledUtil {
         }
 
         private void ImportGround(GameObject g, int index) {
-            var ret = ImportTileToPrefab(g, index, "Ground");
+            var ret = LIL.TileToPrefab(g, index, _prefabReplacements["Ground"]);
             // AddWaterfalCollision(ret.gameObject, ret.collisionPts);
             LIL.SetLayer(ret.gameObject, "Ground");
         }
         
         private void ImportGlowingMushroom(GameObject g, int index)
         {
-            var ret = ImportTileToPrefab(g, index, "Glowing Mushroom");
+            var ret = LIL.TileToPrefab(g, index, _prefabReplacements["Glowing Mushroom"]);
             ret.gameObject.transform.position = ret.collisionPts[2] + new Vector2(4, -12);
             ret.gameObject.transform.localScale = new Vector3(Mathf.Round(UnityEngine.Random.value)*2-1, 1, 1);
         }
@@ -215,11 +183,12 @@ namespace TiledUtil {
         // }
         
         private void ImportSemisolid(GameObject g, int index) {
-            var ret = ImportTileToPrefab(g, index, "Semisolid");
+            var ret = LIL.TileToPrefab(g, index, _prefabReplacements["Semisolid"]);
+            LIL.SetLayer(ret.gameObject, "Interactable");
         }
 
         private void ImportBreakable(GameObject g, int index) {
-            var data = ImportTileToPrefab(g, index, "Breakable");
+            var data = LIL.TileToPrefab(g, index, _prefabReplacements["Breakable"]);
             g = data.gameObject;
             Vector2[] colliderPoints = data.collisionPts;
             Vector2[] spritePoints = LIL.ColliderPointsToRectanglePoints(g, colliderPoints); 
@@ -236,26 +205,9 @@ namespace TiledUtil {
             AddWaterfalCollision(g, colliderPoints);
         }
 
-        /*private void ImportLava(GameObject g, int _) {
-            g.AddComponent<Lava>();
-            LIL.SetLayer(g, "Interactable");
-            Vector2[] colliderPoints = LIL.EdgeToPoints(g);
-            LIL.AddFreeformLightPrefab(g, _prefabReplacements["LavaLight"], colliderPoints.ToVector3());
-        }
-
-        private void ImportWater(GameObject g, int _)
-        {
-            Vector2[] colliderPoints = LIL.EdgeToPoints(g);
-            AddWaterfalCollision(g, colliderPoints);
-
-            //Create a trigger collider around the water.
-            LIL.AddPolygonCollider(g, colliderPoints);
-            g.GetRequiredComponent<PolygonCollider2D>().isTrigger = true;
-        }*/
-
         private void ImportDoors(GameObject g, int index)
         {
-            var ret = ImportTileToPrefab(g, index, "Door");
+            var ret = LIL.TileToPrefab(g, index, _prefabReplacements["Door"]);
             LIL.SetLayer(ret.gameObject, "Default");
         }
 

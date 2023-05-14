@@ -25,6 +25,8 @@ namespace Player
         public GameTimerWindowed ultraTimer;
 
         public Vector3 diePos;
+
+        public Vector2 currentGrapplePos;
         
         public void RefillAbilities()
         {

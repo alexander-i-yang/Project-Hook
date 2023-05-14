@@ -47,6 +47,30 @@ namespace TiledUtil {
             return instance;
         }
 
+        public static (GameObject gameObject, Vector2[] collisionPts) TileToPrefab(GameObject g, int index, GameObject replacer) {
+            Vector2[] points = EdgeToPoints(g);
+
+            g = ConvertToPrefab(g, replacer, index);
+            
+            //Set collider points
+            if (g.GetComponent<EdgeCollider2D>() != null)
+            {
+                SetEdgeCollider2DPoints(g, points);
+            }
+            else if (g.GetComponent<BoxCollider2D>() != null)
+            {
+                Vector2[] rectanglePoints = ColliderPointsToRectanglePoints(g, points);
+                SetBoxColliderPoints(g, rectanglePoints);
+            }
+            
+            //Set shadowcaster points
+            if (g.GetComponent<ShadowCaster2D>() != null) AddShadowCast(g, points.ToVector3());
+            
+            //Set Layer (kinda hacky I know)
+            //LIL.SetLayer(g, "Interactable");
+            return (g, points);
+        }
+
         public static GameObject AddPrefabAsChild(GameObject parent, GameObject prefab) {
             return CreatePrefab(prefab, 0, parent.transform);
         }

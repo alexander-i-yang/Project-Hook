@@ -116,6 +116,11 @@ namespace Player
             return inputActions.Grapple.WasReleasedThisFrame();
         }
 
+        public Vector2 GetMousePos()
+        {
+            return Vector2.zero; 
+        }
+
         public void AddToPauseAction(System.Action action)
         {
             PauseAction += action;

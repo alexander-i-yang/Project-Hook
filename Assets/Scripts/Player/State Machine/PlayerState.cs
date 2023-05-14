@@ -1,6 +1,7 @@
 ﻿using ASK.Core;
 using ASK.Helpers;
 
+using UnityEditor;
 using UnityEngine;
 
 namespace Player
@@ -17,6 +18,12 @@ namespace Player
             public virtual void JumpPressed()
             {
                 Input.jumpBufferTimer = GameTimer.StartNewTimer(core.JumpBufferTime, "Jump Buffer Timer");
+            }
+
+            public virtual void GrappleStarted() {
+                Vector2 mousePos = core.Input.GetMousePos();
+                Input.currentGrapplePos = mousePos;
+                smActor.Grapple(mousePos);
             }
 
             protected void PlayAnimation(PlayerAnimations p)
@@ -74,6 +81,13 @@ namespace Player
                     Input.canJumpCut = false;
                 }
             }
+
+            #if UNITY_EDITOR
+            protected void OnDrawGizmosSelected() {
+             
+                Handles.DrawLine(smActor.transform.position, Input.currentGrapplePos);
+            }
+            #endif
         }
     }
 }

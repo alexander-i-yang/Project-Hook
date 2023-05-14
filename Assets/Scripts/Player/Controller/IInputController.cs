@@ -19,4 +19,6 @@ public interface IInputController
     public abstract bool GetGrappleInput();
     public abstract bool GrappleStarted();
     public abstract bool GrappleFinished();
+
+    public abstract UnityEngine.Vector2 GetMousePos();
 }

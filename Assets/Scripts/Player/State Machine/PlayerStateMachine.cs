@@ -86,6 +86,11 @@ namespace Player
                 CurrState.DivePressed();
             }
 
+            if (MyCore.Input.GrappleStarted())
+            {
+                CurrState.GrappleStarted();
+            }
+
             if (MyCore.Input.RetryStarted())
             {
                 MyCore.Actor.Die(v => v);

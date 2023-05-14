@@ -105,6 +105,16 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     #endregion
 
     #region Dive
+    public void Grapple(Vector2 grapplePos) {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, grapplePos, LayerMask.GetMask("Interactable", "Ground"));
+        foreach (var hit in hits)
+        {
+            print(hit.collider);
+        }
+    }
+    #endregion
+
+    #region Dive
     public void Dive()
     {
         /*if (EndCutsceneManager.IsBeegBouncing)
