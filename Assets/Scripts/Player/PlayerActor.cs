@@ -104,12 +104,22 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     }
     #endregion
 
-    #region Dive
-    public void Grapple(Vector2 grapplePos) {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, grapplePos, LayerMask.GetMask("Interactable", "Ground"));
+    #region Grapple
+    public void Grapple(Vector2 grapplePos)
+    {
+        Vector2 grappleOrigin = transform.position;
+        Vector2 dir = grapplePos - grappleOrigin;
+        // RaycastHit2D[] hits = Physics2D.RaycastAll(grappleOrigin, Vector2.right, 1000, LayerMask.NameToLayer("Ground"));
+        RaycastHit2D[] hits = Physics2D.RaycastAll(
+            grappleOrigin, 
+            dir.normalized,
+            dir.magnitude,
+            LayerMask.GetMask("Ground", "Interactable")
+        );
         foreach (var hit in hits)
         {
-            print(hit.collider);
+            var o = hit.collider.gameObject;
+            print(hit.collider + " " + o.layer + " " + LayerMask.LayerToName(o.layer));
         }
     }
     #endregion

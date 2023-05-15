@@ -124,5 +124,9 @@ namespace Player
         {
             Transition<Airborne>();
         }
+
+        public Vector2 GetGrapplePos() {
+            return CurrInput.currentGrapplePos;
+        }
     }
 }
