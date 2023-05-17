@@ -105,22 +105,23 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     #endregion
 
     #region Grapple
-    public void Grapple(Vector2 grapplePos)
+    public Vector2? Grapple(Vector2 grapplePos)
     {
         Vector2 grappleOrigin = transform.position;
         Vector2 dir = grapplePos - grappleOrigin;
         // RaycastHit2D[] hits = Physics2D.RaycastAll(grappleOrigin, Vector2.right, 1000, LayerMask.NameToLayer("Ground"));
-        RaycastHit2D[] hits = Physics2D.RaycastAll(
+        RaycastHit2D hit = Physics2D.Raycast(
             grappleOrigin, 
             dir.normalized,
-            dir.magnitude,
+            1000f,
             LayerMask.GetMask("Ground", "Interactable")
         );
-        foreach (var hit in hits)
-        {
-            var o = hit.collider.gameObject;
-            print(hit.collider + " " + o.layer + " " + LayerMask.LayerToName(o.layer));
-        }
+        if (hit.collider == null) return null;
+        
+        PhysObj p = hit.collider.GetComponent<PhysObj>();
+        if (p == null) return null;
+
+        return hit.point;
     }
     #endregion
 

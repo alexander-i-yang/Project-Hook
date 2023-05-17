@@ -118,7 +118,8 @@ namespace Player
 
         public Vector2 GetMousePos()
         {
-            return Vector2.zero; 
+            Vector2 mPos = Mouse.current.position.ReadValue();
+            return Camera.main.ScreenToWorldPoint(mPos);
         }
 
         public void AddToPauseAction(System.Action action)
