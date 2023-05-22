@@ -105,7 +105,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     #endregion
 
     #region Grapple
-    public Vector2? Grapple(Vector2 grapplePos)
+    public Vector2? GetGrapplePoint(Vector2 grapplePos)
     {
         Vector2 grappleOrigin = transform.position;
         Vector2 dir = grapplePos - grappleOrigin;
@@ -123,6 +123,18 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
         return hit.point;
     }
+
+    public void GrappleUpdate(Vector2 gPoint, float warmPercent)
+    {
+        Vector2 rawV = gPoint - (Vector2) transform.position;
+        float curVMag = velocity.magnitude;
+        float newMag = Mathf.Lerp(curVMag, _core.MaxGrappleSpeed, 0.5f);
+        // float mag = Mathf.Lerp(_core.InitGrappleSpeed, _core.MaxGrappleSpeed, warmPercent);
+        // print(warmPercent + " " + mag + " " + _core.InitGrappleSpeed + " " + _core.MaxGrappleSpeed);
+        velocity = rawV.normalized * newMag;
+        Fall();
+    }
+
     #endregion
 
     #region Dive

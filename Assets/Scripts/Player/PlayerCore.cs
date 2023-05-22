@@ -96,15 +96,20 @@ namespace Player
 
         [Tooltip("Debug option to change sprite color to green when u can ultra")]
         [SerializeField] public bool UltraHelper;
-        // public static bool UltraHelper => Instance.ultraHelper;
-
-        // [SerializeField] public float dogoConserveXVTime;
-        // public static float DogoConserveXVTime => Instance.dogoConserveXVTime;
 
         [Tooltip("Time to let players input a direction change")]
         [SerializeField] public float DogoJumpGraceTime;
-        // public static float DogoJumpGraceTime => Instance.dogoJumpGraceTime;
 
+        [Foldout("Grapple", true)]
+        [Tooltip("Time it takes to get to full speed for a grapple")]
+        [SerializeField] public float GrappleWarmTime;
+
+        [Tooltip("Max grapple speed")]
+        [SerializeField] public float MaxGrappleSpeed;
+
+        [Tooltip("Init grapple speed")]
+        [SerializeField] public float InitGrappleSpeed;
+        
         [Foldout("RoomTransitions", true)]
         [SerializeField, Range(0f, 1f)] public float RoomTransitionVCutX = 0.5f;
         // public static float RoomTransitionVCutX => Instance.roomTransitionVCutX;

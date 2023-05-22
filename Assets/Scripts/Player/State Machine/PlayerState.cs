@@ -23,11 +23,17 @@ namespace Player
             public virtual void GrappleStarted() {
                 Vector2 mousePos = core.Input.GetMousePos();
                 Input.currentGrapplePos = mousePos;
-                Vector2? grapplePoint = smActor.Grapple(mousePos);
+                Vector2? grapplePoint = smActor.GetGrapplePoint(mousePos);
                 if (grapplePoint != null)
                 {
                     Input.currentGrapplePos = grapplePoint.Value;
                 }
+                MySM.Transition<Grappling>();
+            }
+
+            public virtual void GrappleFinished()
+            {
+                
             }
 
             protected void PlayAnimation(PlayerAnimations p)

@@ -808,6 +808,9 @@ MonoBehaviour:
   UltraSpeedMult: 2
   UltraHelper: 0
   DogoJumpGraceTime: 0.12
+  GrappleWarmTime: 0.12
+  MaxGrappleSpeed: 200
+  InitGrappleSpeed: 20
   RoomTransitionVCutX: 0.5
   RoomTransitionVCutY: 0.5
   DeathTime: 0

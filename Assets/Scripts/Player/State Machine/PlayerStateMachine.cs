@@ -91,6 +91,11 @@ namespace Player
                 CurrState.GrappleStarted();
             }
 
+            if (MyCore.Input.GrappleFinished())
+            {
+                CurrState.GrappleFinished();
+            }
+
             if (MyCore.Input.RetryStarted())
             {
                 MyCore.Actor.Die(v => v);
