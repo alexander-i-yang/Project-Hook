@@ -38,7 +38,7 @@ namespace Player
             public override void GrappleFinished()
             {
                 base.GrappleFinished();
-                MySM.Transition<Airborne>();
+                MySM.Transition<AfterGrapple>();
             }
         }
     }
