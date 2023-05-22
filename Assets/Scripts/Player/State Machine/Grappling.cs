@@ -10,7 +10,6 @@ namespace Player
 
             public override void Enter(PlayerStateInput i)
             {
-                print("Enter grapple");
                 _grappleTimer = GameTimer.StartNewTimer(core.GrappleWarmTime, "Jump Coyote Timer");
             }
 

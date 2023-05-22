@@ -118,6 +118,8 @@ namespace Player
             CurrState.RefreshAbilities();
         }
 
+        public bool IsGrappling() {return IsOnState<Grappling>();}
+
         public void OnDeath()
         {
             // _spriteR.SetAlpha(0);

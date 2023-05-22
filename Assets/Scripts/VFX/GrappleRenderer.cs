@@ -12,7 +12,12 @@ public class GrappleRenderer : MonoBehaviour {
 
 
     private void Update() {
-        _lr.SetPosition(0, transform.parent.position);
-        _lr.SetPosition(1, _parent.GetGrapplePos());
+        if (_parent.IsGrappling()) {
+            _lr.enabled = true;
+            _lr.SetPosition(0, transform.parent.position);
+            _lr.SetPosition(1, _parent.GetGrapplePos());
+        } else {
+            _lr.enabled = false;
+        }
     }
 }
