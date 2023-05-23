@@ -28,7 +28,7 @@ namespace Player
                 {
                     Input.currentGrapplePos = grapplePoint.Value;
                 }
-                MySM.Transition<Grappling>();
+                MySM.Transition<ExtendGrapple>();
             }
 
             public virtual void GrappleFinished()

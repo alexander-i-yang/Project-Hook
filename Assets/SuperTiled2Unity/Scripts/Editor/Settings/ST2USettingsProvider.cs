@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEditor.ShortcutManagement;
 
 #if UNITY_2019_1_OR_NEWER
 using UnityEngine.UIElements;
@@ -335,6 +336,12 @@ namespace SuperTiled2Unity.Editor
                 EditorGUI.PropertyField(new Rect(rect.x, rect.y, fieldWidth, EditorGUIUtility.singleLineHeight), nameProperty, GUIContent.none);
                 EditorGUI.PropertyField(new Rect(rect.x + fieldWidth + kMargin, rect.y, fieldWidth, EditorGUIUtility.singleLineHeight), prefabProperty, GUIContent.none);
             }
+        }
+
+        [Shortcut("Reimport Tiled Assets", KeyCode.I, ShortcutModifiers.Action | ShortcutModifiers.Alt)]
+        public static void ReimportTiledAssetsShortcut()
+        {
+            ReimportTiledAssets(false);
         }
 
         private static void ReimportTiledAssets(bool applyDefaults)

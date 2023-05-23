@@ -101,6 +101,9 @@ namespace Player
         [SerializeField] public float DogoJumpGraceTime;
 
         [Foldout("Grapple", true)]
+        [Tooltip("Time it takes for the grapple to extend out")]
+        [SerializeField] public float GrappleExtendTime;
+       
         [Tooltip("Time it takes to get to full speed for a grapple")]
         [SerializeField] public float GrappleWarmTime;
 
