@@ -64,12 +64,8 @@ namespace Player
 
             public override void MoveX(int moveDirection)
             {
-                // UpdateSpriteFacing(moveDirection);
-                // smActor.UpdateMovementX(moveDirection, core.MaxAirAcceleration);
                 UpdateSpriteFacing(moveDirection);
-                int vxSign = (int) Mathf.Sign(smActor.velocityX);
-                int acceleration = moveDirection == vxSign || moveDirection == 0 ? 100 : core.MaxDeceleration;
-                smActor.UpdateMovementX(moveDirection, acceleration);
+                smActor.UpdateMovementX(moveDirection, core.MaxAirAcceleration, core.AirResistance);
             }
 
             public override void FixedUpdate()

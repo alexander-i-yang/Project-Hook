@@ -6,11 +6,10 @@ namespace Player
     {
         public class Grappling : PlayerState
         {
-            private GameTimer _grappleTimer;
 
             public override void Enter(PlayerStateInput i)
             {
-                _grappleTimer = GameTimer.StartNewTimer(core.GrappleWarmTime, "Jump Coyote Timer");
+                // _grappleTimer = GameTimer.StartNewTimer(core.GrappleWarmTime);
             }
 
             public override void SetGrounded(bool isGrounded, bool isMovingUp)
@@ -30,8 +29,8 @@ namespace Player
 
             public override void FixedUpdate()
             {
-                smActor.GrappleUpdate(Input.currentGrapplePos, _grappleTimer.TimerValue/core.GrappleWarmTime);
-                GameTimer.FixedUpdate(_grappleTimer);
+                smActor.GrappleUpdate(Input.currentGrapplePos, 0);
+                // GameTimer.FixedUpdate(_grappleTimer);
             }
 
             public override void GrappleFinished()

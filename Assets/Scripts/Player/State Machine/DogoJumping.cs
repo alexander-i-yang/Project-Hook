@@ -78,7 +78,7 @@ namespace Player
             public override void MoveX(int moveDirection)
             {
                 UpdateSpriteFacing(moveDirection);
-                smActor.UpdateMovementX(moveDirection, core.DogoJumpAcceleration);
+                smActor.UpdateMovementX(moveDirection, core.DogoJumpAcceleration, core.AirResistance);
             }
 
             public override void FixedUpdate()

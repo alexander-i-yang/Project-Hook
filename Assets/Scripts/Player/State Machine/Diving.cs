@@ -55,7 +55,7 @@ namespace Player
 
             public override void MoveX(int moveDirection)
             {
-                smActor.UpdateMovementX(moveDirection, core.MaxAirAcceleration);
+                smActor.UpdateMovementX(moveDirection, core.MaxAirAcceleration, core.AirResistance);
                 UpdateSpriteFacing(moveDirection);
             }
         }

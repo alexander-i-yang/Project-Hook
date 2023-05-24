@@ -36,8 +36,9 @@ namespace Player
             {
                 UpdateSpriteFacing(moveDirection);
                 AnimSetRunning(moveDirection != 0);
-                int acceleration = moveDirection == 0 ? core.MaxAcceleration : core.MaxDeceleration;
-                smActor.UpdateMovementX(moveDirection, acceleration);
+                // int acceleration = moveDirection == 0 ? core.MaxAcceleration : core.MaxDeceleration;
+                // smActor.UpdateMovementX(moveDirection, acceleration);
+                smActor.UpdateMovementX(moveDirection, core.MaxAcceleration, core.MaxDeceleration);
             }
         }
     }

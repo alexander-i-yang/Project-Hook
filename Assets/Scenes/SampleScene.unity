@@ -634,6 +634,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1211872703554983520, guid: d48d204af4d97a64b9fdb568bf1b2be4, type: 3}
+      propertyPath: m_SoftZoneWidth
+      value: 0.1125
+      objectReference: {fileID: 0}
     - target: {fileID: 3566575033451595569, guid: d48d204af4d97a64b9fdb568bf1b2be4, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -790,10 +794,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 305c46a72a3d4df488422528d07b182d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 75
+  MoveSpeed: 100
   MaxAcceleration: 1600
   MaxAirAcceleration: 1200
   MaxDeceleration: 800
+  AirResistance: 100
   CornerboostTimer: 0.12
   CornerboostMultiplier: 1.05
   JumpHeight: 28
@@ -812,9 +817,9 @@ MonoBehaviour:
   UltraSpeedMult: 2
   UltraHelper: 0
   DogoJumpGraceTime: 0.12
-  GrappleExtendTime: 0.12
-  GrappleWarmTime: 0.12
-  MaxGrappleSpeed: 200
+  GrappleExtendSpeed: 800
+  GrappleLerpPercent: 0.3
+  MaxGrappleSpeed: 250
   InitGrappleSpeed: 20
   RoomTransitionVCutX: 0.5
   RoomTransitionVCutY: 0.5

@@ -51,10 +51,27 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     }
 
     #region Movement
-    public void UpdateMovementX(int moveDirection, int acceleration) {
+    public void UpdateMovementX(int moveDirection, int acceleration, int resistance) {
+        int vxSign = (int) Mathf.Sign(velocityX);
+        // if (Mathf.Abs(smActor.velocityX))
+        // int acceleration = moveDirection == vxSign || moveDirection == 0 ? core.AirResistance : core.MaxAirAcceleration;
+        
+        
         int targetVelocityX = moveDirection * _core.MoveSpeed;
-        int maxSpeedChange = (int) (acceleration * Game.TimeManager.FixedDeltaTime);
-        velocityX = Mathf.MoveTowards(velocityX, targetVelocityX, maxSpeedChange);
+        // float maxSpeedChange = acceleration * Game.TimeManager.FixedDeltaTime;
+        // velocityX = Mathf.MoveTowards(velocityX, targetVelocityX, maxSpeedChange);
+
+        float accel = 0;
+        if (moveDirection == 0) {
+            accel = resistance;
+        } else if (moveDirection == vxSign && Mathf.Abs(velocityX) >= Mathf.Abs(targetVelocityX)) {
+            accel = resistance/2;
+        } else {
+            accel = acceleration;
+        }
+
+        accel *= Game.TimeManager.FixedDeltaTime;
+        velocityX = Mathf.MoveTowards(velocityX, targetVelocityX, accel);
     }
 
     public void Land()
@@ -124,14 +141,28 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         return hit.point;
     }
 
+    public (Vector2 curPoint, bool hit) GrappleExtendUpdate(float grappleDuration, Vector2 grapplePoint) {
+        var ret = (curPoint: Vector2.zero, hit: false);
+        float dist = _core.GrappleExtendSpeed * grappleDuration;
+        Vector2 curPos = (Vector2) transform.position;
+        Vector2 dir = (grapplePoint - curPos);
+        if (Mathf.Abs(dir.magnitude) <= dist) ret.hit = true;
+        
+        dir = dir.normalized;
+        ret.curPoint = curPos + dir * dist;
+        return ret;
+    }
+
     public void GrappleUpdate(Vector2 gPoint, float warmPercent)
     {
         Vector2 rawV = gPoint - (Vector2) transform.position;
-        float curVMag = velocity.magnitude;
-        float newMag = Mathf.Lerp(curVMag, _core.MaxGrappleSpeed, 0.5f);
+        Vector2 targetV = rawV.normalized * _core.MaxGrappleSpeed;
+        // float curVMag = velocity.magnitude;
+        // float newMag = Mathf.Lerp(curVMag, _core.MaxGrappleSpeed, 0.5f);
         // float mag = Mathf.Lerp(_core.InitGrappleSpeed, _core.MaxGrappleSpeed, warmPercent);
         // print(warmPercent + " " + mag + " " + _core.InitGrappleSpeed + " " + _core.MaxGrappleSpeed);
-        velocity = rawV.normalized * newMag;
+        // velocity = rawV.normalized * newMag;
+        velocity = Vector2.Lerp(velocity, targetV, _core.GrappleLerpPercent);
         Fall();
     }
 

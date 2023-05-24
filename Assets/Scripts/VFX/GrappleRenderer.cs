@@ -12,12 +12,21 @@ public class GrappleRenderer : MonoBehaviour {
 
 
     private void Update() {
-        if (_parent.IsGrappling()) {
+        if (_parent.IsGrappleExtending()) {
+            Vector2 v = _parent.GetGrappleExtendPos();
             _lr.enabled = true;
-            _lr.SetPosition(0, transform.parent.position);
-            _lr.SetPosition(1, _parent.GetGrapplePos());
+            UpdatePoints(v);
+        } else if (_parent.IsGrappling()) {
+            _lr.enabled = true;
+            UpdatePoints(_parent.GetGrapplePos());
         } else {
             _lr.enabled = false;
         }
+    }
+
+    private void UpdatePoints(Vector2 p1) {
+        Vector2 p0 = _parent.transform.position;
+        _lr.SetPosition(0, p0);
+        _lr.SetPosition(1, p1);
     }
 }

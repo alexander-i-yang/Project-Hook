@@ -118,7 +118,9 @@ namespace Player
             CurrState.RefreshAbilities();
         }
 
-        public bool IsGrappling() {return IsOnState<Grappling>();}
+        public bool IsGrappling() => IsOnState<Grappling>();
+
+        public bool IsGrappleExtending() => IsOnState<ExtendGrapple>();
 
         public void OnDeath()
         {
@@ -132,8 +134,8 @@ namespace Player
             Transition<Airborne>();
         }
 
-        public Vector2 GetGrapplePos() {
-            return CurrInput.currentGrapplePos;
-        }
+        public Vector2 GetGrapplePos() => CurrInput.currentGrapplePos;
+
+        public Vector2 GetGrappleExtendPos() => CurrInput.curGrappleExtendPos;
     }
 }
