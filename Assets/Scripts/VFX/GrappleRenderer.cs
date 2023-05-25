@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class GrappleRenderer : MonoBehaviour {
     private LineRenderer _lr;
-    private PlayerStateMachine _parent;
+    private AbilityStateMachine _parent;
     
     private void Awake() {
         _lr = GetComponent<LineRenderer>();
-        _parent = transform.parent.GetComponent<PlayerStateMachine>();
+        _parent = transform.parent.GetComponent<AbilityStateMachine>();
     }
 
 

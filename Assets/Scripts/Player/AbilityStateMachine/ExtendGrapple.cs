@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace Player
 {
-    public partial class PlayerStateMachine
+    public partial class AbilityStateMachine
     {
-        public class ExtendGrapple : Airborne
+        public class ExtendGrapple : AbilityState
         {
             private float _grappleDuration;
             
-            public override void Enter(PlayerStateInput i) {
+            public override void Enter(AbilityStateInput i) {
                 _grappleDuration = 0;
                 Input.curGrappleExtendPos = smActor.transform.position;
             }
@@ -23,17 +23,12 @@ namespace Player
                 if (updateData.hit) {
                     MySM.Transition<Grappling>();
                 }
-                // GameTimer.FixedUpdate(_extendTimer);
-                // Input.curGrappleExtendPercent = 1-_extendTimer.TimerValue/core.GrappleExtendTime;
-                // if (GameTimer.GetTimerState(_extendTimer) == TimerState.Finished) {
-                //     MySM.Transition<Grappling>();
-                // }
             }
 
             public override void GrappleStarted() {}
 
             public override void GrappleFinished() {
-                MySM.Transition<Airborne>();
+                MySM.Transition<Idle>();
             }
         }
     }

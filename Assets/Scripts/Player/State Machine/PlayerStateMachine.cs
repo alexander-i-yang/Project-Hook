@@ -86,21 +86,11 @@ namespace Player
                 CurrState.DivePressed();
             }
 
-            if (MyCore.Input.GrappleStarted())
-            {
-                CurrState.GrappleStarted();
-            }
-
-            if (MyCore.Input.GrappleFinished())
-            {
-                CurrState.GrappleFinished();
-            }
-
             if (MyCore.Input.RetryStarted())
             {
                 MyCore.Actor.Die(v => v);
             }
-            
+
             CurrInput.moveDirection = MyCore.Input.GetMovementInput();
         }
 
@@ -118,10 +108,6 @@ namespace Player
             CurrState.RefreshAbilities();
         }
 
-        public bool IsGrappling() => IsOnState<Grappling>();
-
-        public bool IsGrappleExtending() => IsOnState<ExtendGrapple>();
-
         public void OnDeath()
         {
             // _spriteR.SetAlpha(0);
@@ -133,9 +119,5 @@ namespace Player
         {
             Transition<Airborne>();
         }
-
-        public Vector2 GetGrapplePos() => CurrInput.currentGrapplePos;
-
-        public Vector2 GetGrappleExtendPos() => CurrInput.curGrappleExtendPos;
     }
 }
