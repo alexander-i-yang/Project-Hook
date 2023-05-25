@@ -6,10 +6,10 @@
     "activeFile": "Testing/Testing.tmx",
     "automapping.whileDrawing": true,
     "expandedProjectPaths": [
-        "Tilesets",
-        "Testing",
+        ".",
         "Automap",
-        "."
+        "Testing",
+        "Tilesets"
     ],
     "fileStates": {
         ":/automap-tiles.tsx": {
@@ -140,11 +140,11 @@
             }
         },
         "Testing/Testing.tmx": {
-            "scale": 1.714453125,
+            "scale": 3,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 187.2317156527683,
-                "y": 107.6144907723855
+                "x": 204,
+                "y": 153.5
             }
         },
         "Tilesets/Branches.tsx": {
