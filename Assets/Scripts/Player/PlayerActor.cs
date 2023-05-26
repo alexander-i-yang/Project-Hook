@@ -140,7 +140,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         
         PhysObj p = hit.collider.GetComponent<PhysObj>();
         if (p == null) return null;
-
+        print(hit.point);
         return hit.point;
     }
 
