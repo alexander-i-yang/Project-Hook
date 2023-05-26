@@ -8,10 +8,18 @@ namespace Player
         public class ExtendGrapple : AbilityState
         {
             private float _grappleDuration;
+            private float _prevTimeScale;
             
             public override void Enter(AbilityStateInput i) {
                 _grappleDuration = 0;
+                _prevTimeScale = Game.TimeManager.TimeScale;
+                Game.TimeManager.TimeScale = core.GrappleBulletTimeScale;
                 Input.curGrappleExtendPos = smActor.transform.position;
+            }
+
+            public override void Exit(AbilityStateInput i) {
+                base.Exit(i);
+                Game.TimeManager.TimeScale = _prevTimeScale;
             }
             
             public override void FixedUpdate()

@@ -806,6 +806,7 @@ MonoBehaviour:
   DoubleJumpHeight: 16
   JumpCoyoteTime: 0.12
   JumpBufferTime: 0.25
+  BonkHeadV: 30
   JumpCutMultiplier: 0.5
   DiveVelocity: -300
   DiveDeceleration: 30
@@ -819,7 +820,8 @@ MonoBehaviour:
   UltraHelper: 0
   DogoJumpGraceTime: 0.12
   GrappleExtendSpeed: 800
-  GrappleLerpPercent: 0.3
+  GrappleBulletTimeScale: 0.2
+  GrappleLerpPercent: 1200
   MaxGrappleSpeed: 250
   InitGrappleSpeed: 20
   RoomTransitionVCutX: 0.5

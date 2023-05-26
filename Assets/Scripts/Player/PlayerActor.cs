@@ -340,7 +340,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     #endregion
 
     public void BonkHead() {
-        velocityY = Math.Min(10, velocityY);
+        velocityY = Math.Min(_core.BonkHeadV, velocityY);
     }
     
     public void FloorDisappear()

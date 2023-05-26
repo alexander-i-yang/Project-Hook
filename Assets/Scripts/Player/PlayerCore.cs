@@ -44,6 +44,9 @@ namespace Player
 
         [SerializeField] public float JumpBufferTime;
 
+        [Tooltip("Y velocity after the player hits their head on the ceiling")]
+        [SerializeField] public float BonkHeadV;
+
         [SerializeField, Range(0f, 1f)] public float JumpCutMultiplier;
 
         [Foldout("Dive", true)]
@@ -81,6 +84,8 @@ namespace Player
         [Foldout("Grapple", true)]
         [Tooltip("Grapple extend units per second")]
         [SerializeField] public float GrappleExtendSpeed;
+
+        [SerializeField] public float GrappleBulletTimeScale;
        
         [Tooltip("Lerp percent for grapple acceleration")]
         [SerializeField] public float GrappleLerpPercent;
