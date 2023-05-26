@@ -28,13 +28,6 @@ namespace Player
             {
                 
             }
-
-            #if UNITY_EDITOR
-            protected void OnDrawGizmosSelected() {
-             
-                Handles.DrawLine(smActor.transform.position, Input.currentGrapplePos);
-            }
-            #endif
         }
     }
 }

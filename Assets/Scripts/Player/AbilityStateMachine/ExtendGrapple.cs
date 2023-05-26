@@ -12,6 +12,7 @@ namespace Player
             
             public override void Enter(AbilityStateInput i) {
                 _grappleDuration = 0;
+                smActor.ResetMyGrappleHook();
                 _prevTimeScale = Game.TimeManager.TimeScale;
                 Game.TimeManager.TimeScale = core.GrappleBulletTimeScale;
                 Input.curGrappleExtendPos = smActor.transform.position;
@@ -20,13 +21,14 @@ namespace Player
             public override void Exit(AbilityStateInput i) {
                 base.Exit(i);
                 Game.TimeManager.TimeScale = _prevTimeScale;
+                Input.currentGrapplePos = Input.curGrappleExtendPos;
             }
             
             public override void FixedUpdate()
             {
                 base.FixedUpdate();
                 _grappleDuration += Game.TimeManager.FixedDeltaTime;
-                var updateData = smActor.GrappleExtendUpdate(_grappleDuration, Input.currentGrapplePos);
+                var updateData = smActor.GrappleExtendUpdate(_grappleDuration, MySM.GetGrappleInputPos());
                 Input.curGrappleExtendPos = updateData.curPoint;
                 if (updateData.hit) {
                     MySM.Transition<Grappling>();

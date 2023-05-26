@@ -140,21 +140,44 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         
         PhysObj p = hit.collider.GetComponent<PhysObj>();
         if (p == null) return null;
-        print(hit.point);
         return hit.point;
     }
 
     public (Vector2 curPoint, bool hit) GrappleExtendUpdate(float grappleDuration, Vector2 grapplePoint) {
         var ret = (curPoint: Vector2.zero, hit: false);
+        Vector2 grappleOrigin = transform.position;
         float dist = _core.GrappleExtendSpeed * grappleDuration;
         Vector2 curPos = (Vector2) transform.position;
-        Vector2 dir = (grapplePoint - curPos);
-        if (Mathf.Abs(dir.magnitude) <= dist) ret.hit = true;
+        Vector2 dir = (grapplePoint - curPos).normalized;
+        RaycastHit2D hit = Physics2D.Raycast(
+            grappleOrigin, 
+            dir,
+            dist,
+            LayerMask.GetMask("Ground", "Interactable")
+        );
+
+        Vector2 newPoint = curPos + dir * dist;
+        ret.curPoint = newPoint;
         
-        dir = dir.normalized;
-        ret.curPoint = curPos + dir * dist;
+
+        if (hit.collider != null) {
+            PhysObj p = hit.collider.GetComponent<PhysObj>();
+            if (p != this) {
+                ret.hit = true;
+                ret.curPoint = hit.point;
+            };
+        }
+        // if (Mathf.Abs(dir.magnitude) <= dist) ret.hit = true;
+        
+        // ret.hit = _core.MyGrappleHook.SetPos(newPoint);
+
+        // _core.MyGrappleHook.Move(dir * _core.GrappleExtendSpeed);
+        // ret.curPoint = _core.MyGrappleHook.transform.position;
+        // if (_core.MyGrappleHook.DidCollide) ret.hit = true;
         return ret;
     }
+
+    public void ResetMyGrappleHook() {_core.MyGrappleHook.Reset(transform.position);}
 
     public void PullGrappleUpdate(Vector2 gPoint, float warmPercent) {
         Vector2 rawV = gPoint - (Vector2) transform.position;
@@ -189,7 +212,9 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         // velocity += ortho * _core.GrappleBoost;
         // if (velocityY <= 0) return;
         int vxSign = (int) Mathf.Sign(velocityX);
-        velocity += new Vector2(Facing, 1) * _core.GrappleBoost * velocity.magnitude;
+        Vector2 addV = new Vector2(Facing, 1) * _core.GrappleBoost * velocity.magnitude;
+        addV = addV.normalized * Mathf.Clamp(addV.magnitude, -_core.MaxGrappleBoostMagnitude, _core.MaxGrappleBoostMagnitude);
+        velocity += addV;
     }
 
     #endregion
@@ -339,7 +364,6 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
             if (direction.x != 0) {
                 HitWall((int)direction.x);
             }
-            print("nice!");
             _abilityStateMachine.HitWall();
         }
 
@@ -383,7 +407,6 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
     //Todo: change to fixedUpdate GameTimer
     private IEnumerator HitWallLogic(int direction) {
-        bool didBoost = false;
         for (float t = 0; t < _core.CornerboostTimer; t += Game.TimeManager.FixedDeltaTime) {
             bool movingWithDir = Math.Sign(velocityX) == Math.Sign(direction) || velocityX == 0;
             if (!movingWithDir) {
@@ -396,7 +419,6 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
             });
             if (!stillNextToWall) {
                 velocityX = _hitWallPrevSpeed * _core.CornerboostMultiplier;
-                didBoost = true;
                 break;
             }
             yield return new WaitForFixedUpdate();

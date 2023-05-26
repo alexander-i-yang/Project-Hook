@@ -17,6 +17,8 @@ namespace Player
     [RequireComponent(typeof(PlayerScreenShakeActivator))]
     public class PlayerCore : MonoBehaviour
     {
+        public GrappleHook MyGrappleHook;
+
         #region Player Properties
         [Foldout("Move", true)]
         [SerializeField] public int MoveSpeed;
@@ -96,8 +98,11 @@ namespace Player
         [Tooltip("Init grapple speed")]
         [SerializeField] public float InitGrappleSpeed;
 
-        [Tooltip("Boost upon leaving the grapple")]
+        [Tooltip("Boost magnitude multiplier after leaving the grapple")]
         [SerializeField] public float GrappleBoost;
+
+        [Tooltip("Max boost magnitude")]
+        [SerializeField] public float MaxGrappleBoostMagnitude;
         
         [Foldout("RoomTransitions", true)]
         [SerializeField, Range(0f, 1f)] public float RoomTransitionVCutX = 0.5f;
@@ -114,7 +119,7 @@ namespace Player
         public PlayerSpawnManager SpawnManager { get; private set; }
         public PlayerScreenShakeActivator MyScreenShakeActivator { get; private set; }
         [NonSerialized] public PlayerAnimationStateManager AnimManager;
-
+        
         private void Awake()
         {
             // InitializeSingleton(false); //L: Don't make player persistent, bc then there'll be multiple players OO
@@ -124,6 +129,8 @@ namespace Player
             SpawnManager = gameObject.GetComponent<PlayerSpawnManager>();
             MyScreenShakeActivator = gameObject.GetComponent<PlayerScreenShakeActivator>();
             AnimManager = GetComponentInChildren<PlayerAnimationStateManager>();
+            
+            if (MyGrappleHook == null) throw new ConstraintException("PlayerCore must have GrappleHook");
             if (AnimManager == null) throw new ConstraintException("PlayerCore must have AnimManager");
             //gameObject.AddComponent<PlayerCrystalResponse>();
             //gameObject.AddComponent<PlayerSpikeResponse>();
