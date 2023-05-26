@@ -824,6 +824,7 @@ MonoBehaviour:
   GrappleLerpPercent: 1200
   MaxGrappleSpeed: 250
   InitGrappleSpeed: 20
+  GrappleBoost: 50
   RoomTransitionVCutX: 0.5
   RoomTransitionVCutY: 0.5
   DeathTime: 0

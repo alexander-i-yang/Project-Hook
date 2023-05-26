@@ -21,6 +21,7 @@ namespace Player
             public override void GrappleFinished()
             {
                 base.GrappleFinished();
+                smActor.GrappleBoost(Input.currentGrapplePos);
                 MySM.Transition<Idle>();
             }
         }

@@ -12,6 +12,17 @@ namespace Player
             public override void Enter(AbilityStateInput i) {
                 
             }
+
+            public override void GrappleStarted() {
+                Vector2 mousePos = core.Input.GetMousePos();
+                // Vector2 mousePos = (Vector2)smActor.transform.position + new Vector2(smActor.Facing * 2, 1) * 10;
+                Vector2? grapplePoint = smActor.GetGrapplePoint(mousePos);
+                if (grapplePoint != null)
+                {
+                    Input.currentGrapplePos = grapplePoint.Value;
+                    MySM.Transition<ExtendGrapple>();
+                }
+            }
         }
     }
 }

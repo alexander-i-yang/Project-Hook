@@ -95,6 +95,9 @@ namespace Player
 
         [Tooltip("Init grapple speed")]
         [SerializeField] public float InitGrappleSpeed;
+
+        [Tooltip("Boost upon leaving the grapple")]
+        [SerializeField] public float GrappleBoost;
         
         [Foldout("RoomTransitions", true)]
         [SerializeField, Range(0f, 1f)] public float RoomTransitionVCutX = 0.5f;

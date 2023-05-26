@@ -155,17 +155,33 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         return ret;
     }
 
-    public void GrappleUpdate(Vector2 gPoint, float warmPercent)
-    {
+    public void PullGrappleUpdate(Vector2 gPoint, float warmPercent) {
         Vector2 rawV = gPoint - (Vector2) transform.position;
         Vector2 targetV = rawV.normalized * _core.MaxGrappleSpeed;
-        // float curVMag = velocity.magnitude;
-        // float newMag = Mathf.Lerp(curVMag, _core.MaxGrappleSpeed, 0.5f);
-        // float mag = Mathf.Lerp(_core.InitGrappleSpeed, _core.MaxGrappleSpeed, warmPercent);
-        // print(warmPercent + " " + mag + " " + _core.InitGrappleSpeed + " " + _core.MaxGrappleSpeed);
-        // velocity = rawV.normalized * newMag;
         velocity = Vector2.Lerp(velocity, targetV, _core.GrappleLerpPercent);
         Fall();
+    }
+
+    public void GrappleUpdate(Vector2 gPoint, float warmPercent)
+    {
+        // Fall();
+        Vector2 rawV = gPoint - (Vector2) transform.position;
+        Vector2 projection = Vector3.Project(velocity, rawV);
+        Vector2 ortho = velocity - projection;
+        ortho = ortho.normalized * velocity.magnitude;
+        velocity = ortho;
+        
+    }
+
+    public void GrappleBoost(Vector2 gPoint) {
+        // Vector2 rawV = gPoint - (Vector2) transform.position;
+        // Vector2 projection = Vector3.Project(velocity, rawV);
+        // Vector2 ortho = velocity - projection;
+        
+        // velocity += ortho * _core.GrappleBoost;
+
+        int vxSign = (int) Mathf.Sign(velocityX);
+        velocity += new Vector2(Facing, 1) * _core.GrappleBoost;
     }
 
     #endregion

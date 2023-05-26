@@ -5,7 +5,7 @@ using Mechanics;
 using UnityEngine;
 
 namespace Player
-{
+{   
     public class AbilityStateInput : StateInput {
         //Grapple
         public Vector2 currentGrapplePos;
