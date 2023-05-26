@@ -98,10 +98,13 @@ namespace Player
         {
             base.FixedUpdate();
             GameTimer.FixedUpdate(CurrInput.jumpBufferTimer);
-            CurrState.SetGrounded(MyCore.Actor.IsGrounded(), MyCore.Actor.IsMovingUp);
             CurrState.MoveX(CurrInput.moveDirection);
         }
         #endregion
+
+        public void SetGrounded(bool isGrounded, bool isMovingUp) {
+            CurrState.SetGrounded(isGrounded, isMovingUp);
+        }
 
         public void RefreshAbilities()
         {

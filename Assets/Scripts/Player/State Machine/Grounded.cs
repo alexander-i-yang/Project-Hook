@@ -10,7 +10,7 @@ namespace Player
                 //PlayerAnim.ChangeState(PlayerAnimations.IDLE);
                 Input.jumpedFromGround = false;
                 RefreshAbilities();
-                smActor.Land();
+                // smActor.Land();
                 if (GameTimer.GetTimerState(Input.jumpBufferTimer) == TimerState.Running && !MySM.PrevStateEquals<Diving>())
                 {
                     JumpFromGround();
@@ -39,6 +39,13 @@ namespace Player
                 // int acceleration = moveDirection == 0 ? core.MaxAcceleration : core.MaxDeceleration;
                 // smActor.UpdateMovementX(moveDirection, acceleration);
                 smActor.UpdateMovementX(moveDirection, core.MaxAcceleration, core.MaxDeceleration);
+            }
+
+            public override void FixedUpdate() {
+                base.FixedUpdate();
+                if (!smActor.IsGrounded()) {
+                    MySM.Transition<Airborne>();
+                }
             }
         }
     }

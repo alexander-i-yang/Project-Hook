@@ -75,6 +75,10 @@ namespace Player
             }
         }
 
+        public void HitWall() {
+            CurrState.HitWall();
+        }
+
         #endregion
 
         public bool IsGrappling() => IsOnState<Grappling>();

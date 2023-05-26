@@ -18,6 +18,12 @@ namespace Player
                 // GameTimer.FixedUpdate(_grappleTimer);
             }
 
+            public override void HitWall() {
+                // smActor.HitWall()
+                // MySM.Transition<Idle>();
+                GrappleFinished();
+            }
+
             public override void GrappleFinished()
             {
                 base.GrappleFinished();

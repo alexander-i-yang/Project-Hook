@@ -24,6 +24,11 @@ namespace Player
                 
             }
 
+            public virtual void HitWall()
+            {
+                
+            }
+
             #if UNITY_EDITOR
             protected void OnDrawGizmosSelected() {
              

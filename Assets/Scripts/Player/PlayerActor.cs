@@ -79,6 +79,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     public void Land()
     {
         OnLand?.Invoke(transform.position + Vector3.down * 5.5f);
+        _stateMachine.SetGrounded(true, IsMovingUp);
         velocityY = 0;
     }
     #endregion
@@ -167,10 +168,17 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         // Fall();
         Vector2 rawV = gPoint - (Vector2) transform.position;
         Vector2 projection = Vector3.Project(velocity, rawV);
-        Vector2 ortho = velocity - projection;
-        ortho = ortho.normalized * velocity.magnitude;
-        velocity = ortho;
+        Vector2 newV = velocity - projection; // Get the component of velocity that's orthogonal to the grapple
+        // Vector2 newV = ortho.normalized * velocity.magnitude;
         
+        
+        //If ur moving towards the grapple point, just use that velocity
+        if (Vector2.Dot(projection, rawV) >= 0) {
+            // newV = (newV + projection);
+            return;
+        }
+
+        velocity = newV.normalized * velocity.magnitude;
     }
 
     public void GrappleBoost(Vector2 gPoint) {
@@ -179,9 +187,9 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         // Vector2 ortho = velocity - projection;
         
         // velocity += ortho * _core.GrappleBoost;
-
+        // if (velocityY <= 0) return;
         int vxSign = (int) Mathf.Sign(velocityX);
-        velocity += new Vector2(Facing, 1) * _core.GrappleBoost;
+        velocity += new Vector2(Facing, 1) * _core.GrappleBoost * velocity.magnitude;
     }
 
     #endregion
@@ -325,10 +333,14 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
             if (direction.y > 0) {
                 BonkHead();
             }
-
+            if (direction.y < 0) {
+                Land();
+            }
             if (direction.x != 0) {
                 HitWall((int)direction.x);
             }
+            print("nice!");
+            _abilityStateMachine.HitWall();
         }
 
         return col;
@@ -358,17 +370,9 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     public void BonkHead() {
         velocityY = Math.Min(_core.BonkHeadV, velocityY);
     }
-    
-    public void FloorDisappear()
-    {
-        if (IsDogoing())
-        {
-            velocity = Vector2.zero;
-            _stateMachine.Transition<PlayerStateMachine.Airborne>();    
-        }
-    }
 
     private void HitWall(int direction) {
+        // _abilityStateMachine.HitWall();
         if (!_hitWallCoroutineRunning) {
             _hitWallPrevSpeed = velocityX;
             velocityX = 0;
@@ -379,6 +383,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
     //Todo: change to fixedUpdate GameTimer
     private IEnumerator HitWallLogic(int direction) {
+        bool didBoost = false;
         for (float t = 0; t < _core.CornerboostTimer; t += Game.TimeManager.FixedDeltaTime) {
             bool movingWithDir = Math.Sign(velocityX) == Math.Sign(direction) || velocityX == 0;
             if (!movingWithDir) {
@@ -391,10 +396,12 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
             });
             if (!stillNextToWall) {
                 velocityX = _hitWallPrevSpeed * _core.CornerboostMultiplier;
+                didBoost = true;
                 break;
             }
             yield return new WaitForFixedUpdate();
         }
+
         _hitWallCoroutineRunning = false;
     }
 
