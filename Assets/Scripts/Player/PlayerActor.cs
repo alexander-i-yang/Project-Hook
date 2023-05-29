@@ -364,7 +364,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
             if (direction.x != 0) {
                 HitWall((int)direction.x);
             }
-            _abilityStateMachine.HitWall();
+            _abilityStateMachine.CollideWall();
         }
 
         return col;
@@ -425,6 +425,11 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         }
 
         _hitWallCoroutineRunning = false;
+    }
+
+    public void HitWallGrapple() {
+        // velocity = Vector2.up * velocity.magnitude;
+        velocity = new Vector2(0, velocityY);
     }
 
     private void OnRoomTransition(Room roomEntering)

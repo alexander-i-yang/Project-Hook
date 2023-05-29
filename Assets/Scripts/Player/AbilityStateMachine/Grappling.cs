@@ -1,4 +1,5 @@
 ﻿using ASK.Core;
+using UnityEngine;
 
 namespace Player
 {
@@ -18,10 +19,11 @@ namespace Player
                 // GameTimer.FixedUpdate(_grappleTimer);
             }
 
-            public override void HitWall() {
+            public override void CollideWall() {
                 // smActor.HitWall()
-                // MySM.Transition<Idle>();
-                GrappleFinished();
+                // smActor.HitWallGrapple();
+                MySM.Transition<Idle>();
+                // GrappleFinished();
             }
 
             public override void GrappleFinished()

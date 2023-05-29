@@ -75,8 +75,8 @@ namespace Player
             }
         }
 
-        public void HitWall() {
-            CurrState.HitWall();
+        public void CollideWall() {
+            CurrState.CollideWall();
         }
 
         #endregion
