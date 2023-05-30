@@ -24,7 +24,12 @@ namespace Player
                 
             }
 
-            public virtual void CollideWall()
+            public virtual void CollideHorizontal()
+            {
+                
+            }
+
+            public virtual void CollideVertical()
             {
                 
             }

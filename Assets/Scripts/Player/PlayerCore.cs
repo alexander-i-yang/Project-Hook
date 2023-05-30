@@ -98,11 +98,20 @@ namespace Player
         [Tooltip("Init grapple speed")]
         [SerializeField] public float InitGrappleSpeed;
 
+        [Tooltip("Multiplier for magnitude of normal component of velocity")]
+        [SerializeField] public float GrappleNormalMult;
+
+        [Tooltip("Multiplier for magnitude of ortho component of velocity")]
+        [SerializeField] public float GrappleOrthMult;
+
         [Tooltip("Boost magnitude multiplier after leaving the grapple")]
         [SerializeField] public float GrappleBoost;
 
         [Tooltip("Max boost magnitude")]
         [SerializeField] public float MaxGrappleBoostMagnitude;
+
+        [Tooltip("Y velocity multiplier after you it a wall")]
+        [SerializeField] public float HitWallGrappleMult;
         
         [Foldout("RoomTransitions", true)]
         [SerializeField, Range(0f, 1f)] public float RoomTransitionVCutX = 0.5f;

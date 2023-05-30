@@ -11,6 +11,7 @@ namespace Player
             public override void Enter(AbilityStateInput i)
             {
                 // _grappleTimer = GameTimer.StartNewTimer(core.GrappleWarmTime);
+                smActor.StartGrapple(Input.currentGrapplePos);
             }
 
             public override void FixedUpdate()
@@ -19,11 +20,14 @@ namespace Player
                 // GameTimer.FixedUpdate(_grappleTimer);
             }
 
-            public override void CollideWall() {
-                // smActor.HitWall()
-                // smActor.HitWallGrapple();
+            public override void CollideHorizontal() {
+                smActor.CollideHorizontalGrapple();
                 MySM.Transition<Idle>();
-                // GrappleFinished();
+            }
+
+            public override void CollideVertical() {
+                smActor.CollideVerticalGrapple();
+                MySM.Transition<Idle>();
             }
 
             public override void GrappleFinished()

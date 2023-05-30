@@ -179,6 +179,16 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
     public void ResetMyGrappleHook() {_core.MyGrappleHook.Reset(transform.position);}
 
+    public void StartGrapple(Vector2 gPoint) {
+        Vector2 rawV = gPoint - (Vector2) transform.position;
+        Vector2 projection = Vector3.Project(velocity, rawV);
+        Vector2 newV = velocity - projection; // Get the component of velocity that's orthogonal to the grapple
+        if (Vector2.Dot(projection, rawV) >= 0) {
+            return;
+        }
+        velocity = newV.normalized * velocity.magnitude;
+    }
+
     public void PullGrappleUpdate(Vector2 gPoint, float warmPercent) {
         Vector2 rawV = gPoint - (Vector2) transform.position;
         Vector2 targetV = rawV.normalized * _core.MaxGrappleSpeed;
@@ -201,7 +211,8 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
             return;
         }
 
-        velocity = newV.normalized * velocity.magnitude;
+        // velocity = newV.normalized * velocity.magnitude;
+        velocity = newV.normalized * (projection.magnitude * _core.GrappleNormalMult + newV.magnitude * _core.GrappleOrthMult);
     }
 
     public void GrappleBoost(Vector2 gPoint) {
@@ -355,16 +366,18 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         }
         bool col = p.PlayerCollide(this, direction);
         if (col) {
-            if (direction.y > 0) {
-                BonkHead();
-            }
-            if (direction.y < 0) {
-                Land();
-            }
             if (direction.x != 0) {
+                _abilityStateMachine.CollideHorizontal();
                 HitWall((int)direction.x);
+            } else if (direction.y != 0) {
+                _abilityStateMachine.CollideVertical();
+                if (direction.y > 0) {
+                    BonkHead();
+                }
+                if (direction.y < 0) {
+                    Land();
+                }
             }
-            _abilityStateMachine.CollideWall();
         }
 
         return col;
@@ -427,9 +440,13 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         _hitWallCoroutineRunning = false;
     }
 
-    public void HitWallGrapple() {
+    public void CollideHorizontalGrapple() {
         // velocity = Vector2.up * velocity.magnitude;
-        velocity = new Vector2(0, velocityY);
+        velocity += new Vector2(0, velocityX * _core.HitWallGrappleMult);
+    }
+
+    public void CollideVerticalGrapple() {
+        velocity += new Vector2(velocityY * _core.HitWallGrappleMult * -Mathf.Sign(velocityX), 0);
     }
 
     private void OnRoomTransition(Room roomEntering)
