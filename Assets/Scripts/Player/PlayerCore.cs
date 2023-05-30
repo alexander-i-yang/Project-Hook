@@ -107,6 +107,15 @@ namespace Player
         [Tooltip("Boost magnitude multiplier after leaving the grapple")]
         [SerializeField] public float GrappleBoost;
 
+        [Tooltip("Angle from the vertical that it takes to slow down a grapple")]
+        [SerializeField] public float SmallAngle;
+
+        [Tooltip("Magnitude that u need to slow down a small angle grapple")]
+        [SerializeField] public float SmallAngleMagnitude;
+
+        [Tooltip("Angle that u need to be at to zero out your velocity")]
+        [SerializeField] public float ZeroAngle;
+
         [Tooltip("Max boost magnitude")]
         [SerializeField] public float MaxGrappleBoostMagnitude;
 

@@ -1261,6 +1261,9 @@ MonoBehaviour:
   GrappleNormalMult: 0
   GrappleOrthMult: 1
   GrappleBoost: 0.3
+  SmallAngle: 10
+  SmallAngleMagnitude: 15
+  ZeroAngle: 0.1
   MaxGrappleBoostMagnitude: 100
   HitWallGrappleMult: 0.5
   RoomTransitionVCutX: 0.5

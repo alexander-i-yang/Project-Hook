@@ -198,21 +198,35 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
     public void GrappleUpdate(Vector2 gPoint, float warmPercent)
     {
-        // Fall();
         Vector2 rawV = gPoint - (Vector2) transform.position;
         Vector2 projection = Vector3.Project(velocity, rawV);
-        Vector2 newV = velocity - projection; // Get the component of velocity that's orthogonal to the grapple
-        // Vector2 newV = ortho.normalized * velocity.magnitude;
+        Vector2 ortho = velocity - projection; // Get the component of velocity that's orthogonal to the grapple
         
-        
-        //If ur moving towards the grapple point, just use that velocity
         if (Vector2.Dot(projection, rawV) >= 0) {
             // newV = (newV + projection);
             return;
         }
-
         // velocity = newV.normalized * velocity.magnitude;
-        velocity = newV.normalized * (projection.magnitude * _core.GrappleNormalMult + newV.magnitude * _core.GrappleOrthMult);
+        velocity = ortho.normalized * (projection.magnitude * _core.GrappleNormalMult + ortho.magnitude * _core.GrappleOrthMult);
+
+        float angle = Vector2.Angle(rawV, Vector2.up);
+        if (velocity.magnitude < _core.SmallAngleMagnitude && angle <= _core.SmallAngle) {
+            print(Mathf.Sign(rawV.x) + " " + Mathf.Sign(velocityX));
+            if (Mathf.Sign(rawV.x) == Mathf.Sign(velocityX)) {
+                float newMag = ClosestBetween(-_core.SmallAngleMagnitude, _core.SmallAngleMagnitude, (ortho + projection).magnitude);
+                print("Newmag: " + newMag);
+                velocity = ortho.normalized * newMag;
+            }
+            if (angle < _core.ZeroAngle) {
+                velocity *= 0.5f;
+            }
+        }
+        print("Stuff: " + Vector2.Angle(rawV, Vector2.up) + ' ' + velocity.magnitude);
+    }
+
+    public float ClosestBetween(float a, float b, float x) {
+        if (x <= a || x >= b) return x;
+        return x < (b-a)/2 + a ? a : b;
     }
 
     public void GrappleBoost(Vector2 gPoint) {
