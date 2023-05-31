@@ -62,10 +62,10 @@ namespace Player
                 }
             }
 
-            public override void MoveX(int moveDirection)
+            public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction)
             {
-                UpdateSpriteFacing(moveDirection);
-                smActor.UpdateMovementX(moveDirection, core.MaxAirAcceleration, core.AirResistance);
+                UpdateSpriteFacing(direction);
+                return p.CalcMovementX(direction, core.MaxAirAcceleration, core.AirResistance);
             }
 
             public override void FixedUpdate()

@@ -32,9 +32,10 @@ namespace Player
                 base.FixedUpdate();
             }
 
-            public override void MoveX(int moveDirection)
+            public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction)
             {
-                UpdateSpriteFacing(moveDirection);
+                UpdateSpriteFacing(direction);
+                return p.CalcMovementX(direction, core.MaxAirAcceleration, core.AirResistance);
             }
 
             public override void Update()

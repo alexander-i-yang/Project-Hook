@@ -1,7 +1,7 @@
 ﻿using ASK.Helpers;
 using System.Collections;
 using ASK.Core;
-using Mechanics;
+using UnityEngine;
 
 namespace Player
 {
@@ -75,10 +75,10 @@ namespace Player
                 }
             }
 
-            public override void MoveX(int moveDirection)
+            public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction)
             {
-                UpdateSpriteFacing(moveDirection);
-                smActor.UpdateMovementX(moveDirection, core.DogoJumpAcceleration, core.AirResistance);
+                UpdateSpriteFacing(direction);
+                return p.CalcMovementX(direction, core.MaxAirAcceleration, core.AirResistance);
             }
 
             public override void FixedUpdate()

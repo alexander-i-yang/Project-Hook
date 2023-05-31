@@ -83,6 +83,10 @@ namespace Player
             CurrState.CollideVertical();
         }
 
+        public Vector2 ProcessMoveX(PlayerActor p, Vector2 velocity, int direction) {
+            return CurrState.MoveX(p, velocity, direction);
+        }
+
         #endregion
 
         public bool IsGrappling() => IsOnState<Grappling>();

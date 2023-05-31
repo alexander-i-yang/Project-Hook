@@ -1,4 +1,5 @@
 ﻿using ASK.Core;
+using UnityEngine;
 
 namespace Player
 {
@@ -32,13 +33,11 @@ namespace Player
                 }
             }
 
-            public override void MoveX(int moveDirection)
+            public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction)
             {
-                UpdateSpriteFacing(moveDirection);
-                AnimSetRunning(moveDirection != 0);
-                // int acceleration = moveDirection == 0 ? core.MaxAcceleration : core.MaxDeceleration;
-                // smActor.UpdateMovementX(moveDirection, acceleration);
-                smActor.UpdateMovementX(moveDirection, core.MaxAcceleration, core.MaxDeceleration);
+                UpdateSpriteFacing(direction);
+                AnimSetRunning(direction != 0);
+                return p.CalcMovementX(direction, core.MaxAcceleration, core.MaxDeceleration);
             }
 
             public override void FixedUpdate() {

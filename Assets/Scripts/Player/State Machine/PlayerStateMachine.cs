@@ -91,14 +91,13 @@ namespace Player
                 MyCore.Actor.Die(v => v);
             }
 
-            CurrInput.moveDirection = MyCore.Input.GetMovementInput();
+            // CurrInput.moveDirection = MyCore.Input.GetMovementInput();
         }
 
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
             GameTimer.FixedUpdate(CurrInput.jumpBufferTimer);
-            CurrState.MoveX(CurrInput.moveDirection);
         }
         #endregion
 
@@ -121,6 +120,10 @@ namespace Player
         public void OnRespawn()
         {
             Transition<Airborne>();
+        }
+
+        public Vector2 ProcessMoveX(PlayerActor p, Vector2 velocity, int direction) {
+            return CurrState.MoveX(p, velocity, direction);
         }
     }
 }

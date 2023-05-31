@@ -28,7 +28,7 @@ namespace A2DK.Phys {
             Game.TimeManager.ResetNextFrameOffset += ResetNextFrameOffset;
         }
 
-        public virtual void FixedUpdate() {
+        protected virtual void FixedUpdate() {
             Move(velocity * Game.TimeManager.FixedDeltaTime);
         }
 

@@ -33,7 +33,7 @@ namespace Player
             public virtual void JumpReleased() { }
             public virtual void DivePressed() { }
             public virtual void SetGrounded(bool isGrounded, bool isMovingUp) { }
-            public virtual void MoveX(int moveDirection) { }
+            public virtual Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction) => Vector2.zero;
 
             public void RefreshAbilities()
             {

@@ -36,6 +36,12 @@ namespace Player
                 smActor.GrappleBoost(Input.currentGrapplePos);
                 MySM.Transition<Idle>();
             }
+
+            public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction) {
+                // velocity = smActor.CalcMovementX(0, core.MaxAirAcceleration, core.AirResistance);
+                velocity = smActor.MoveXGrapple(velocity, Input.currentGrapplePos, direction);
+                return velocity;
+            }
         }
     }
 }

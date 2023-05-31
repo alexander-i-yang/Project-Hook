@@ -53,10 +53,10 @@ namespace Player
                 smActor.UpdateWhileDiving();
             }
 
-            public override void MoveX(int moveDirection)
+            public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction)
             {
-                smActor.UpdateMovementX(moveDirection, core.MaxAirAcceleration, core.AirResistance);
-                UpdateSpriteFacing(moveDirection);
+                UpdateSpriteFacing(direction);
+                return p.CalcMovementX(direction, core.MaxAirAcceleration, core.AirResistance);
             }
         }
     }

@@ -33,6 +33,8 @@ namespace Player
             {
                 
             }
+
+            public virtual Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction) => velocity;
         }
     }
 }

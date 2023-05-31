@@ -52,8 +52,18 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         // EndCutsceneManager.EndCutsceneEvent -= OnEndCutscene;
     }
 
+    protected override void FixedUpdate() {
+        base.FixedUpdate();
+
+        Vector2 newV = Vector2.zero;
+        newV = _stateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
+        newV = _abilityStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
+        velocity += newV;
+        print(newV);
+    }
+
     #region Movement
-    public void UpdateMovementX(int moveDirection, int acceleration, int resistance) {
+    public Vector2 CalcMovementX(int moveDirection, int acceleration, int resistance) {
         int vxSign = (int) Mathf.Sign(velocityX);
         // if (Mathf.Abs(smActor.velocityX))
         // int acceleration = moveDirection == vxSign || moveDirection == 0 ? core.AirResistance : core.MaxAirAcceleration;
@@ -73,7 +83,8 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         }
 
         accel *= Game.TimeManager.FixedDeltaTime;
-        velocityX = Mathf.MoveTowards(velocityX, targetVelocityX, accel);
+        return new Vector2(Math.Clamp(targetVelocityX - velocityX, -accel, accel), 0);
+        // return new Vector2(Mathf.MoveTowards(velocityX, targetVelocityX, accel), velocityY);
     }
 
     public void Land()
@@ -182,11 +193,11 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     public void StartGrapple(Vector2 gPoint) {
         Vector2 rawV = gPoint - (Vector2) transform.position;
         Vector2 projection = Vector3.Project(velocity, rawV);
-        Vector2 newV = velocity - projection; // Get the component of velocity that's orthogonal to the grapple
+        Vector2 ortho = velocity - projection; // Get the component of velocity that's orthogonal to the grapple
         if (Vector2.Dot(projection, rawV) >= 0) {
             return;
         }
-        velocity = newV.normalized * velocity.magnitude;
+        velocity = ortho.normalized * velocity.magnitude;
     }
 
     public void PullGrappleUpdate(Vector2 gPoint, float warmPercent) {
@@ -202,26 +213,30 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         Vector2 projection = Vector3.Project(velocity, rawV);
         Vector2 ortho = velocity - projection; // Get the component of velocity that's orthogonal to the grapple
         
+        //If ur moving towards the grapple point, just use that velocity
         if (Vector2.Dot(projection, rawV) >= 0) {
-            // newV = (newV + projection);
             return;
         }
-        // velocity = newV.normalized * velocity.magnitude;
         velocity = ortho.normalized * (projection.magnitude * _core.GrappleNormalMult + ortho.magnitude * _core.GrappleOrthMult);
 
         float angle = Vector2.Angle(rawV, Vector2.up);
         if (velocity.magnitude < _core.SmallAngleMagnitude && angle <= _core.SmallAngle) {
-            print(Mathf.Sign(rawV.x) + " " + Mathf.Sign(velocityX));
             if (Mathf.Sign(rawV.x) == Mathf.Sign(velocityX)) {
                 float newMag = ClosestBetween(-_core.SmallAngleMagnitude, _core.SmallAngleMagnitude, (ortho + projection).magnitude);
-                print("Newmag: " + newMag);
                 velocity = ortho.normalized * newMag;
             }
             if (angle < _core.ZeroAngle) {
-                velocity *= 0.5f;
+                velocity *= 0.25f;
             }
         }
-        print("Stuff: " + Vector2.Angle(rawV, Vector2.up) + ' ' + velocity.magnitude);
+    }
+
+    public Vector2 MoveXGrapple(Vector2 oldV, Vector2 gPos, int direction) {
+        Vector2 rawV = gPos - (Vector2) transform.position;
+        Vector2 projection = Vector3.Project(oldV, rawV);
+        Vector2 ortho = oldV - projection;
+        print("ORTHO: " + ortho);
+        return direction == 0 ? oldV : ortho * _core.MoveXGrappleMult;
     }
 
     public float ClosestBetween(float a, float b, float x) {

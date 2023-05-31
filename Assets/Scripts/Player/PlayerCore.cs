@@ -119,8 +119,11 @@ namespace Player
         [Tooltip("Max boost magnitude")]
         [SerializeField] public float MaxGrappleBoostMagnitude;
 
-        [Tooltip("Y velocity multiplier after you it a wall")]
+        [Tooltip("Velocity multiplier from the discarded direction after you it a wall")]
         [SerializeField] public float HitWallGrappleMult;
+
+        [Tooltip("Velocity multiplier for when you move left/right while grappling")]
+        [SerializeField] public float MoveXGrappleMult;
         
         [Foldout("RoomTransitions", true)]
         [SerializeField, Range(0f, 1f)] public float RoomTransitionVCutX = 0.5f;
