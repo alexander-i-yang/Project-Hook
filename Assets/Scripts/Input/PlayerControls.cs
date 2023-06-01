@@ -89,6 +89,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shotgun"",
+                    ""type"": ""Button"",
+                    ""id"": ""241c28f1-ffe9-4717-a5c8-101c7ceed2e0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -223,6 +232,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Grapple"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a4c71910-f94c-48f7-8294-b5b0d6a02392"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shotgun"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4f8e945-ce0a-4223-89b4-4bd810fe7537"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shotgun"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -238,6 +269,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
         m_Gameplay_Restart = m_Gameplay.FindAction("Restart", throwIfNotFound: true);
         m_Gameplay_Grapple = m_Gameplay.FindAction("Grapple", throwIfNotFound: true);
+        m_Gameplay_Shotgun = m_Gameplay.FindAction("Shotgun", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -306,6 +338,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Pause;
     private readonly InputAction m_Gameplay_Restart;
     private readonly InputAction m_Gameplay_Grapple;
+    private readonly InputAction m_Gameplay_Shotgun;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -317,6 +350,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
         public InputAction @Restart => m_Wrapper.m_Gameplay_Restart;
         public InputAction @Grapple => m_Wrapper.m_Gameplay_Grapple;
+        public InputAction @Shotgun => m_Wrapper.m_Gameplay_Shotgun;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -347,6 +381,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Grapple.started += instance.OnGrapple;
             @Grapple.performed += instance.OnGrapple;
             @Grapple.canceled += instance.OnGrapple;
+            @Shotgun.started += instance.OnShotgun;
+            @Shotgun.performed += instance.OnShotgun;
+            @Shotgun.canceled += instance.OnShotgun;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -372,6 +409,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Grapple.started -= instance.OnGrapple;
             @Grapple.performed -= instance.OnGrapple;
             @Grapple.canceled -= instance.OnGrapple;
+            @Shotgun.started -= instance.OnShotgun;
+            @Shotgun.performed -= instance.OnShotgun;
+            @Shotgun.canceled -= instance.OnShotgun;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -398,5 +438,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnPause(InputAction.CallbackContext context);
         void OnRestart(InputAction.CallbackContext context);
         void OnGrapple(InputAction.CallbackContext context);
+        void OnShotgun(InputAction.CallbackContext context);
     }
 }

@@ -2,7 +2,7 @@
 using UnityEngine;
 
 namespace Mechanics {
-    public class Wall : Solid {
+    public class Wall : Solid, IGrappleAble {
         public override bool Collidable() {
             return true;
         }

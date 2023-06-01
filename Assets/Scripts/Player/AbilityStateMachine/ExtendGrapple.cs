@@ -40,6 +40,17 @@ namespace Player
             public override void GrappleFinished() {
                 MySM.Transition<Idle>();
             }
+
+            public override void CollideHorizontal()
+            {
+                MySM.Transition<Idle>();
+                base.CollideHorizontal();
+            }
+            public override void CollideVertical()
+            {
+                MySM.Transition<Idle>();
+                base.CollideVertical();
+            }
         }
     }
 }

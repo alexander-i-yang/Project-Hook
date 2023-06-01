@@ -59,7 +59,11 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         newV = _stateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
         newV = _abilityStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
         velocity += newV;
-        print(newV);
+
+        if (_core.Input.ShotgunStarted()) {
+            print("Started");
+        }
+        // print(newV);
     }
 
     #region Movement
@@ -160,7 +164,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         float dist = _core.GrappleExtendSpeed * grappleDuration;
         Vector2 curPos = (Vector2) transform.position;
         Vector2 dir = (grapplePoint - curPos).normalized;
-        RaycastHit2D hit = Physics2D.Raycast(
+        RaycastHit2D[] hits = Physics2D.RaycastAll(
             grappleOrigin, 
             dir,
             dist,
@@ -169,14 +173,18 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
         Vector2 newPoint = curPos + dir * dist;
         ret.curPoint = newPoint;
-        
 
-        if (hit.collider != null) {
-            PhysObj p = hit.collider.GetComponent<PhysObj>();
-            if (p != this) {
-                ret.hit = true;
-                ret.curPoint = hit.point;
-            };
+        foreach (var hit in hits) {
+            if (hit.collider != null) {
+                IGrappleAble p = hit.collider.GetComponent<IGrappleAble>();
+                if (p != null) {
+                    var newRet = p.GetGrapplePoint(this, hit.point);
+                    if (newRet.hit) {
+                        ret = newRet;
+                        break;
+                    }
+                };
+            }
         }
         // if (Mathf.Abs(dir.magnitude) <= dist) ret.hit = true;
         
@@ -235,7 +243,6 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         Vector2 rawV = gPos - (Vector2) transform.position;
         Vector2 projection = Vector3.Project(oldV, rawV);
         Vector2 ortho = oldV - projection;
-        print("ORTHO: " + ortho);
         return direction == 0 ? oldV : ortho * _core.MoveXGrappleMult;
     }
 

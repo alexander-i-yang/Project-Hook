@@ -116,6 +116,21 @@ namespace Player
             return inputActions.Grapple.WasReleasedThisFrame();
         }
 
+        public bool GetShotgunInput()
+        {
+            return inputActions.Shotgun.IsPressed();
+        }
+
+        public bool ShotgunStarted()
+        {
+            return inputActions.Shotgun.WasPressedThisFrame();
+        }
+
+        public bool ShotgunFinished()
+        {
+            return inputActions.Shotgun.WasReleasedThisFrame();
+        }
+
         public Vector2 GetMousePos()
         {
             Vector2 mPos = Mouse.current.position.ReadValue();

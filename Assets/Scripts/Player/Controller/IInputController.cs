@@ -20,5 +20,9 @@ public interface IInputController
     public abstract bool GrappleStarted();
     public abstract bool GrappleFinished();
 
+    public abstract bool GetShotgunInput();
+    public abstract bool ShotgunStarted();
+    public abstract bool ShotgunFinished();
+
     public abstract UnityEngine.Vector2 GetMousePos();
 }
