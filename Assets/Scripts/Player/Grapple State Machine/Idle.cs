@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace Player
 {
-    public partial class AbilityStateMachine
+    public partial class GrappleStateMachine
     {
-        public class Idle : AbilityState
+        public class Idle : GrappleState
         {
             private float _grappleDuration;
             
-            public override void Enter(AbilityStateInput i) {
+            public override void Enter(GrappleStateInput i) {
                 
             }
 

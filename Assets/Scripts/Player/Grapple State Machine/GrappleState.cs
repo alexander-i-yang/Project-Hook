@@ -6,15 +6,10 @@ using UnityEngine;
 
 namespace Player
 {
-    public partial class AbilityStateMachine
+    public partial class GrappleStateMachine
     {
-        public abstract class AbilityState : State<AbilityStateMachine, AbilityState, AbilityStateInput>
+        public abstract class GrappleState : PlayerStateMachine.PlayerState<GrappleStateMachine, GrappleState, GrappleStateInput>
         {
-            protected PlayerCore core => MySM.MyCore;
-            protected PlayerSpawnManager spawnManager => core.SpawnManager;
-            protected PlayerAnimationStateManager animManager => core.AnimManager;
-            protected PlayerActor smActor => core.Actor;
-
             public virtual void GrappleStarted() {
                 
             }

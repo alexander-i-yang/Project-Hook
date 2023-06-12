@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace Player
 {
-    public partial class AbilityStateMachine
+    public partial class GrappleStateMachine
     {
-        public class Grappling : AbilityState
+        public class Grappling : GrappleState
         {
 
-            public override void Enter(AbilityStateInput i)
+            public override void Enter(GrappleStateInput i)
             {
                 // _grappleTimer = GameTimer.StartNewTimer(core.GrappleWarmTime);
                 smActor.StartGrapple(Input.currentGrapplePos);

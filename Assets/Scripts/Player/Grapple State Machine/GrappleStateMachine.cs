@@ -7,21 +7,11 @@ using UnityEngine.Events;
 
 namespace Player
 {
-    public partial class AbilityStateMachine : StateMachine<AbilityStateMachine, AbilityStateMachine.AbilityState, AbilityStateInput> {
-        private PlayerCore _core;
-        protected PlayerCore MyCore
-        {
-            get
-            {
-                if (_core == null) _core = GetComponent<PlayerCore>();
-                return _core;
-            }
-        }
-
+    public partial class GrappleStateMachine : PlayerStateMachine<GrappleStateMachine, GrappleStateMachine.GrappleState, GrappleStateInput> {
         private SpriteRenderer _spriteR;
 
         //Expose to inspector
-        public UnityEvent<AbilityStateMachine> OnAbilityStateChange;
+        public UnityEvent<GrappleStateMachine> OnAbilityStateChange;
 
         private PlayerScreenShakeActivator _screenshakeActivator;
 
@@ -35,7 +25,7 @@ namespace Player
 
         protected override void Init()
         {
-            _core = GetComponent<PlayerCore>();
+            base.Init();
             _spriteR = GetComponentInChildren<SpriteRenderer>();
             _screenshakeActivator = GetComponent<PlayerScreenShakeActivator>();
         }

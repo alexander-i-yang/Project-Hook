@@ -3,22 +3,22 @@ using UnityEngine;
 
 namespace Player
 {
-    public partial class AbilityStateMachine
+    public partial class GrappleStateMachine
     {
-        public class ExtendGrapple : AbilityState
+        public class ExtendGrapple : GrappleState
         {
             private float _grappleDuration;
             private float _prevTimeScale;
             
-            public override void Enter(AbilityStateInput i) {
+            public override void Enter(GrappleStateInput i) {
                 _grappleDuration = 0;
                 smActor.ResetMyGrappleHook();
                 _prevTimeScale = Game.TimeManager.TimeScale;
-                Game.TimeManager.TimeScale = core.GrappleBulletTimeScale;
+                Game.TimeManager.TimeScale = MyCore.GrappleBulletTimeScale;
                 Input.curGrappleExtendPos = smActor.transform.position;
             }
 
-            public override void Exit(AbilityStateInput i) {
+            public override void Exit(GrappleStateInput i) {
                 base.Exit(i);
                 Game.TimeManager.TimeScale = _prevTimeScale;
                 Input.currentGrapplePos = Input.curGrappleExtendPos;

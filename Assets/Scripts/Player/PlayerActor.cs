@@ -12,12 +12,12 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(MovementStateMachine))]
-[RequireComponent(typeof(AbilityStateMachine))]
+[RequireComponent(typeof(GrappleStateMachine))]
 [RequireComponent(typeof(PlayerCore))]
 [RequireComponent(typeof(BoxCollider2D))]
 public class PlayerActor : Actor, IFilterLoggerTarget {
     [SerializeField, AutoProperty(AutoPropertyMode.Parent)] private MovementStateMachine _stateMachine;
-    [SerializeField, AutoProperty(AutoPropertyMode.Parent)] private AbilityStateMachine _abilityStateMachine;
+    [SerializeField, AutoProperty(AutoPropertyMode.Parent)] private GrappleStateMachine _abilityStateMachine;
     [SerializeField, AutoProperty(AutoPropertyMode.Parent)] private BoxCollider2D _collider;
     [SerializeField] private SpriteRenderer sprite;
 

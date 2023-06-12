@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Player
 {   
-    public class AbilityStateInput : StateInput {
+    public class GrappleStateInput : PlayerStateInput {
         //Grapple
         public Vector2 currentGrapplePos;
         public Vector2 curGrappleExtendPos;

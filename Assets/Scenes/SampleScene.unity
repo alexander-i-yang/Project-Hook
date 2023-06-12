@@ -1128,8 +1128,8 @@ GameObject:
   - component: {fileID: 1498126419}
   - component: {fileID: 1498126418}
   - component: {fileID: 1498126425}
-  - component: {fileID: 1498126426}
   - component: {fileID: 1498126427}
+  - component: {fileID: 1498126428}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -1254,7 +1254,7 @@ MonoBehaviour:
   GravityUp: -350
   MaxFall: -350
   _stateMachine: {fileID: 1498126427}
-  _abilityStateMachine: {fileID: 1498126426}
+  _abilityStateMachine: {fileID: 1498126428}
   _collider: {fileID: 1498126422}
   sprite: {fileID: 18964407}
   OnJumpFromGround:
@@ -1361,21 +1361,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1498126426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498126416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f75f3907dfeb454ab5564720bdd3b66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnAbilityStateChange:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1498126427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1389,6 +1374,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnPlayerStateChange:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1498126428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498126416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1adbd517a5785bb4daa4ad5a76ea966e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnAbilityStateChange:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1645856332
