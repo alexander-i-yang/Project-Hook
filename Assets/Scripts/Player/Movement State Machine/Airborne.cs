@@ -3,18 +3,18 @@ using UnityEngine;
 
 namespace Player
 {
-    public partial class PlayerStateMachine
+    public partial class MovementStateMachine
     {
-        public class Airborne : PlayerState
+        public class Airborne : MovementState
         {
             private GameTimer _jumpCoyoteTimer;
 
-            public override void Enter(PlayerStateInput i)
+            public override void Enter(MovementStateInput i)
             {
                 // PlayAnimation(PlayerAnimations.JUMP_INIT);
                 if (!Input.jumpedFromGround)
                 {
-                    _jumpCoyoteTimer = GameTimer.StartNewTimer(core.JumpCoyoteTime, "Jump Coyote Timer");
+                    _jumpCoyoteTimer = GameTimer.StartNewTimer(MyCore.JumpCoyoteTime, "Jump Coyote Timer");
                 }
             }
 
@@ -65,7 +65,7 @@ namespace Player
             public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction)
             {
                 UpdateSpriteFacing(direction);
-                return p.CalcMovementX(direction, core.MaxAirAcceleration, core.AirResistance);
+                return p.CalcMovementX(direction, MyCore.MaxAirAcceleration, MyCore.AirResistance);
             }
 
             public override void FixedUpdate()

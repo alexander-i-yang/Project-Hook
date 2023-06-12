@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace Player
 {
-    public partial class PlayerStateMachine
+    public partial class MovementStateMachine
     {
-        public class DogoJumping : PlayerState
+        public class DogoJumping : MovementState
         {
             private GameTimer _dogoJumpTimer;
 
-            public override void Enter(PlayerStateInput i)
+            public override void Enter(MovementStateInput i)
             {
                 bool conserveMomentum = GameTimerWindowed.GetTimerState(i.ultraTimer) == TimerStateWindowed.InWindow;
                 MySM.StartCoroutine(DogoJumpRoutine(conserveMomentum, i.oldVelocity));
@@ -28,16 +28,16 @@ namespace Player
             private IEnumerator DogoJumpRoutine(bool conserveMomentum, double oldXV)
             {
                 Input.canJumpCut = true;
-                _dogoJumpTimer = GameTimer.StartNewTimer(core.DogoJumpTime);
+                _dogoJumpTimer = GameTimer.StartNewTimer(MyCore.DogoJumpTime);
                 int jumpDir = GetDogoJumpDirection();
                 smActor.DogoJump(jumpDir, conserveMomentum, oldXV);
                 int oldJumpDir = jumpDir;
                 
-                yield return Helper.DelayAction(core.DogoJumpGraceTime, () => {
+                yield return Helper.DelayAction(MyCore.DogoJumpGraceTime, () => {
                     jumpDir = GetDogoJumpDirection();
                     if (jumpDir != oldJumpDir)
                     {
-                        _dogoJumpTimer = GameTimer.StartNewTimer(core.DogoJumpTime);
+                        _dogoJumpTimer = GameTimer.StartNewTimer(MyCore.DogoJumpTime);
                         smActor.DogoJump(jumpDir, conserveMomentum, oldXV);
                     }
                 });
@@ -78,7 +78,7 @@ namespace Player
             public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction)
             {
                 UpdateSpriteFacing(direction);
-                return p.CalcMovementX(direction, core.MaxAirAcceleration, core.AirResistance);
+                return p.CalcMovementX(direction, MyCore.MaxAirAcceleration, MyCore.AirResistance);
             }
 
             public override void FixedUpdate()

@@ -6,30 +6,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerStateInput : StateInput {
-        //Movement
-        public int moveDirection;
-        public int facing;
-
-        //Jump
-        public GameTimer jumpBufferTimer;
-        public bool jumpedFromGround;
-        public bool canJumpCut;
-        public bool canDoubleJump;
-
-        //Dive
-        public bool canDive;
-
-        //Dogo
-        public double oldVelocity;
-        public GameTimerWindowed ultraTimer;
-
-        public Vector3 diePos;
+    public abstract class PlayerStateInput : StateInput {
         
-        public void RefillAbilities()
-        {
-            canDive = true;
-            canDoubleJump = true;
-        }
     }
 }

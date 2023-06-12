@@ -11,12 +11,12 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(PlayerStateMachine))]
+[RequireComponent(typeof(MovementStateMachine))]
 [RequireComponent(typeof(AbilityStateMachine))]
 [RequireComponent(typeof(PlayerCore))]
 [RequireComponent(typeof(BoxCollider2D))]
 public class PlayerActor : Actor, IFilterLoggerTarget {
-    [SerializeField, AutoProperty(AutoPropertyMode.Parent)] private PlayerStateMachine _stateMachine;
+    [SerializeField, AutoProperty(AutoPropertyMode.Parent)] private MovementStateMachine _stateMachine;
     [SerializeField, AutoProperty(AutoPropertyMode.Parent)] private AbilityStateMachine _abilityStateMachine;
     [SerializeField, AutoProperty(AutoPropertyMode.Parent)] private BoxCollider2D _collider;
     [SerializeField] private SpriteRenderer sprite;
@@ -59,11 +59,14 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         newV = _stateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
         newV = _abilityStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
         velocity += newV;
+    }
 
+    protected void Update() {
         if (_core.Input.ShotgunStarted()) {
-            print("Started");
+            Vector2 rawV = (Vector2) transform.position - _core.Input.GetMousePos();
+            print(rawV.normalized * 100);
+            velocity += rawV.normalized * _core.ShotgunRecoil;
         }
-        // print(newV);
     }
 
     #region Movement
@@ -303,7 +306,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
     public bool IsDiving()
     {
-        return _stateMachine.IsOnState<PlayerStateMachine.Diving>();
+        return _stateMachine.IsOnState<MovementStateMachine.Diving>();
     }
     #endregion
 
@@ -340,12 +343,12 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     
     public bool IsDogoJumping()
     {
-        return _stateMachine.IsOnState<PlayerStateMachine.DogoJumping>();
+        return _stateMachine.IsOnState<MovementStateMachine.DogoJumping>();
     }
     
     public bool IsDogoing()
     {
-        return _stateMachine.IsOnState<PlayerStateMachine.Dogoing>();
+        return _stateMachine.IsOnState<MovementStateMachine.Dogoing>();
     }
 
     public void BallBounce(Vector2 direction)

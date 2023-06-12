@@ -1122,7 +1122,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1498126424}
   - component: {fileID: 1498126417}
-  - component: {fileID: 1498126423}
   - component: {fileID: 1498126422}
   - component: {fileID: 1498126421}
   - component: {fileID: 1498126420}
@@ -1130,6 +1129,7 @@ GameObject:
   - component: {fileID: 1498126418}
   - component: {fileID: 1498126425}
   - component: {fileID: 1498126426}
+  - component: {fileID: 1498126427}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -1188,6 +1188,7 @@ MonoBehaviour:
   MaxGrappleBoostMagnitude: 100
   HitWallGrappleMult: 0.5
   MoveXGrappleMult: 0.2
+  ShotgunRecoil: 0
   RoomTransitionVCutX: 0.5
   RoomTransitionVCutY: 0.5
   DeathTime: 0
@@ -1252,7 +1253,7 @@ MonoBehaviour:
   GravityDown: -450
   GravityUp: -350
   MaxFall: -350
-  _stateMachine: {fileID: 1498126423}
+  _stateMachine: {fileID: 1498126427}
   _abilityStateMachine: {fileID: 1498126426}
   _collider: {fileID: 1498126422}
   sprite: {fileID: 18964407}
@@ -1316,22 +1317,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 8, y: 12}
   m_EdgeRadius: 0
---- !u!114 &1498126423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498126416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ac73b8be5f4a2c82f54128b3a85995, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnPlayerStateChange:
-    m_PersistentCalls:
-      m_Calls: []
-  _diveParticles: {fileID: 0}
 --- !u!4 &1498126424
 Transform:
   m_ObjectHideFlags: 0
@@ -1389,6 +1374,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnAbilityStateChange:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1498126427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498126416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d75f36f1c65140645bb438753e4a43ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPlayerStateChange:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1645856332

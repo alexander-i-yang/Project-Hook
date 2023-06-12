@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace Player
 {
-    public partial class PlayerStateMachine {
-        public class Grounded : PlayerState
+    public partial class MovementStateMachine {
+        public class Grounded : MovementState
         {
-            public override void Enter(PlayerStateInput i)
+            public override void Enter(MovementStateInput i)
             {
                 //PlayerAnim.ChangeState(PlayerAnimations.IDLE);
                 Input.jumpedFromGround = false;
@@ -37,7 +37,7 @@ namespace Player
             {
                 UpdateSpriteFacing(direction);
                 AnimSetRunning(direction != 0);
-                return p.CalcMovementX(direction, core.MaxAcceleration, core.MaxDeceleration);
+                return p.CalcMovementX(direction, MyCore.MaxAcceleration, MyCore.MaxDeceleration);
             }
 
             public override void FixedUpdate() {

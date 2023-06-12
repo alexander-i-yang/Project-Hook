@@ -1,15 +1,19 @@
-﻿using ASK.Core;
+using ASK.Core;
 using ASK.Helpers;
 using VFX;
 
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.Events;        
 
 namespace Player
 {
-    public partial class PlayerStateMachine : StateMachine<PlayerStateMachine, PlayerStateMachine.PlayerState, PlayerStateInput> {
+    public abstract partial class PlayerStateMachine<M, S, I> : StateMachine<M, S, I>
+        where M : PlayerStateMachine<M, S, I>
+        where S : PlayerStateMachine.PlayerState<M, S, I>
+        where I : PlayerStateInput
+    {
         private PlayerCore _core;
-        protected PlayerCore MyCore
+        public PlayerCore MyCore
         {
             get
             {
@@ -18,112 +22,11 @@ namespace Player
             }
         }
 
-        private SpriteRenderer _spriteR;
-
-        //Expose to inspector
-        public UnityEvent<PlayerStateMachine> OnPlayerStateChange;
-        [SerializeField] private ParticleSystem _diveParticles;
-
-        public bool UsingDrill => IsOnState<Diving>() || IsOnState<Dogoing>();
-        public bool DrillingIntoGround => IsOnState<Dogoing>();
-
-        private PlayerScreenShakeActivator _screenshakeActivator;
-
-        private bool _hasInputted;
-
         #region Overrides
-        protected override void SetInitialState() 
-        {
-            SetState<Grounded>();
-            // _playerAnim.Play(PlayerAnimations.SLEEPING);
-        }
-
         protected override void Init()
         {
             _core = GetComponent<PlayerCore>();
-            //_deathAnim = GetComponentInChildren<DeathAnimationManager>();
-            _spriteR = GetComponentInChildren<SpriteRenderer>();
-            _screenshakeActivator = GetComponent<PlayerScreenShakeActivator>();
-            
-            //_drillEmitter = GetComponentInChildren<StudioEventEmitter>();
-        }
-
-        protected void OnEnable()
-        {
-            StateTransition += InvokeUnityStateChangeEvent;
-            MyCore.SpawnManager.OnPlayerRespawn += OnRespawn;
-        }
-
-        protected void OnDisable()
-        {
-            StateTransition -= InvokeUnityStateChangeEvent;
-            MyCore.SpawnManager.OnPlayerRespawn -= OnRespawn;
-        }
-
-        private void InvokeUnityStateChangeEvent()
-        {
-            OnPlayerStateChange?.Invoke(this);
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-            
-            if (!_hasInputted && MyCore.Input.AnyKeyPressed()) _hasInputted = true;
-
-            if (MyCore.Input.JumpStarted())
-            {
-                CurrState.JumpPressed();
-            }
-
-            if (MyCore.Input.JumpFinished())
-            {
-                CurrState.JumpReleased();
-            }
-
-            if (MyCore.Input.DiveStarted())
-            {
-                CurrState.DivePressed();
-            }
-
-            if (MyCore.Input.RetryStarted())
-            {
-                MyCore.Actor.Die(v => v);
-            }
-
-            // CurrInput.moveDirection = MyCore.Input.GetMovementInput();
-        }
-
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-            GameTimer.FixedUpdate(CurrInput.jumpBufferTimer);
         }
         #endregion
-
-        public void SetGrounded(bool isGrounded, bool isMovingUp) {
-            CurrState.SetGrounded(isGrounded, isMovingUp);
-        }
-
-        public void RefreshAbilities()
-        {
-            CurrState.RefreshAbilities();
-        }
-
-        public void OnDeath()
-        {
-            // _spriteR.SetAlpha(0);
-            // CurrInput.diePos = diePos;
-            Transition<Dead>();
-        }
-
-        public void OnRespawn()
-        {
-            Transition<Airborne>();
-        }
-
-        public Vector2 ProcessMoveX(PlayerActor p, Vector2 velocity, int direction) {
-            return CurrState.MoveX(p, velocity, direction);
-        }
     }
 }

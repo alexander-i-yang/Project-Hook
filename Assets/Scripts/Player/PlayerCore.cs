@@ -12,7 +12,7 @@ namespace Player
     //L: The purpose of this class is to ensure that all player components are initialized properly, and it helps keep all of the player properties in one place.
     [RequireComponent(typeof(PlayerActor))]
     [RequireComponent(typeof(PlayerSpawnManager))]
-    [RequireComponent(typeof(PlayerStateMachine))]
+    [RequireComponent(typeof(MovementStateMachine))]
     [RequireComponent(typeof(PlayerInputController))]
     [RequireComponent(typeof(PlayerScreenShakeActivator))]
     public class PlayerCore : MonoBehaviour
@@ -124,6 +124,11 @@ namespace Player
 
         [Tooltip("Velocity multiplier for when you move left/right while grappling")]
         [SerializeField] public float MoveXGrappleMult;
+
+        [Foldout("Shotgun", true)]
+        [Tooltip("Recoil speed of shotgun")]
+        [SerializeField] public float ShotgunRecoil;
+
         
         [Foldout("RoomTransitions", true)]
         [SerializeField, Range(0f, 1f)] public float RoomTransitionVCutX = 0.5f;
@@ -134,20 +139,29 @@ namespace Player
 
         #endregion
 
-        public PlayerStateMachine StateMachine { get; private set; }
+        public MovementStateMachine StateMachine { get; private set; }
         public PlayerInputController Input { get; private set; }
         public PlayerActor Actor { get; private set; }
-        public PlayerSpawnManager SpawnManager { get; private set; }
+        
+        private PlayerSpawnManager _sm;
+        public PlayerSpawnManager SpawnManager {
+            get {
+                if (_sm == null) _sm = GetComponent<PlayerSpawnManager>();
+                return _sm;
+            }
+            private set {_sm = value;}
+        }
+        
         public PlayerScreenShakeActivator MyScreenShakeActivator { get; private set; }
         [NonSerialized] public PlayerAnimationStateManager AnimManager;
         
         private void Awake()
         {
             // InitializeSingleton(false); //L: Don't make player persistent, bc then there'll be multiple players OO
-            StateMachine = gameObject.GetComponent<PlayerStateMachine>();
+            StateMachine = gameObject.GetComponent<MovementStateMachine>();
             Input = gameObject.GetComponent<PlayerInputController>();
             Actor = gameObject.GetComponent<PlayerActor>();
-            SpawnManager = gameObject.GetComponent<PlayerSpawnManager>();
+            _sm = gameObject.GetComponent<PlayerSpawnManager>();
             MyScreenShakeActivator = gameObject.GetComponent<PlayerScreenShakeActivator>();
             AnimManager = GetComponentInChildren<PlayerAnimationStateManager>();
             

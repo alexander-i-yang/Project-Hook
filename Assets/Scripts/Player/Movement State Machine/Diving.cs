@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Player
 {
-    public partial class PlayerStateMachine
+    public partial class MovementStateMachine
     {
-        public class Diving : PlayerState
+        public class Diving : MovementState
         {
-            public override void Enter(PlayerStateInput i)
+            public override void Enter(MovementStateInput i)
             {
                 // PlayAnimation(PlayerAnimations.DIVING);
                 smActor.Dive();
@@ -20,7 +20,7 @@ namespace Player
                 MySM._screenshakeActivator.ScreenShakeContinuousOn(MySM._screenshakeActivator.DiveData);
             }
 
-            public override void Exit(PlayerStateInput i)
+            public override void Exit(MovementStateInput i)
             {
                 MySM._screenshakeActivator.ScreenShakeContinuousOff(MySM._screenshakeActivator.DiveData);
                 // var divePEmission = MySM._diveParticles.emission;
@@ -56,7 +56,7 @@ namespace Player
             public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction)
             {
                 UpdateSpriteFacing(direction);
-                return p.CalcMovementX(direction, core.MaxAirAcceleration, core.AirResistance);
+                return p.CalcMovementX(direction, MyCore.MaxAirAcceleration, MyCore.AirResistance);
             }
         }
     }

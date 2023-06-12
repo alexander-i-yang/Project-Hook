@@ -3,19 +3,19 @@ using UnityEngine;
 
 namespace Player
 {
-    public partial class PlayerStateMachine
+    public partial class MovementStateMachine
     {
-        public class Dogoing : PlayerState
+        public class Dogoing : MovementState
         {
-            public override void Enter(PlayerStateInput i)
+            public override void Enter(MovementStateInput i)
             {
                 // PlayAnimation(PlayerAnimations.DOGOING);
                 //MySM._drillEmitter.SetParameter("PlayerGrounded", 1);
                 //MySM._drillEmitter.Play();
                 i.oldVelocity = smActor.Dogo();
                 i.ultraTimer = GameTimerWindowed.StartNewWindowedTimer(
-                    core.UltraTimeDelay, 
-                    core.UltraTimeWindow
+                    MyCore.UltraTimeDelay, 
+                    MyCore.UltraTimeWindow
                 );
             }
 
@@ -35,13 +35,13 @@ namespace Player
             public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction)
             {
                 UpdateSpriteFacing(direction);
-                return p.CalcMovementX(direction, core.MaxAirAcceleration, core.AirResistance);
+                return p.CalcMovementX(direction, MyCore.MaxAirAcceleration, MyCore.AirResistance);
             }
 
             public override void Update()
             {
                 base.Update();
-                if (core.UltraHelper)
+                if (MyCore.UltraHelper)
                 {
                     if (GameTimerWindowed.GetTimerState(Input.ultraTimer) == TimerStateWindowed.InWindow)
                     {
@@ -54,11 +54,11 @@ namespace Player
                 }
             }
             
-            public override void Exit(PlayerStateInput playerStateInput)
+            public override void Exit(MovementStateInput playerStateInput)
             {
                 base.Exit(playerStateInput);
                 //MySM._drillEmitter.Stop();
-                if (core.UltraHelper)
+                if (MyCore.UltraHelper)
                 {
                     MySM._spriteR.color = Color.white;
                 }
