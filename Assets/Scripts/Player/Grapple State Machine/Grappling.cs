@@ -25,6 +25,11 @@ namespace Player
                 MySM.Transition<Idle>();
             }
 
+            public override Vector2 ProcessCollideHorizontal(Vector2 oldV, Vector2 newV) {
+                MySM.Transition<Idle>();
+                return smActor.CollideHorizontalGrapple();
+            }
+
             public override void CollideVertical() {
                 smActor.CollideVerticalGrapple();
                 MySM.Transition<Idle>();

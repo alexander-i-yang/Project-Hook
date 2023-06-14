@@ -15,8 +15,6 @@ namespace Player
 
         private PlayerScreenShakeActivator _screenshakeActivator;
 
-        private bool _hasInputted;
-
         #region Overrides
         protected override void SetInitialState() 
         {
@@ -76,6 +74,8 @@ namespace Player
         public Vector2 ProcessMoveX(PlayerActor p, Vector2 velocity, int direction) {
             return CurrState.MoveX(p, velocity, direction);
         }
+
+        public virtual Vector2 ProcessCollideHorizontal(Vector2 oldV, Vector2 newV) => CurrState.ProcessCollideHorizontal(oldV, newV);
 
         #endregion
 

@@ -13,6 +13,8 @@ namespace Player
     [RequireComponent(typeof(PlayerActor))]
     [RequireComponent(typeof(PlayerSpawnManager))]
     [RequireComponent(typeof(MovementStateMachine))]
+    [RequireComponent(typeof(GrappleStateMachine))]
+    [RequireComponent(typeof(ParryStateMachine))]
     [RequireComponent(typeof(PlayerInputController))]
     [RequireComponent(typeof(PlayerScreenShakeActivator))]
     public class PlayerCore : MonoBehaviour
@@ -139,7 +141,9 @@ namespace Player
 
         #endregion
 
-        public MovementStateMachine StateMachine { get; private set; }
+        public MovementStateMachine MovementStateMachine { get; private set; }
+        public GrappleStateMachine GrappleStateMachine { get; private set; }
+        public ParryStateMachine ParryStateMachine { get; private set; }
         public PlayerInputController Input { get; private set; }
         public PlayerActor Actor { get; private set; }
         
@@ -158,7 +162,9 @@ namespace Player
         private void Awake()
         {
             // InitializeSingleton(false); //L: Don't make player persistent, bc then there'll be multiple players OO
-            StateMachine = gameObject.GetComponent<MovementStateMachine>();
+            MovementStateMachine = gameObject.GetComponent<MovementStateMachine>();
+            GrappleStateMachine = gameObject.GetComponent<GrappleStateMachine>();
+            ParryStateMachine = gameObject.GetComponent<ParryStateMachine>();
             Input = gameObject.GetComponent<PlayerInputController>();
             Actor = gameObject.GetComponent<PlayerActor>();
             _sm = gameObject.GetComponent<PlayerSpawnManager>();

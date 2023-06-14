@@ -1,4 +1,4 @@
-﻿using ASK.Core;
+using ASK.Core;
 using ASK.Helpers;
 
 using UnityEditor;

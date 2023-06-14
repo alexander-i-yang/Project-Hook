@@ -1130,6 +1130,7 @@ GameObject:
   - component: {fileID: 1498126425}
   - component: {fileID: 1498126427}
   - component: {fileID: 1498126428}
+  - component: {fileID: 1498126429}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -1253,8 +1254,6 @@ MonoBehaviour:
   GravityDown: -450
   GravityUp: -350
   MaxFall: -350
-  _stateMachine: {fileID: 1498126427}
-  _abilityStateMachine: {fileID: 1498126428}
   _collider: {fileID: 1498126422}
   sprite: {fileID: 18964407}
   OnJumpFromGround:
@@ -1386,6 +1385,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1adbd517a5785bb4daa4ad5a76ea966e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnAbilityStateChange:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1498126429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498126416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d16b30eb4068ce34fa8c207d6ed28b11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OnAbilityStateChange:
@@ -1811,11 +1825,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5643374729468623732, guid: e633866161cb22e4196fce4365240b0a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 142
+      value: 136
       objectReference: {fileID: 0}
     - target: {fileID: 5643374729468623732, guid: e633866161cb22e4196fce4365240b0a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -137
+      value: -136
       objectReference: {fileID: 0}
     - target: {fileID: 5643374729468623732, guid: e633866161cb22e4196fce4365240b0a, type: 3}
       propertyPath: m_LocalPosition.z

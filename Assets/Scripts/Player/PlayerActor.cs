@@ -11,13 +11,10 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(MovementStateMachine))]
-[RequireComponent(typeof(GrappleStateMachine))]
-[RequireComponent(typeof(PlayerCore))]
 [RequireComponent(typeof(BoxCollider2D))]
 public class PlayerActor : Actor, IFilterLoggerTarget {
-    [SerializeField, AutoProperty(AutoPropertyMode.Parent)] private MovementStateMachine _stateMachine;
-    [SerializeField, AutoProperty(AutoPropertyMode.Parent)] private GrappleStateMachine _abilityStateMachine;
+    private MovementStateMachine _movementStateMachine => _core.MovementStateMachine;
+    private GrappleStateMachine _grappleStateMachine => _core.GrappleStateMachine;
     [SerializeField, AutoProperty(AutoPropertyMode.Parent)] private BoxCollider2D _collider;
     [SerializeField] private SpriteRenderer sprite;
 
@@ -56,17 +53,9 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         base.FixedUpdate();
 
         Vector2 newV = Vector2.zero;
-        newV = _stateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
-        newV = _abilityStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
+        newV = _movementStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
+        newV = _grappleStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
         velocity += newV;
-    }
-
-    protected void Update() {
-        if (_core.Input.ShotgunStarted()) {
-            Vector2 rawV = (Vector2) transform.position - _core.Input.GetMousePos();
-            print(rawV.normalized * 100);
-            velocity += rawV.normalized * _core.ShotgunRecoil;
-        }
     }
 
     #region Movement
@@ -97,7 +86,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     public void Land()
     {
         OnLand?.Invoke(transform.position + Vector3.down * 5.5f);
-        _stateMachine.SetGrounded(true, IsMovingUp);
+        _movementStateMachine.SetGrounded(true, IsMovingUp);
         velocityY = 0;
     }
     #endregion
@@ -306,7 +295,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
     public bool IsDiving()
     {
-        return _stateMachine.IsOnState<MovementStateMachine.Diving>();
+        return _movementStateMachine.IsOnState<MovementStateMachine.Diving>();
     }
     #endregion
 
@@ -343,12 +332,12 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     
     public bool IsDogoJumping()
     {
-        return _stateMachine.IsOnState<MovementStateMachine.DogoJumping>();
+        return _movementStateMachine.IsOnState<MovementStateMachine.DogoJumping>();
     }
     
     public bool IsDogoing()
     {
-        return _stateMachine.IsOnState<MovementStateMachine.Dogoing>();
+        return _movementStateMachine.IsOnState<MovementStateMachine.Dogoing>();
     }
 
     public void BallBounce(Vector2 direction)
@@ -363,14 +352,14 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     #region  Death
 
     public bool IsDrilling() {
-        return _stateMachine.UsingDrill;
+        return _movementStateMachine.UsingDrill;
     }
 
     public void Die(Func<Vector2, Vector2> recoilFunc = null)
     {
         if (recoilFunc == null) recoilFunc = v => v;
         _deathRecoilFunc = recoilFunc;
-        _stateMachine.OnDeath();
+        _movementStateMachine.OnDeath();
         // Game.Instance.ScreenShakeManagerInstance.Screenshake(
         //     _core.SpawnManager.CurrentRoom.GetComponentInChildren<CinemachineVirtualCamera>(),
         //     10,
@@ -406,10 +395,18 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         bool col = p.PlayerCollide(this, direction);
         if (col) {
             if (direction.x != 0) {
-                _abilityStateMachine.CollideHorizontal();
+                
+                Vector2 newV = Vector2.zero;
+                Vector2 oldV = velocity;
                 HitWall((int)direction.x);
+                // newV = _movementStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
+                newV = _grappleStateMachine.ProcessCollideHorizontal(oldV, newV);
+                newV = _core.ParryStateMachine.ProcessCollideHorizontal(oldV, newV);
+                velocity += newV;
+                // print(oldV + " " + newV + " " + velocity);
+                
             } else if (direction.y != 0) {
-                _abilityStateMachine.CollideVertical();
+                _grappleStateMachine.CollideVertical();
                 if (direction.y > 0) {
                     BonkHead();
                 }
@@ -479,9 +476,9 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         _hitWallCoroutineRunning = false;
     }
 
-    public void CollideHorizontalGrapple() {
+    public Vector2 CollideHorizontalGrapple() {
         // velocity = Vector2.up * velocity.magnitude;
-        velocity += new Vector2(0, velocityX * _core.HitWallGrappleMult);
+        return new Vector2(0, Math.Abs(velocityX * _core.HitWallGrappleMult));
     }
 
     public void CollideVerticalGrapple() {
