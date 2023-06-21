@@ -127,9 +127,15 @@ namespace Player
         [Tooltip("Velocity multiplier for when you move left/right while grappling")]
         [SerializeField] public float MoveXGrappleMult;
 
-        [Foldout("Shotgun", true)]
-        [Tooltip("Recoil speed of shotgun")]
-        [SerializeField] public float ShotgunRecoil;
+        [Foldout("Parry", true)]
+        [Tooltip("Velocity mult after parrying a wall")]
+        [SerializeField] public float ParryVMult;
+
+        [Tooltip("Time window before hitting a wall")]
+        [SerializeField] public float ParryPreCollisionWindow;
+
+        [Tooltip("Time window afteri hitting a wall")]
+        [SerializeField] public float ParryPostCollisionWindow;
 
         
         [Foldout("RoomTransitions", true)]

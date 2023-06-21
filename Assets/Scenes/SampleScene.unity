@@ -1189,7 +1189,9 @@ MonoBehaviour:
   MaxGrappleBoostMagnitude: 100
   HitWallGrappleMult: 0.5
   MoveXGrappleMult: 0.2
-  ShotgunRecoil: 0
+  ParryVMult: 1
+  ParryPreCollisionWindow: 0.25
+  ParryPostCollisionWindow: 0.125
   RoomTransitionVCutX: 0.5
   RoomTransitionVCutY: 0.5
   DeathTime: 0

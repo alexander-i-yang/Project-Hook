@@ -398,13 +398,10 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
                 
                 Vector2 newV = Vector2.zero;
                 Vector2 oldV = velocity;
-                HitWall((int)direction.x);
-                // newV = _movementStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
+                newV = HitWall((int)direction.x);
                 newV = _grappleStateMachine.ProcessCollideHorizontal(oldV, newV);
                 newV = _core.ParryStateMachine.ProcessCollideHorizontal(oldV, newV);
                 velocity += newV;
-                // print(oldV + " " + newV + " " + velocity);
-                
             } else if (direction.y != 0) {
                 _grappleStateMachine.CollideVertical();
                 if (direction.y > 0) {
@@ -417,6 +414,13 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         }
 
         return col;
+    }
+
+    //TODO: figure out what to do with this
+    public void Parry(Vector2 oldV) {
+        float prevV = velocity.x;
+        velocity = Vector2.left * oldV.x * _core.ParryVMult;
+        print(prevV + " " + oldV.x + " " + velocity.x);
     }
 
     public override bool PlayerCollide(PlayerActor p, Vector2 direction)
@@ -444,14 +448,14 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         velocityY = Math.Min(_core.BonkHeadV, velocityY);
     }
 
-    private void HitWall(int direction) {
+    private Vector2 HitWall(int direction) {
         // _abilityStateMachine.HitWall();
         if (!_hitWallCoroutineRunning) {
             _hitWallPrevSpeed = velocityX;
-            velocityX = 0;
             _hitWallCoroutineRunning = true;
             StartCoroutine(HitWallLogic(direction));
         }
+        return Vector2.left * velocityX;
     }
 
     //Todo: change to fixedUpdate GameTimer
