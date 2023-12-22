@@ -37,59 +37,17 @@ public class URPCallbackExample : MonoBehaviour
     {
         if (camera == cam)
         {
-            Vector2 mainPos = cams.transform.position;
+            Vector2 mainPos = camera.transform.position;
             
-            // if (!pixelate)
-            // {
-            //     layer.transform.position = new Vector3(500, 0, layer.transform.position.z) - (Vector3) Vector2.Scale(mainPos, parallaxScale);
-            //     return;
-            // }
-            //
-            // layer.transform.position = new Vector3(0, 0, layer.transform.position.z);
-            
-            float oldCamZ = camera.transform.localPosition.z;
             float quadOldZ = quad.localPosition.z;
-
             mainPos += Vector2.Scale(mainPos, parallaxScale-Vector2.one);
             
             Vector2 roundedPos = RoundVec(mainPos);
             Vector2 newPos = roundedPos - mainPos;
-
-            mainPos += newPos;
-            
-            Vector3 ret = mainPos;
-            ret.z = oldCamZ;
-            camera.transform.position = ret;
-            // FindObjectOfType<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>()
-                // .m_FollowOffset = (Vector2)ret;
             
             Vector3 quadPos = newPos;
             quadPos.z = quadOldZ;
             quad.localPosition = quadPos;
-            
-            // float oldCamZ = camera.transform.localPosition.z;
-            // float quadOldZ = quad.localPosition.z;
-            //
-            // Vector2 mainPos = cams.transform.position;
-            //
-            // mainPos += Vector2.Scale(mainPos, parallaxScale);
-            // // layer.transform.position = mainPos;
-            //
-            // // mainPos = cams.transform.position;
-            // Vector2 roundedPos = RoundVec(mainPos);
-            // Vector2 newPos = roundedPos - mainPos;
-            //
-            // mainPos += newPos;
-            //
-            // // Vector3 ret = mainPos;
-            // Vector3 ret = newPos;
-            // ret.z = oldCamZ;
-            // // camera.transform.position = ret;
-            // camera.transform.localPosition = ret;
-            //
-            // Vector3 quadPos = newPos;
-            // quadPos.z = quadOldZ;
-            // quad.localPosition = quadPos;
         }
     }
     
