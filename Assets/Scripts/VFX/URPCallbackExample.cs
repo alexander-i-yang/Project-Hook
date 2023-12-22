@@ -37,13 +37,26 @@ public class URPCallbackExample : MonoBehaviour
     {
         if (camera == cam)
         {
-            Vector2 mainPos = camera.transform.position;
+            var vcam = FindObjectOfType<CinemachineVirtualCamera>();
+            vcam.transform.localPosition = RoundVec(vcam.transform.localPosition * 1000) / 1000;
+            Vector2 mainPos = vcam.transform.localPosition;
             
             float quadOldZ = quad.localPosition.z;
+            float camOldZ = vcam.transform.localPosition.z;
             mainPos += Vector2.Scale(mainPos, parallaxScale-Vector2.one);
             
             Vector2 roundedPos = RoundVec(mainPos);
+            print("camPos " + camera.transform.position);
+            print("mainPos " + mainPos);
+            print("roundedPos " + roundedPos);
             Vector2 newPos = roundedPos - mainPos;
+            newPos = RoundVec(newPos * 1000) / 1000;
+            print("offset " + newPos);
+
+            // vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = newPos;
+            Vector3 ret = roundedPos;
+            ret.z = camOldZ;
+            vcam.transform.position = ret;
             
             Vector3 quadPos = newPos;
             quadPos.z = quadOldZ;

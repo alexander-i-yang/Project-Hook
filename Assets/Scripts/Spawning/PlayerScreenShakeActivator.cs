@@ -1,4 +1,6 @@
-﻿using ASK.ScreenShake;
+﻿using ASK.Helpers;
+using ASK.ScreenShake;
+using Cinemachine;
 using Player;
 using UnityEditor;
 using UnityEngine;
@@ -6,11 +8,12 @@ using UnityEngine;
 namespace Spawning
 {
     [RequireComponent(typeof(PlayerSpawnManager))]
+    [RequireComponent(typeof(PlayerDeathManager))]
     [RequireComponent(typeof(PlayerCore))]
     public class PlayerScreenShakeActivator : ScreenShakeActivator
     {
         private PlayerSpawnManager _spawnManager;
-        private PlayerCore _core;
+        private PlayerDeathManager _deathManager;
         
         public ScreenShakeDataBurst DeathData;
         public ScreenShakeDataContinuous DiveData;
@@ -20,23 +23,38 @@ namespace Spawning
         private void Awake()
         {
             _spawnManager = GetComponent<PlayerSpawnManager>();
+            _deathManager = GetComponent<PlayerDeathManager>();
         }
 
         private void OnEnable()
         {
             // Room.RoomTransitionEvent += SwitchRooms;
-            _core.DeathManager.OnDeath += DeathScreenShake;
+            _deathManager.OnDeath += DeathScreenShake;
         }
         
         private void OnDisable()
         {
             // Room.RoomTransitionEvent -= SwitchRooms;
-            _core.DeathManager.OnDeath -= DeathScreenShake;
+            _deathManager.OnDeath -= DeathScreenShake;
         }
 
+        private Coroutine _shakeRoutine;
         public void ScreenShakeBurst(ScreenShakeDataBurst d)
         {
-            base.ScreenShakeBurst(_spawnManager.CurrentVCam, d);
+            // base.ScreenShakeBurst(_spawnManager.CurrentVCam, d);
+            var c = _spawnManager.CurrentVCam.GetComponentInChildren<CinemachineBasicMultiChannelPerlin>();
+            c.m_NoiseProfile = d.NoiseProfile;
+            print(c.m_NoiseProfile);
+
+            if (_shakeRoutine != null)
+            {
+                StopCoroutine(_shakeRoutine);
+            }
+        
+            _shakeRoutine = StartCoroutine(Helper.DelayAction(d.Time, () =>
+            {
+                c.m_NoiseProfile = null;
+            }));
         }
         
         public void ScreenShakeContinuousOn(ScreenShakeDataContinuous d)
