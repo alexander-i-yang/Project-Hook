@@ -1,6 +1,5 @@
 using ASK.Core;
 using ASK.Helpers;
-using VFX;
 
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,8 +12,6 @@ namespace Player
         //Expose to inspector
         public UnityEvent<GrappleStateMachine> OnAbilityStateChange;
 
-        private PlayerScreenShakeActivator _screenshakeActivator;
-
         #region Overrides
         protected override void SetInitialState() 
         {
@@ -25,7 +22,6 @@ namespace Player
         {
             base.Init();
             _spriteR = GetComponentInChildren<SpriteRenderer>();
-            _screenshakeActivator = GetComponent<PlayerScreenShakeActivator>();
         }
 
         protected void OnEnable()

@@ -1,6 +1,7 @@
 using ASK.Core;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEditor;
 
 namespace Player
 {
@@ -130,11 +131,27 @@ namespace Player
         {
             return inputActions.Shotgun.WasReleasedThisFrame();
         }
+        
+        public bool GetParryInput()
+        {
+            return inputActions.Parry.IsPressed();
+        }
+
+        public bool ParryStarted()
+        {
+            return inputActions.Parry.WasPressedThisFrame();
+        }
+
+        public bool ParryFinished()
+        {
+            return inputActions.Parry.WasReleasedThisFrame();
+        }
 
         public Vector2 GetMousePos()
         {
             Vector2 mPos = Mouse.current.position.ReadValue();
             return Camera.main.ScreenToWorldPoint(mPos);
+            // return GameObject.Find("FinalCamera").ScreenToWorldPoint(mPos);
         }
 
         public void AddToPauseAction(System.Action action)

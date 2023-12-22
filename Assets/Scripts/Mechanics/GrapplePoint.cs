@@ -8,14 +8,14 @@ namespace Mechanics {
             return false;
         }
 
-        public override bool PlayerCollide(PlayerActor p, Vector2 direction) {
+        public override bool PlayerCollide(Actor p, Vector2 direction) {
             // if (direction.y > 0) {
             //     p.BonkHead();
             // }
             return false;
         }
 
-        public (Vector2 curPoint, bool hit) GetGrapplePoint(PlayerActor p, Vector2 rayCastHit) {
+        public (Vector2 curPoint, bool hit) GetGrapplePoint(Actor p, Vector2 rayCastHit) {
             bool pOverlap = false;
             
             // Collider2D pCollider = p.GetComponent<Collider2D>();

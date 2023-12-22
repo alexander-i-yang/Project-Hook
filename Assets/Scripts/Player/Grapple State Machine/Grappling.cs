@@ -40,6 +40,7 @@ namespace Player
                 base.GrappleFinished();
                 smActor.GrappleBoost(Input.currentGrapplePos);
                 MySM.Transition<Idle>();
+                MyCore.MovementStateMachine.RefreshAbilities();
             }
 
             public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction) {

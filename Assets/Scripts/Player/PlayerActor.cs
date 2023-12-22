@@ -347,27 +347,25 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
             velocityX = Math.Sign(direction.x) * -150;
         }
     }
+    
+    public bool IsDrilling() {
+        return _movementStateMachine.UsingDrill;
+    }
     #endregion
 
     #region  Death
 
-    public bool IsDrilling() {
-        return _movementStateMachine.UsingDrill;
-    }
-
     public void Die(Func<Vector2, Vector2> recoilFunc = null)
     {
-        if (recoilFunc == null) recoilFunc = v => v;
+        if (recoilFunc == null) recoilFunc = v => Vector2.zero;
         _deathRecoilFunc = recoilFunc;
-        _movementStateMachine.OnDeath();
+        DeathRecoil();
+        _core.DeathManager.Die();
         // Game.Instance.ScreenShakeManagerInstance.Screenshake(
         //     _core.SpawnManager.CurrentRoom.GetComponentInChildren<CinemachineVirtualCamera>(),
         //     10,
         //     1
         //     );
-        _core.MyScreenShakeActivator.ScreenShakeBurst(
-            _core.MyScreenShakeActivator.DeathData
-        );
     }
 
     public void DeathRecoil()
@@ -423,7 +421,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         print(prevV + " " + oldV.x + " " + velocity.x);
     }
 
-    public override bool PlayerCollide(PlayerActor p, Vector2 direction)
+    public override bool PlayerCollide(Actor p, Vector2 direction)
     {
         return false;     
     }

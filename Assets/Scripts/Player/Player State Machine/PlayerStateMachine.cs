@@ -1,6 +1,5 @@
 using ASK.Core;
 using ASK.Helpers;
-using VFX;
 
 using UnityEngine;
 using UnityEngine.Events;        

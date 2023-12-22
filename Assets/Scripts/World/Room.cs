@@ -1,31 +1,24 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Cinemachine;
 
 using ASK.Helpers;
-using A2DK.Phys;
-using Player;
-using UnityEditor;
-using UnityEngine.Serialization;
-
 
 namespace World {
-    public class Room : MonoBehaviour, IFilterLoggerTarget {
+    public class Room : MonoBehaviour {
         private Collider2D _roomCollider;
         public CinemachineVirtualCamera VCam { get; private set; }
-        private PlayerSpawnManager _player;
         private CinemachineBrain _cmBrain;
 
         public bool StopTime = true;
-
-        private Spawn[] _spawns;
-        // private IResettable[] _resettables = new IResettable[0];
+        
         private GameObject _grid;
-        public Spawn[] Spawns => _spawns;
         private static Coroutine _transitionRoutine;
+
+        //Invoked whenever child objects change. Mostly used for player spawns
+        public event Action RecalculateChildren;
 
         private int _numEnables;
         [SerializeField] private int _maxEnables = 4;
@@ -39,15 +32,12 @@ namespace World {
         private void Awake()
         {
             _roomCollider = GetComponent<Collider2D>();
-            _player = FindObjectOfType<PlayerSpawnManager>(true);
             _cmBrain = FindObjectOfType<CinemachineBrain>(true);
 
             // _endCutsceneManager = FindObjectOfType<EndCutsceneManager>();
+            RecalculateChildren?.Invoke();
 
             VCam = GetComponentInChildren<CinemachineVirtualCamera>(true);
-            VCam.Follow = _player.transform;
-            
-            FetchMechanics();
             _grid = transform.GetChild(0).gameObject;
         }
 
@@ -64,36 +54,6 @@ namespace World {
         void TurnOffStopTime()
         {
             StopTime = false;
-        }
-
-        void FetchMechanics()
-        {
-            // _resettables = GetComponentsInChildren<IResettable>(includeInactive:true);
-            _spawns = GetComponentsInChildren<Spawn>(includeInactive:true);
-        }
-
-        void Start()
-        {
-            if (this == _player.CurrentRoom)
-            {
-                //Don't disable current room
-                /*foreach (var r in AdjacentRooms)
-                {
-                    r.RoomSetEnable(true);
-                }*/
-            }
-            else
-            {
-                SetRoomGridEnabled(false);
-            }
-        }
-        private void OnValidate()
-        {
-            Spawn spawn = GetComponentInChildren<Spawn>();
-            if (spawn == null)
-            {
-                FilterLogger.LogWarning(this, $"The room {gameObject.name} does not have a spawn point. Every room should have at least one spawn point.");
-            }
         }
 
         /*private void Update()
@@ -118,23 +78,10 @@ namespace World {
             return bounds;
         }
 
-        private void OnTriggerStay2D(Collider2D other)
-        {
-            bool isPlayer = other.gameObject == _player.gameObject;
-            bool needTransition = _player.CurrentRoom != this;
-            if (isPlayer && needTransition) 
-            {
-                /*
-                 * This check ensures that the player can only ever be in one room at a time.
-                 * It says that not only does the player need to collide, but the entire bounding box needs to be in the room.
-                 */
-                bool boundsCheck = _roomCollider.bounds.Contains(other.bounds.min) && _roomCollider.bounds.Contains(other.bounds.max);
-                if (boundsCheck)
-                {
-                    TransitionToThisRoom();
-                }
-            }
-        }
+        /**
+         * Does this room fully contain the bounds of other?
+         */
+        public bool ContainsCollider(Collider2D other) => _roomCollider.bounds.Contains(other.bounds.min) && _roomCollider.bounds.Contains(other.bounds.max);
 
         public float GetRoomSize()
         {
@@ -146,7 +93,7 @@ namespace World {
         {
             SetRoomGridEnabled(true);
             Reset();
-            FilterLogger.Log(this, $"Transitioned to room: {gameObject.name}");
+            // FilterLogger.Log(this, $"Transitioned to room: {gameObject.name}");
             if (_transitionRoutine != null)
             {
                 StopCoroutine(_transitionRoutine);
@@ -209,7 +156,7 @@ namespace World {
             gridObj.transform.parent = null; //This is so the mechanics in _grid aren't counted in FetchMechanics.
             Destroy(gridObj);
             _grid = newGrid;
-            FetchMechanics();
+            RecalculateChildren?.Invoke();
         }
 
         public void RoomSetEnable(bool enable)

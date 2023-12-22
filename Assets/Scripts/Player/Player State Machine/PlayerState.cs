@@ -14,7 +14,6 @@ namespace Player
             where I : PlayerStateInput 
         {
             protected PlayerCore MyCore => MySM.MyCore;
-            protected PlayerSpawnManager spawnManager => MyCore.SpawnManager;
             protected PlayerAnimationStateManager animManager => MyCore.AnimManager;
             protected PlayerActor smActor => MyCore.Actor;
         }

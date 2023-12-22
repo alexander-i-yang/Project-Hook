@@ -16,13 +16,10 @@ namespace Player
                 
                 // var divePEmission = MySM._diveParticles.emission;
                 // divePEmission.enabled = true;
-                
-                MySM._screenshakeActivator.ScreenShakeContinuousOn(MySM._screenshakeActivator.DiveData);
             }
 
             public override void Exit(MovementStateInput i)
             {
-                MySM._screenshakeActivator.ScreenShakeContinuousOff(MySM._screenshakeActivator.DiveData);
                 // var divePEmission = MySM._diveParticles.emission;
                 // divePEmission.enabled = false;
                 base.Exit(i);

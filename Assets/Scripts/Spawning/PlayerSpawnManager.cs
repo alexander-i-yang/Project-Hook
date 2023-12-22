@@ -6,16 +6,19 @@ using UnityEngine;
 using ASK.Helpers;
 using World;
 using System;
-using MyBox;
 using System.Linq;
 using Cinemachine;
-using UnityEditor;
+using MyBox;
+using Player;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 
-namespace Player
+namespace Spawning
 {
+    [RequireComponent(typeof(PlayerCore))]
     public class PlayerSpawnManager : MonoBehaviour, IFilterLoggerTarget
     {
         private Room _currentRoom;
+
         private Room _prevRoom;
         private Spawn _currentSpawnPoint;
         public Room CurrentRoom => _currentRoom;
@@ -31,8 +34,8 @@ namespace Player
         [SerializeField] private float spawnAnimationTime = .5f;
         [SerializeField] private float roomSizeMaxReverb;
 
-        public event Action OnPlayerRespawn;
-
+        private PlayerCore _core;
+        
         // public event Action OnRoomTransition;
 
         public Spawn CurrentSpawnPoint
@@ -56,14 +59,15 @@ namespace Player
 
         private void OnEnable()
         {
+            _core = GetComponent<PlayerCore>();
             Room.RoomTransitionEvent += OnRoomTransition;
-            OnPlayerRespawn += ShaderRespawn;
+            _core.DeathManager.OnPlayerRespawn += Respawn;
         }
 
         private void OnDisable()
         {
             Room.RoomTransitionEvent -= OnRoomTransition;
-            OnPlayerRespawn -= ShaderRespawn;
+            _core.DeathManager.OnPlayerRespawn -= Respawn;
         }
 
         public void Respawn()
@@ -73,8 +77,6 @@ namespace Player
                 _currentRoom.Reset();
                 transform.position = CurrentSpawnPoint.transform.position;
             }
-            
-            OnPlayerRespawn?.Invoke();
         }
 
         private void OnRoomTransition(Room roomEntering)
@@ -86,6 +88,7 @@ namespace Player
             }
 
             _currentRoom = roomEntering;
+            _currentRoom.VCam.Follow = transform;
             _currentSpawnPoint = FindClosestSpawnPoint();
 
             //Set Global Reverb Amount for FMOD Events.
@@ -143,7 +146,7 @@ namespace Player
             }
             else
             {
-                closest = FindClosestSpawnPoint(CurrentRoom.Spawns);
+                closest = FindClosestSpawnPoint(CurrentRoom.GetComponentsInChildren<Spawn>());
             }
 
             if (closest == null)
@@ -158,7 +161,7 @@ namespace Player
             float closestDist = float.MaxValue;
             Spawn closest = null;
             FilterLogger.Log(this, $"CurrentRoom: {CurrentRoom}");
-            FilterLogger.Log(this, $"Spawns: {CurrentRoom.Spawns.Length}");
+            // FilterLogger.Log(this, $"Spawns: {CurrentRoom.Spawns.Length}");
             foreach (Spawn spawn in spawns)
             {
                 FilterLogger.Log(this, $"{spawn}");

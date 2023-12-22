@@ -4,19 +4,17 @@ using UnityEngine;
 
 using MyBox;
 
-using Mechanics;
 using UnityEngine.Serialization;
 
 namespace Player
 {
     //L: The purpose of this class is to ensure that all player components are initialized properly, and it helps keep all of the player properties in one place.
     [RequireComponent(typeof(PlayerActor))]
-    [RequireComponent(typeof(PlayerSpawnManager))]
     [RequireComponent(typeof(MovementStateMachine))]
     [RequireComponent(typeof(GrappleStateMachine))]
     [RequireComponent(typeof(ParryStateMachine))]
     [RequireComponent(typeof(PlayerInputController))]
-    [RequireComponent(typeof(PlayerScreenShakeActivator))]
+    [RequireComponent(typeof(PlayerDeathManager))]
     public class PlayerCore : MonoBehaviour
     {
         public GrappleHook MyGrappleHook;
@@ -153,16 +151,8 @@ namespace Player
         public PlayerInputController Input { get; private set; }
         public PlayerActor Actor { get; private set; }
         
-        private PlayerSpawnManager _sm;
-        public PlayerSpawnManager SpawnManager {
-            get {
-                if (_sm == null) _sm = GetComponent<PlayerSpawnManager>();
-                return _sm;
-            }
-            private set {_sm = value;}
-        }
+        public PlayerDeathManager DeathManager { get; private set; }
         
-        public PlayerScreenShakeActivator MyScreenShakeActivator { get; private set; }
         [NonSerialized] public PlayerAnimationStateManager AnimManager;
         
         private void Awake()
@@ -173,9 +163,8 @@ namespace Player
             ParryStateMachine = gameObject.GetComponent<ParryStateMachine>();
             Input = gameObject.GetComponent<PlayerInputController>();
             Actor = gameObject.GetComponent<PlayerActor>();
-            _sm = gameObject.GetComponent<PlayerSpawnManager>();
-            MyScreenShakeActivator = gameObject.GetComponent<PlayerScreenShakeActivator>();
             AnimManager = GetComponentInChildren<PlayerAnimationStateManager>();
+            DeathManager = GetComponentInChildren<PlayerDeathManager>();
             
             if (MyGrappleHook == null) throw new ConstraintException("PlayerCore must have GrappleHook");
             if (AnimManager == null) throw new ConstraintException("PlayerCore must have AnimManager");

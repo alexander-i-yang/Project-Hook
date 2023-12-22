@@ -208,7 +208,7 @@ namespace A2DK.Phys {
             return Collidable();
         }
 
-        public virtual bool PlayerCollide(PlayerActor p, Vector2 direction) {
+        public virtual bool PlayerCollide(Actor p, Vector2 direction) {
             return OnCollide(p, direction);
         }
 

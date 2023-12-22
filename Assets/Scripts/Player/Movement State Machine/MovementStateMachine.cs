@@ -1,6 +1,5 @@
 using ASK.Core;
 using ASK.Helpers;
-using VFX;
 
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,8 +15,6 @@ namespace Player
         public bool UsingDrill => IsOnState<Diving>() || IsOnState<Dogoing>();
         public bool DrillingIntoGround => IsOnState<Dogoing>();
 
-        private PlayerScreenShakeActivator _screenshakeActivator;
-
         private bool _hasInputted;
 
         #region Overrides
@@ -30,20 +27,20 @@ namespace Player
         {
             base.Init();
             _spriteR = GetComponentInChildren<SpriteRenderer>();
-            _screenshakeActivator = GetComponent<PlayerScreenShakeActivator>();
         }
 
         protected void OnEnable()
         {
             StateTransition += InvokeUnityStateChangeEvent;
-            print(MyCore.SpawnManager);
-            MyCore.SpawnManager.OnPlayerRespawn += OnRespawn;
+            MyCore.DeathManager.OnPlayerRespawn += OnRespawn;
+            MyCore.DeathManager.OnDeath += OnDeath;
         }
 
         protected void OnDisable()
         {
             StateTransition -= InvokeUnityStateChangeEvent;
-            MyCore.SpawnManager.OnPlayerRespawn -= OnRespawn;
+            MyCore.DeathManager.OnPlayerRespawn -= OnRespawn;
+            MyCore.DeathManager.OnDeath -= OnDeath;
         }
 
         private void InvokeUnityStateChangeEvent()
@@ -74,7 +71,7 @@ namespace Player
 
             if (MyCore.Input.RetryStarted())
             {
-                MyCore.Actor.Die(v => v);
+                MyCore.Actor.Die();
             }
 
             // CurrInput.moveDirection = MyCore.Input.GetMovementInput();

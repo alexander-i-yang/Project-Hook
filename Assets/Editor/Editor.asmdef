@@ -9,7 +9,10 @@
         "SuperTiled2Unity",
         "SuperTiled2UnityEditor",
         "MyBox",
-        "Unity.RenderPipelines.Universal.Runtime"
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Mechanics",
+        "World",
+        "Spawning"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

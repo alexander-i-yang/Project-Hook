@@ -9,7 +9,7 @@ namespace Player {
             return false;
         }
 
-        public override bool PlayerCollide(PlayerActor p, Vector2 direction) {
+        public override bool PlayerCollide(Actor p, Vector2 direction) {
             return false;
         }
 

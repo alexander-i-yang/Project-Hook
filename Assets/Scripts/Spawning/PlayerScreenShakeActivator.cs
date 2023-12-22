@@ -1,12 +1,16 @@
 ﻿using ASK.ScreenShake;
-using World;
+using Player;
+using UnityEditor;
+using UnityEngine;
 
-namespace Player
+namespace Spawning
 {
+    [RequireComponent(typeof(PlayerSpawnManager))]
+    [RequireComponent(typeof(PlayerCore))]
     public class PlayerScreenShakeActivator : ScreenShakeActivator
     {
+        private PlayerSpawnManager _spawnManager;
         private PlayerCore _core;
-        private PlayerSpawnManager _spawnManager => _core.SpawnManager;
         
         public ScreenShakeDataBurst DeathData;
         public ScreenShakeDataContinuous DiveData;
@@ -15,17 +19,19 @@ namespace Player
 
         private void Awake()
         {
-            _core = GetComponent<PlayerCore>();
+            _spawnManager = GetComponent<PlayerSpawnManager>();
         }
 
         private void OnEnable()
         {
             // Room.RoomTransitionEvent += SwitchRooms;
+            _core.DeathManager.OnDeath += DeathScreenShake;
         }
         
         private void OnDisable()
         {
             // Room.RoomTransitionEvent -= SwitchRooms;
+            _core.DeathManager.OnDeath -= DeathScreenShake;
         }
 
         public void ScreenShakeBurst(ScreenShakeDataBurst d)
@@ -44,6 +50,8 @@ namespace Player
             base.ScreenShakeContinuousOff(_spawnManager.CurrentVCam, d);
             CurShake = null;
         }
+
+        private void DeathScreenShake() => ScreenShakeBurst(DeathData);
 
         /*public void SwitchRooms(Room r)
         {

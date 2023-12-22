@@ -12,9 +12,9 @@ using SuperTiled2Unity.Editor;
 using Cinemachine;
 using ASK.Helpers;
 using MyBox;
+using Spawning;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.Tilemaps;
 
 using World;
@@ -97,6 +97,7 @@ namespace TiledUtil {
         private void AddRoomComponents(Transform room)
         {
             room.gameObject.AddComponent<Room>();
+            room.gameObject.AddComponent<RoomSpawnSolver>();
 
             Tilemap mainTilemap = FindGroundLayerTilemap(room);
             if (mainTilemap == null)
