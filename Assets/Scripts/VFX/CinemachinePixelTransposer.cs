@@ -571,6 +571,8 @@ namespace VFX
             curState.RawPosition = localToWorld * (cameraPos + cameraOffset);
             m_PreviousCameraPosition = curState.RawPosition;
 
+            curState.RawPosition = PixelScaling(m_PreviousCameraPosition);
+
             // Adjust lens for group framing
             if (isGroupFraming)
             {
@@ -677,6 +679,21 @@ namespace VFX
             return new Bounds(
                 new Vector3(0, 0, d/2),
                 new Vector3(Mathf.Tan(angles.y) * d, Mathf.Tan(angles.x) * d, zRange.y - zRange.x));
+        }
+
+        public Vector2 Offset;
+        public Vector3 PixelScaling(Vector3 pos)
+        {
+            Vector3 rounded = RoundVec(pos);
+            Offset = pos - rounded;
+            return rounded;
+        }
+        
+        private float RoundFunc(float x) => Mathf.Round(x);
+    
+        private Vector3 RoundVec(Vector3 v)
+        {
+            return new Vector3(RoundFunc(v.x), RoundFunc(v.y), RoundFunc(v.z));
         }
     }
 }

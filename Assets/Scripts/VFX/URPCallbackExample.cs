@@ -6,12 +6,17 @@ using System.Reflection;
 using System.Linq;
 using Cinemachine;
 using UnityEngine.Rendering.Universal;
+using VFX;
 
 public class URPCallbackExample : MonoBehaviour
 {
     [SerializeField] private Camera cam;
-    [SerializeField] private Transform cams;
+    // [SerializeField] private Transform original;
+    // [SerializeField] private Transform offsetted;
+    [SerializeField] private CinemachineVirtualCamera _cam;
     [SerializeField] private Transform quad;
+
+    [SerializeField] private CinemachinePixelTransposer transposer;
     // [SerializeField] private Transform layer;
 
     [SerializeField] private Vector2 parallaxScale;
@@ -37,12 +42,11 @@ public class URPCallbackExample : MonoBehaviour
     {
         if (camera == cam)
         {
-            var vcam = FindObjectOfType<CinemachineVirtualCamera>();
-            vcam.transform.localPosition = RoundVec(vcam.transform.localPosition * 1000) / 1000;
-            Vector2 mainPos = vcam.transform.localPosition;
+            /*
+            // original.transform.localPosition = RoundVec(original.transform.localPosition * 1000) / 1000;
+            Vector2 mainPos = original.transform.localPosition;
             
-            float quadOldZ = quad.localPosition.z;
-            float camOldZ = vcam.transform.localPosition.z;
+            float camOldZ = offsetted.transform.localPosition.z;
             mainPos += Vector2.Scale(mainPos, parallaxScale-Vector2.one);
             
             Vector2 roundedPos = RoundVec(mainPos);
@@ -53,12 +57,14 @@ public class URPCallbackExample : MonoBehaviour
             newPos = RoundVec(newPos * 1000) / 1000;
             print("offset " + newPos);
 
-            // vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = newPos;
+            vcam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = newPos;
             Vector3 ret = roundedPos;
             ret.z = camOldZ;
-            vcam.transform.position = ret;
+            offsetted.transform.position = ret;*/
             
-            Vector3 quadPos = newPos;
+            float quadOldZ = quad.localPosition.z;
+            // Vector3 quadPos = newPos;
+            Vector3 quadPos = -_cam.GetCinemachineComponent<CinemachinePixelTransposer>().Offset;
             quadPos.z = quadOldZ;
             quad.localPosition = quadPos;
         }
