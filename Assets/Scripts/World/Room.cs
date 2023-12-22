@@ -9,7 +9,8 @@ using ASK.Helpers;
 namespace World {
     public class Room : MonoBehaviour {
         private Collider2D _roomCollider;
-        public CinemachineVirtualCamera VCam { get; private set; }
+        // public CinemachineVirtualCamera VCam { get; private set; }
+        public VCamManager VCamManager { get; private set; }
         private CinemachineBrain _cmBrain;
 
         public bool StopTime = true;
@@ -37,7 +38,7 @@ namespace World {
             // _endCutsceneManager = FindObjectOfType<EndCutsceneManager>();
             RecalculateChildren?.Invoke();
 
-            VCam = GetComponentInChildren<CinemachineVirtualCamera>(true);
+            VCamManager = GetComponentInChildren<VCamManager>();
             _grid = transform.GetChild(0).gameObject;
         }
 
@@ -120,12 +121,12 @@ namespace World {
         protected void SwitchCamera()
         {
             //L: Inefficient, but not terrible?
-            this.VCam.gameObject.SetActive(true);
+            VCamManager.gameObject.SetActive(true);
             foreach (Room room in RoomList.Rooms)
             {
                 if (room != this)
                 {
-                    room.VCam.gameObject.SetActive(false);
+                    room.VCamManager.gameObject.SetActive(false);
                 }
             }
         }

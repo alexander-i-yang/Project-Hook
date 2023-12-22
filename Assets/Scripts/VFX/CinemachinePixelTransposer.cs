@@ -681,9 +681,11 @@ namespace VFX
                 new Vector3(Mathf.Tan(angles.y) * d, Mathf.Tan(angles.x) * d, zRange.y - zRange.x));
         }
 
-        public Vector2 Offset;
+        public Vector2 parallaxScale;
+        [NonSerialized] public Vector2 Offset;
         public Vector3 PixelScaling(Vector3 pos)
         {
+            pos = Vector3.Scale(pos, Vector3.one - (Vector3)parallaxScale);
             Vector3 rounded = RoundVec(pos);
             Offset = pos - rounded;
             return rounded;

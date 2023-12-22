@@ -22,11 +22,11 @@ namespace Spawning
         private Room _prevRoom;
         private Spawn _currentSpawnPoint;
         public Room CurrentRoom => _currentRoom;
-        public CinemachineVirtualCamera CurrentVCam
+        public VCamManager CurrentVCamManager
         {
             get
             {
-                return _currentRoom.VCam;
+                return _currentRoom.VCamManager;
             }
         }
 
@@ -88,7 +88,7 @@ namespace Spawning
             }
 
             _currentRoom = roomEntering;
-            _currentRoom.VCam.Follow = transform;
+            _currentRoom.VCamManager.SetFollow(transform);
             _currentSpawnPoint = FindClosestSpawnPoint();
 
             //Set Global Reverb Amount for FMOD Events.

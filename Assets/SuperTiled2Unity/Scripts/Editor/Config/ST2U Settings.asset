@@ -55,8 +55,8 @@ MonoBehaviour:
   - {r: 0.7372549, g: 0.56078434, b: 0.56078434, a: 1}
   m_CustomObjectTypes: []
   m_PrefabReplacements:
-  - m_TypeName: VCam
-    m_Prefab: {fileID: 2350385809013767849, guid: 2a5de5ea4af3d9d4cb7ad8e561f98c49, type: 3}
+  - m_TypeName: VCamManager
+    m_Prefab: {fileID: 7630941652698365557, guid: 966263489224d444c9cd9c3aa099380d, type: 3}
   - m_TypeName: Spawn
     m_Prefab: {fileID: 6624542280847100587, guid: 906ad37a132038947a1fce6723bdad7f, type: 3}
   - m_TypeName: Ground

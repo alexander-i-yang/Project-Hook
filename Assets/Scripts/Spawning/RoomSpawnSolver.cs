@@ -24,7 +24,7 @@ namespace Spawning
         
         void Start()
         {
-            _room.VCam.Follow = _player.transform;
+            _room.VCamManager.SetFollow(_player.transform);
             if (this == _player.CurrentRoom)
             {
                 

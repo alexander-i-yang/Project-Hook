@@ -42,9 +42,7 @@ namespace Spawning
         public void ScreenShakeBurst(ScreenShakeDataBurst d)
         {
             // base.ScreenShakeBurst(_spawnManager.CurrentVCam, d);
-            var c = _spawnManager.CurrentVCam.GetComponentInChildren<CinemachineBasicMultiChannelPerlin>();
-            c.m_NoiseProfile = d.NoiseProfile;
-            print(c.m_NoiseProfile);
+            _spawnManager.CurrentVCamManager.SetNoise(d.NoiseProfile);
 
             if (_shakeRoutine != null)
             {
@@ -53,19 +51,19 @@ namespace Spawning
         
             _shakeRoutine = StartCoroutine(Helper.DelayAction(d.Time, () =>
             {
-                c.m_NoiseProfile = null;
+                _spawnManager.CurrentVCamManager.SetNoise(null);
             }));
         }
         
         public void ScreenShakeContinuousOn(ScreenShakeDataContinuous d)
         {
-            base.ScreenShakeContinuousOn(_spawnManager.CurrentVCam, d);
+            _spawnManager.CurrentVCamManager.SetNoise(d.NoiseProfile);
             CurShake = d;
         }
         
         public void ScreenShakeContinuousOff(ScreenShakeDataContinuous d)
         {
-            base.ScreenShakeContinuousOff(_spawnManager.CurrentVCam, d);
+            _spawnManager.CurrentVCamManager.SetNoise(null);
             CurShake = null;
         }
 

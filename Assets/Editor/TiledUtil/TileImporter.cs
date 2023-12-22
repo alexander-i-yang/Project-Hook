@@ -108,7 +108,7 @@ namespace TiledUtil {
             }
             mainTilemap.CompressBounds();
             PolygonCollider2D bounds = AddPolygonColliderToRoom(room, mainTilemap);
-            AddVCamToRoom(room, bounds);
+            AddVCamManagerToRoom(room, bounds);
         }
 
         private Tilemap FindGroundLayerTilemap(Transform parent)
@@ -147,14 +147,13 @@ namespace TiledUtil {
             return roomCollider;
         }
 
-        private void AddVCamToRoom(Transform room, PolygonCollider2D boundingShape)
+        private void AddVCamManagerToRoom(Transform room, PolygonCollider2D boundingShape)
         {
-            GameObject instance = _prefabReplacements["VCam"];
+            GameObject instance = _prefabReplacements["VCamManager"];
             instance = (GameObject)PrefabUtility.InstantiatePrefab(instance);
             instance.transform.SetParent(room);
 
-            var confiner = instance.GetComponent<CinemachineConfiner2D>();
-            confiner.m_BoundingShape2D = boundingShape;
+            instance.GetComponent<VCamManager>().SetConfiner(boundingShape);
         }
 
         private GameObject AddWaterfalCollision(GameObject g, Vector2[] points)
