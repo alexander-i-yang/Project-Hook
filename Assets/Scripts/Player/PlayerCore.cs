@@ -79,11 +79,15 @@ namespace Player
 
         [Tooltip("Debug option to change sprite color to green when u can ultra")]
         [SerializeField] public bool UltraHelper;
-
+        
         [Tooltip("Time to let players input a direction change")]
         [SerializeField] public float DogoJumpGraceTime;
 
         [Foldout("Grapple", true)]
+        
+        [Tooltip("Grapple Stops when you collide with a wall")]
+        [SerializeField] public bool GrappleCollideWallStop;
+        
         [Tooltip("Grapple extend units per second")]
         [SerializeField] public float GrappleExtendSpeed;
 
@@ -95,8 +99,8 @@ namespace Player
         [Tooltip("Max grapple speed")]
         [SerializeField] public float MaxGrappleSpeed;
 
-        [Tooltip("Init grapple speed")]
-        [SerializeField] public float InitGrappleSpeed;
+        [Tooltip("Start grapple energy loss")]
+        [SerializeField] public float GrappleStartMult;
 
         [Tooltip("Multiplier for magnitude of normal component of velocity")]
         [SerializeField] public float GrappleNormalMult;
@@ -106,6 +110,9 @@ namespace Player
 
         [Tooltip("Boost magnitude multiplier after leaving the grapple")]
         [SerializeField] public float GrappleBoost;
+        
+        [Tooltip("Min Boost Velocity")]
+        [SerializeField] public float GrappleMinBoost;
 
         [Tooltip("Angle from the vertical that it takes to slow down a grapple")]
         [SerializeField] public float SmallAngle;

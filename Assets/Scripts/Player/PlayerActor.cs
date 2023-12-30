@@ -197,7 +197,8 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         if (Vector2.Dot(projection, rawV) >= 0) {
             return;
         }
-        velocity = ortho.normalized * velocity.magnitude;
+        // velocity = ortho.normalized * velocity.magnitude * _core.GrappleStartMult;
+        velocity = ortho.normalized * (Mathf.Lerp(ortho.magnitude, velocity.magnitude, _core.GrappleStartMult));
     }
 
     public void PullGrappleUpdate(Vector2 gPoint, float warmPercent) {
@@ -251,7 +252,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         // velocity += ortho * _core.GrappleBoost;
         // if (velocityY <= 0) return;
         int vxSign = (int) Mathf.Sign(velocityX);
-        Vector2 addV = new Vector2(Facing, 1) * _core.GrappleBoost * velocity.magnitude;
+        Vector2 addV = new Vector2(Facing, 1) * Mathf.Max(_core.GrappleBoost * velocity.magnitude, _core.GrappleMinBoost);
         addV = addV.normalized * Mathf.Clamp(addV.magnitude, -_core.MaxGrappleBoostMagnitude, _core.MaxGrappleBoostMagnitude);
         velocity += addV;
     }
@@ -418,7 +419,6 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     public void Parry(Vector2 oldV) {
         float prevV = velocity.x;
         velocity = Vector2.left * oldV.x * _core.ParryVMult;
-        print(prevV + " " + oldV.x + " " + velocity.x);
     }
 
     public override bool PlayerCollide(Actor p, Vector2 direction)

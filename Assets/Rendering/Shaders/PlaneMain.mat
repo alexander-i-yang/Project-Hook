@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BgPlane 1
+  m_Name: PlaneMain
   m_Shader: {fileID: -6465566751694194690, guid: e5d3ef6078bfd894c9454e5e1ce916d8, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -66,7 +66,7 @@ Material:
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _cells: {r: 4, g: 4, b: 0, a: 0}
-    - _coord: {r: 1, g: 0, b: 0, a: 0}
+    - _coord: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1822901238887896976
 MonoBehaviour:

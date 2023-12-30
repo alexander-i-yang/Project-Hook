@@ -17,8 +17,6 @@ public class ParallaxManager : MonoBehaviour
     // [SerializeField] private CinemachinePixelTransposer transposer;
     // [SerializeField] private Transform layer;
 
-    [SerializeField] private Vector2 parallaxScale;
-
     [SerializeField] private bool pixelate = true;
 
     private CinemachineBrain _brain;

@@ -1,4 +1,5 @@
 using ASK.Core;
+using Helpers;
 using UnityEngine;
 
 namespace Player
@@ -9,19 +10,33 @@ namespace Player
         {
             private float _grappleDuration;
             private float _prevTimeScale;
+            // private GameTimer2 _timescaleTimer;
             
             public override void Enter(GrappleStateInput i) {
                 _grappleDuration = 0;
                 smActor.ResetMyGrappleHook();
                 _prevTimeScale = Game.TimeManager.TimeScale;
-                Game.TimeManager.TimeScale = MyCore.GrappleBulletTimeScale;
                 Input.curGrappleExtendPos = smActor.transform.position;
+
+                // _timescaleTimer = GameTimerManager.Instance.StartTimer(
+                //     MyCore.GrappleBulletTimeDuration,
+                //     () => { ResetTimeScale(); print("Timer done");},
+                //     // ResetTimeScale,
+                //     IncrementType.FIXED_UPDATE
+                // );
+                Game.TimeManager.TimeScale = MyCore.GrappleBulletTimeScale;
             }
 
             public override void Exit(GrappleStateInput i) {
                 base.Exit(i);
-                Game.TimeManager.TimeScale = _prevTimeScale;
+                ResetTimeScale();
+                // GameTimerManager.Instance.RemoveTimer(_timescaleTimer);
                 Input.currentGrapplePos = Input.curGrappleExtendPos;
+            }
+
+            private void ResetTimeScale() 
+            {
+                Game.TimeManager.TimeScale = _prevTimeScale;
             }
             
             public override void FixedUpdate()
@@ -43,12 +58,18 @@ namespace Player
 
             public override void CollideHorizontal()
             {
-                MySM.Transition<Idle>();
+                if (MyCore.GrappleCollideWallStop)
+                {
+                    MySM.Transition<Idle>();
+                }
                 base.CollideHorizontal();
             }
             public override void CollideVertical()
             {
-                MySM.Transition<Idle>();
+                if (MyCore.GrappleCollideWallStop)
+                {
+                    MySM.Transition<Idle>();
+                }
                 base.CollideVertical();
             }
         }

@@ -21,18 +21,26 @@ namespace Player
             }
 
             public override void CollideHorizontal() {
-                smActor.CollideHorizontalGrapple();
-                MySM.Transition<Idle>();
+                if (MyCore.GrappleCollideWallStop)
+                {
+                    smActor.CollideHorizontalGrapple();
+                    MySM.Transition<Idle>();
+                }
             }
 
             public override Vector2 ProcessCollideHorizontal(Vector2 oldV, Vector2 newV) {
-                MySM.Transition<Idle>();
-                return smActor.CollideHorizontalGrapple();
-            }
+                if (MyCore.GrappleCollideWallStop)
+                {
+                    MySM.Transition<Idle>();
+                    return smActor.CollideHorizontalGrapple();
+                }
+
+                return newV;
+            }   
 
             public override void CollideVertical() {
                 smActor.CollideVerticalGrapple();
-                MySM.Transition<Idle>();
+                if (MyCore.GrappleCollideWallStop) MySM.Transition<Idle>();
             }
 
             public override void GrappleFinished()

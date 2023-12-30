@@ -219,7 +219,7 @@ namespace A2DK.Phys {
         public static Actor[] GetActors() {
             return FindObjectsOfType<Actor>();
         }
-
+        
         public abstract bool Squish(PhysObj p, Vector2 d);
         
         public int ColliderBottomY()

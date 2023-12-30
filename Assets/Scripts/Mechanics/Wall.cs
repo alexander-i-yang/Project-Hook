@@ -13,5 +13,7 @@ namespace Mechanics {
             // }
             return true;
         }
+
+        public (Vector2 curPoint, bool hit) GetGrapplePoint(Actor p, Vector2 rayCastHit) => (rayCastHit, true);
     }
 }
