@@ -1,6 +1,7 @@
+using A2DK.Phys;
 using UnityEngine;
 
-namespace A2DK.Phys {
+namespace Mechanics {
     public interface IGrappleAble {
         public (Vector2 curPoint, bool hit) GetGrapplePoint(Actor p, Vector2 rayCastHit);
     }

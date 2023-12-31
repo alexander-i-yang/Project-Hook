@@ -82,13 +82,13 @@ namespace A2DK.Phys {
             Vector2 sizeMult = colliderSize - Vector2.one;
             List<RaycastHit2D> hits = new List<RaycastHit2D>();
             ContactFilter2D filter = new ContactFilter2D();
-            filter.layerMask = LayerMask.GetMask("Interactable", "Ground");
+            filter.layerMask = LayerMask.GetMask("Interactable", "Ground", "Player");
             filter.useLayerMask = true;
             Physics2D.BoxCast(transform.position, sizeMult, 0, direction, filter, hits, 8f);
 
             List<Solid> solids = new();
             List<Actor> actors = new();
-
+            
             foreach (var hit in hits) {
                 if (hit.transform == transform)
                 {
@@ -188,13 +188,13 @@ namespace A2DK.Phys {
             vel += MoveRemainder;
             int moveX = (int) Math.Abs(vel.x);
             if (moveX != 0) {
-                Vector2 xDir = new Vector2(vel.x / moveX, 0);
+                Vector2 xDir = new Vector2(vel.x / moveX, 0).normalized;
                 MoveGeneral(xDir, moveX, OnCollide);
             }
 
             int moveY = (int) Math.Abs(vel.y);
             if (moveY != 0) {
-                Vector2 yDir = new Vector2(0, vel.y / moveY);
+                Vector2 yDir = new Vector2(0, vel.y / moveY).normalized;
                 MoveGeneral(yDir, moveY, OnCollide);
             }
 

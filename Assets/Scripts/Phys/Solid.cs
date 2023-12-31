@@ -23,22 +23,22 @@ namespace A2DK.Phys {
                     return ret;
                 });
 
-                    List<Actor> ridingActors = GetRidingActors(allActors);
+                    List<PhysObj> ridingActors = new List<PhysObj>(GetRidingActors(allActors));
                 bool collision = CheckCollisions(direction, (p, d) => {
                     if (p == this) {
                         return false;
                     }
 
                     // Debug.Break();
-                    
                     if (ridingActors.Contains(p)) {
-                        ridingActors.Remove((Actor)p);
+                        ridingActors.Remove(p);
                     }
                     if (!allActors.Contains(p)) {
                         if (onCollide(p, d)) {
                             return true;
                         }
-                    } else {
+                    } else
+                    {
                         p.MoveGeneral(direction, 1, (ps, ds) => {
                             if (ps != this) return p.Squish(ps, ds);
                             return false;
