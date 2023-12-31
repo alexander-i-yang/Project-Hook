@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BgPlane 1
+  m_Name: RenderDEbug
   m_Shader: {fileID: -6465566751694194690, guid: 9072fb6c45f04504b8b16bf487f7df23, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -67,13 +67,13 @@ Material:
     - _QueueOffset: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Coord: {r: 1, g: 0, b: 0, a: 0}
+    - _Coord: {r: 0, g: 0, b: 0, a: 0}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ScreenRez: {r: 320, g: 180, b: 0, a: 0}
+    - _ScreenRez: {r: 2014.3, g: 180, b: 0, a: 0}
     - _ScreenSize: {r: 0, g: 0, b: 0, a: 0}
     - _cells: {r: 4, g: 1, b: 0, a: 0}
-    - _coord: {r: 1, g: 0, b: 0, a: 0}
+    - _coord: {r: 3, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1822901238887896976
 MonoBehaviour:
