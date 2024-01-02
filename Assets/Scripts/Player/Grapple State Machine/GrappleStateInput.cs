@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using A2DK.Phys;
 using ASK.Core;
 using ASK.Helpers;
 using Mechanics;
@@ -8,7 +9,8 @@ namespace Player
 {   
     public class GrappleStateInput : PlayerStateInput {
         //Grapple
-        public Vector2 currentGrapplePos;
-        public Vector2 curGrappleExtendPos;
+        public Vector2 CurrentGrapplePos;
+        public Vector2 CurGrappleExtendPos;
+        public PhysObj AttachedTo;
     }
 }

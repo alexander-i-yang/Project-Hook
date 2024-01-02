@@ -1,3 +1,4 @@
+using A2DK.Phys;
 using ASK.Core;
 using ASK.Helpers;
 
@@ -81,8 +82,11 @@ namespace Player
 
         public Vector2 GetGrappleInputPos() => MyCore.Input.GetMousePos();
 
-        public Vector2 GetGrapplePos() => CurrInput.currentGrapplePos;
+        public Vector2 GetGrapplePos() => CurrInput.CurrentGrapplePos;
 
-        public Vector2 GetGrappleExtendPos() => CurrInput.curGrappleExtendPos;
+        public Vector2 GetGrappleExtendPos() => CurrInput.CurGrappleExtendPos;
+
+        public void Ride(Vector2 v) => CurrState.Ride(v);
+        public PhysObj CalcRiding(PhysObj p) => CurrState.ResolveRidingOn(p);
     }
 }

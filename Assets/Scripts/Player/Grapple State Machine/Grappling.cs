@@ -1,22 +1,36 @@
-﻿using ASK.Core;
+﻿using A2DK.Phys;
+using ASK.Core;
 using UnityEngine;
 
 namespace Player
 {
     public partial class GrappleStateMachine
     {
+        
         public class Grappling : GrappleState
         {
+            
+            // private PhysObj _attachedTo;
+            // private Vector2 _prevV;
 
             public override void Enter(GrappleStateInput i)
             {
+                
+                
                 // _grappleTimer = GameTimer.StartNewTimer(core.GrappleWarmTime);
-                smActor.StartGrapple(Input.currentGrapplePos);
+                // _prevV = Vector2.zero;
+                smActor.StartGrapple(Input.CurrentGrapplePos);
+                // _attachedTo.GrappleRider = smActor;
             }
 
             public override void FixedUpdate()
             {
-                smActor.GrappleUpdate(Input.currentGrapplePos, 0);
+                smActor.GrappleUpdate(Input.CurrentGrapplePos, 0);
+                // if (_attachedTo.velocity == Vector2.zero && _prevV != Vector2.zero)
+                // {
+                //     smActor.ApplyVelocity(_prevV);
+                // }
+                // _prevV = _attachedTo.velocity;
                 // GameTimer.FixedUpdate(_grappleTimer);
             }
 
@@ -46,16 +60,24 @@ namespace Player
             public override void GrappleFinished()
             {
                 base.GrappleFinished();
-                smActor.GrappleBoost(Input.currentGrapplePos);
+                smActor.GrappleBoost(Input.CurrentGrapplePos);
                 MySM.Transition<Idle>();
                 MyCore.MovementStateMachine.RefreshAbilities();
             }
 
-            public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction) {
+            public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction)
+            {
                 // velocity = smActor.CalcMovementX(0, core.MaxAirAcceleration, core.AirResistance);
-                velocity = smActor.MoveXGrapple(velocity, Input.currentGrapplePos, direction);
+                velocity = smActor.MoveXGrapple(velocity, Input.CurrentGrapplePos, direction);
                 return velocity;
             }
+
+            public override void Ride(Vector2 direction)
+            {
+                Input.CurrentGrapplePos += direction;
+            }
+
+            public override PhysObj ResolveRidingOn(PhysObj p) => Input.AttachedTo;
         }
     }
 }

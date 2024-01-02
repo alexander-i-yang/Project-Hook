@@ -4,13 +4,14 @@ using System.Linq;
 using UnityEngine;
 
 namespace A2DK.Phys {
-    public abstract class Solid : PhysObj {
+    public abstract class Solid : PhysObj
+    {
         public override bool MoveGeneral(Vector2 direction, int magnitude, Func<PhysObj, Vector2, bool> onCollide) {
             if (magnitude < 0) throw new ArgumentException("Magnitude must be >0");
 
             int remainder = magnitude;
 
-            Actor[] allActors = PhysObj.GetActors();
+            Actor[] allActors = AllActors();
             
             // If the actor moves at least 1 pixel, Move one pixel at a time
             while (remainder > 0) {
@@ -23,11 +24,10 @@ namespace A2DK.Phys {
                     return ret;
                 });
 
-                    List<PhysObj> ridingActors = new List<PhysObj>(GetRidingActors(allActors));
+                HashSet<PhysObj> ridingActors = new HashSet<PhysObj>(GetRidingActors(allActors));
                 bool collision = CheckCollisions(direction, (p, d) => {
-                    if (p == this) {
-                        return false;
-                    }
+                    if (p == this) return false;
+                    // if (p == GrappleRider) return false;
 
                     // Debug.Break();
                     if (ridingActors.Contains(p)) {
@@ -39,6 +39,7 @@ namespace A2DK.Phys {
                         }
                     } else
                     {
+                        //Push actors
                         p.MoveGeneral(direction, 1, (ps, ds) => {
                             if (ps != this) return p.Squish(ps, ds);
                             return false;
@@ -48,9 +49,12 @@ namespace A2DK.Phys {
                     return false;
                 });
 
+                //Ride actors
                 foreach (var a in ridingActors) {
-                    a.Move(direction);
+                    //Might cause a bug due to a being a PhysObj and GrappleRider is an actor
+                    a.Ride(direction);
                 }
+                
                 if (collision) return true;
                 
                 transform.position += new Vector3((int)direction.x, (int)direction.y, 0);
@@ -61,8 +65,8 @@ namespace A2DK.Phys {
             return false;
         }
 
-        public List<Actor> GetRidingActors(Actor[] allActors) {
-            return allActors.Where(c => c.IsRiding(this)).ToList();
+        public HashSet<Actor> GetRidingActors(Actor[] allActors) {
+            return new HashSet<Actor>(allActors.Where(c => c.IsRiding(this)));
         }
 
         public override bool Squish(PhysObj p, Vector2 d) {

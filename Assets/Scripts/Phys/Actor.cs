@@ -4,12 +4,20 @@ using MyBox;
 using UnityEngine;
 
 namespace A2DK.Phys {
-    public abstract class Actor : PhysObj {
+    [RequireComponent(typeof(JostleBehavior))]
+    public abstract class Actor : PhysObj
+    {
+        protected JostleBehavior jostleBehavior;
         
         [SerializeField, Foldout("Gravity")] protected int GravityDown;
         [SerializeField, Foldout("Gravity")] protected int GravityUp;
         [SerializeField, Foldout("Gravity")] protected int MaxFall;
         public bool IsMovingUp => velocityY >= 0;
+
+        private void Awake()
+        {
+            jostleBehavior = GetComponent<JostleBehavior>();
+        }
 
         /// <summary>
         /// Moves this actor a specified number of pixels.
@@ -49,12 +57,6 @@ namespace A2DK.Phys {
         {
             return (velocityY > 0 ? GravityUp : GravityDown);
         }
-
-        public bool IsRiding(Solid s) {
-            return CheckCollisions(Vector2.down, (p, d) => {
-                return p == s;
-            });
-        }
         
         public bool IsGrounded() {
             return CheckCollisions(Vector2.down, (p, d) => {
@@ -68,9 +70,12 @@ namespace A2DK.Phys {
             GravityUp *= -1;
         }
 
-        public void ApplyVelocity(Vector2 v)
+        protected void ApplyVelocity(Vector2 v)
         {
+            print(gameObject.name + " apply v " + v);
             velocity += v;
         }
+
+        public bool IsRiding(Solid solid) => jostleBehavior.IsRiding(solid);
     }
 }

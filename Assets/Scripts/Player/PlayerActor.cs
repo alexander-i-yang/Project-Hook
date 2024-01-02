@@ -50,8 +50,10 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         // EndCutsceneManager.EndCutsceneEvent -= OnEndCutscene;
     }
 
-    protected override void FixedUpdate() {
-        base.FixedUpdate();
+    private void FixedUpdate()
+    {
+        MoveTick();
+        ApplyVelocity(jostleBehavior.ResolveRidingOn());
 
         Vector2 newV = Vector2.zero;
         newV = _movementStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
@@ -151,8 +153,8 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         return hit.point;
     }
 
-    public (Vector2 curPoint, bool hit) GrappleExtendUpdate(float grappleDuration, Vector2 grapplePoint) {
-        var ret = (curPoint: Vector2.zero, hit: false);
+    public (Vector2 curPoint, PhysObj attachedTo) GrappleExtendUpdate(float grappleDuration, Vector2 grapplePoint) {
+        var ret = (curPoint: Vector2.zero, attachedTo: (PhysObj)null);
         Vector2 grappleOrigin = transform.position;
         float dist = _core.GrappleExtendSpeed * grappleDuration;
         Vector2 curPos = (Vector2) transform.position;
@@ -172,8 +174,9 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
                 IGrappleAble p = hit.collider.GetComponent<IGrappleAble>();
                 if (p != null) {
                     var newRet = p.GetGrapplePoint(this, hit.point);
-                    if (newRet.hit) {
+                    if (newRet.attachedTo != null) {
                         ret = newRet;
+                        
                         break;
                     }
                 };
@@ -209,6 +212,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         Fall();
     }
 
+    //recalculate velocity during grapple
     public void GrappleUpdate(Vector2 gPoint, float warmPercent)
     {
         Vector2 rawV = gPoint - (Vector2) transform.position;
@@ -231,6 +235,12 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
                 velocity *= 0.25f;
             }
         }
+    }
+
+    public override void Ride(Vector2 direction)
+    {
+        _core.GrappleStateMachine.Ride(direction);
+        base.Ride(direction);
     }
 
     public Vector2 MoveXGrapple(Vector2 oldV, Vector2 gPos, int direction) {
@@ -441,6 +451,12 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         }
         return false;
     }
+
+    public override PhysObj CalcRiding()
+    {
+        PhysObj p = base.CalcRiding();
+        return _grappleStateMachine.CalcRiding(p);
+    }
     #endregion
 
     public void BonkHead() {
@@ -503,7 +519,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
     #if UNITY_EDITOR
     private void OnDrawGizmosSelected() {
-        Handles.Label(transform.position, $"Velocity: <{velocityX}, {velocityY}>");
+        Handles.Label(transform.position, $"Velocity: <{(int)velocityX}, {(int)velocityY}>");
     }
     #endif
 

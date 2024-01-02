@@ -20,16 +20,17 @@ namespace Mechanics {
             return false;
         }
 
-        public (Vector2 curPoint, bool hit) GetGrapplePoint(Actor p, Vector2 rayCastHit)
+        public (Vector2 curPoint, PhysObj attachedTo) GetGrapplePoint(Actor p, Vector2 rayCastHit)
         {
             velocity = p.transform.position - transform.position;
-            return (rayCastHit, true);
+            return (rayCastHit, this);
         }
 
-        protected override void FixedUpdate()
+        private void FixedUpdate()
         {
             Fall();
-            base.FixedUpdate();
+            ApplyVelocity(jostleBehavior.ResolveRidingOn());
+            MoveTick();
         }
     }
 }

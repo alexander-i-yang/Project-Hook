@@ -41,16 +41,16 @@ namespace Mechanics
             return true;
         }
 
-        protected override void FixedUpdate()
+        private void FixedUpdate()
         {
             velocity = _sm.CalculateVelocity();
-            base.FixedUpdate();
+            MoveTick();
         }
         
-        public (Vector2 curPoint, bool hit) GetGrapplePoint(Actor p, Vector2 rayCastHit)
+        public (Vector2 curPoint, PhysObj attachedTo) GetGrapplePoint(Actor p, Vector2 rayCastHit)
         {
             _sm.TouchGrapple();
-            return (rayCastHit, true);
+            return (transform.position, this);
         }
         
         //Returns true if it's past any endpoint. Works for any two endpoints.
@@ -65,7 +65,7 @@ namespace Mechanics
         public Vector2 VToStart() => (trackStart.position - transform.position).normalized * vMag;
         public Vector2 VToEnd() => (trackEnd.position - transform.position).normalized * vMag;
 
-        public void SetPosStart() => transform.position = trackStart.position;
-        public void SetPosEnd() => transform.position = trackEnd.position;
+        public void SetPosStart() => Move(trackStart.position - transform.position);
+        public void SetPosEnd() => Move(trackEnd.position - transform.position);
     }
 }

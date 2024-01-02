@@ -9,7 +9,7 @@ namespace A2DK.Phys {
     public abstract class PhysObj : MonoBehaviour {
         protected BoxCollider2D myCollider { get; private set; }
         public Vector2 velocity { get; protected set; }  = Vector2.zero;
-
+        
         [NonSerialized] public Vector2 NextFrameOffset = Vector2.zero;
         [NonSerialized] private Vector2 MoveRemainder = Vector2.zero;
 
@@ -27,10 +27,11 @@ namespace A2DK.Phys {
             myCollider = GetComponent<BoxCollider2D>();
             Game.TimeManager.ResetNextFrameOffset += ResetNextFrameOffset;
         }
-
-        protected virtual void FixedUpdate() {
-            Move(velocity * Game.TimeManager.FixedDeltaTime);
-        }
+        
+        /**
+         * Move velocity * time.
+         */
+        protected void MoveTick() => Move(velocity * Game.TimeManager.FixedDeltaTime);
 
         private void ResetNextFrameOffset() {
             NextFrameOffset = Vector2.zero;
@@ -75,9 +76,9 @@ namespace A2DK.Phys {
         /// </summary>
         /// <param name="direction"><b>MUST</b> be a cardinal direction with a <b>magnitude of one.</b></param>
         /// <param name="onCollide">(<b>physObj</b> collided with, <b>Vector2</b> direction),
-        /// returns true if should stop</param>
+        /// returns physObj when collide, otherwise null.</param>
         /// <returns></returns>
-        public bool CheckCollisions(Vector2 direction, Func<PhysObj, Vector2, bool> onCollide) {
+        public PhysObj CheckCollisions(Vector2 direction, Func<PhysObj, Vector2, bool> onCollide) {
             Vector2 colliderSize = myCollider.size;
             Vector2 sizeMult = colliderSize - Vector2.one;
             List<RaycastHit2D> hits = new List<RaycastHit2D>();
@@ -120,7 +121,7 @@ namespace A2DK.Phys {
                     bool col = onCollide.Invoke(s, direction);
                     if (col)
                     {
-                        return true;
+                        return s;
                     }
                 }
             }
@@ -140,12 +141,12 @@ namespace A2DK.Phys {
                     bool col = onCollide.Invoke(a, direction);
                     if (col)
                     {
-                        return true;
+                        return a;
                     }
                 }
             }
             
-            return false;
+            return null;
         }
 
         public bool ProactiveBoxCast(Transform checkAgainst, Vector3 nextFrameOffset, Vector2 sizeMult, float dist, Vector2 direction, ContactFilter2D filter) {
@@ -216,20 +217,23 @@ namespace A2DK.Phys {
             return Collidable();
         }
 
-        public static Actor[] GetActors() {
+        //TODO: change this so that it only looks for actors near me
+        public static Actor[] AllActors() {
             return FindObjectsOfType<Actor>();
         }
         
         public abstract bool Squish(PhysObj p, Vector2 d);
         
-        public int ColliderBottomY()
-        {
-            return Convert.ToInt16(transform.position.y + myCollider.offset.y - myCollider.bounds.extents.y);
-        }
+        /**
+         * Gets the physObj underneath this PhysObj's feet.
+         */
+        private PhysObj GetBelowPhysObj() => CheckCollisions(Vector2.down, (p, d) => p.Collidable());
+
+        /**
+         * Calculates the physics object this PhysObj is riding on.
+         */
+        public virtual PhysObj CalcRiding() => GetBelowPhysObj();
         
-        public int ColliderTopY()
-        {
-            return Convert.ToInt16(transform.position.y + myCollider.offset.y + myCollider.bounds.extents.y);
-        }
+        public virtual void Ride(Vector2 direction) => Move(direction);
     }
 }
