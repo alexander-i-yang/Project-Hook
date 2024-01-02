@@ -2651,7 +2651,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 0.5
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -3834,7 +3834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GravityDown: -450
   GravityUp: -350
-  MaxFall: -350
+  MaxFall: -1000
   _collider: {fileID: 1498126422}
   sprite: {fileID: 18964407}
   OnJumpFromGround:
@@ -4045,7 +4045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd6ff59fa689439880f5c0ee263d0fc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GraceTime: 1
+  GraceTime: 0.25
 --- !u!1 &1610871598
 GameObject:
   m_ObjectHideFlags: 0
