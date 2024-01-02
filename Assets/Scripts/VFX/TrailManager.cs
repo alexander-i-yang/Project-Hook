@@ -9,7 +9,10 @@ namespace VFX
     {
         private TrailRenderer _tr;
         private float _rawTime;
-        
+
+        private float _yee;
+        public float Yee => _yee;
+
         private void Awake()
         {
             _tr = GetComponent<TrailRenderer>();

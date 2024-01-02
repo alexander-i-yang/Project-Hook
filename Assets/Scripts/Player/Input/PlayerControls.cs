@@ -107,6 +107,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Debug"",
+                    ""type"": ""Button"",
+                    ""id"": ""569ac5af-0415-4adb-b7e7-df8608a4d84d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -274,6 +283,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Parry"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1cd8c5c-2d14-4674-98fd-6f3055d018e7"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Debug"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -291,6 +311,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay_Grapple = m_Gameplay.FindAction("Grapple", throwIfNotFound: true);
         m_Gameplay_Shotgun = m_Gameplay.FindAction("Shotgun", throwIfNotFound: true);
         m_Gameplay_Parry = m_Gameplay.FindAction("Parry", throwIfNotFound: true);
+        m_Gameplay_Debug = m_Gameplay.FindAction("Debug", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -361,6 +382,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Grapple;
     private readonly InputAction m_Gameplay_Shotgun;
     private readonly InputAction m_Gameplay_Parry;
+    private readonly InputAction m_Gameplay_Debug;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -374,6 +396,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Grapple => m_Wrapper.m_Gameplay_Grapple;
         public InputAction @Shotgun => m_Wrapper.m_Gameplay_Shotgun;
         public InputAction @Parry => m_Wrapper.m_Gameplay_Parry;
+        public InputAction @Debug => m_Wrapper.m_Gameplay_Debug;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -410,6 +433,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Parry.started += instance.OnParry;
             @Parry.performed += instance.OnParry;
             @Parry.canceled += instance.OnParry;
+            @Debug.started += instance.OnDebug;
+            @Debug.performed += instance.OnDebug;
+            @Debug.canceled += instance.OnDebug;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -441,6 +467,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Parry.started -= instance.OnParry;
             @Parry.performed -= instance.OnParry;
             @Parry.canceled -= instance.OnParry;
+            @Debug.started -= instance.OnDebug;
+            @Debug.performed -= instance.OnDebug;
+            @Debug.canceled -= instance.OnDebug;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -469,5 +498,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnGrapple(InputAction.CallbackContext context);
         void OnShotgun(InputAction.CallbackContext context);
         void OnParry(InputAction.CallbackContext context);
+        void OnDebug(InputAction.CallbackContext context);
     }
 }

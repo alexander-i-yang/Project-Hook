@@ -25,11 +25,13 @@ namespace Player
             inputActions.Enable();
 
             inputActions.Pause.performed += OnPause;
+            inputActions.Debug.performed += OnDebug;
         }
 
         private void OnDisable()
         {
             inputActions.Pause.performed -= OnPause;
+            inputActions.Debug.performed -= OnDebug;
             inputActions.Disable();
         }
 
@@ -181,5 +183,12 @@ namespace Player
 
             return dirPressed || dirReleased;
         }
+        
+        #if UNITY_EDITOR
+        private void OnDebug(InputAction.CallbackContext ctx)
+        {
+            Game.Instance.IsDebug = true;
+        }
+        #endif
     }
 }
