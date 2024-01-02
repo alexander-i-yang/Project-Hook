@@ -24,7 +24,7 @@ namespace Player
                 //     // ResetTimeScale,
                 //     IncrementType.FIXED_UPDATE
                 // );
-                Game.TimeManager.TimeScale = MyCore.GrappleBulletTimeScale;
+                Game.TimeManager.SetTimeScale(MyCore.GrappleBulletTimeScale);
             }
 
             public override void Exit(GrappleStateInput i) {
@@ -36,7 +36,7 @@ namespace Player
 
             private void ResetTimeScale() 
             {
-                Game.TimeManager.TimeScale = _prevTimeScale;
+                Game.TimeManager.SetTimeScale(_prevTimeScale);
             }
             
             public override void FixedUpdate()

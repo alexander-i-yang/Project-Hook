@@ -2586,6 +2586,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1291619342}
   - component: {fileID: 1291619343}
+  - component: {fileID: 1291619344}
   m_Layer: 6
   m_Name: Trail
   m_TagString: Untagged
@@ -2712,6 +2713,18 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &1291619344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291619341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27d30d6688a14befbe3d0ae47d7844dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1300481101
 GameObject:
   m_ObjectHideFlags: 0
@@ -4707,7 +4720,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4fb0d1eaa84516b13645680e39327e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeScale: 1
   stepFrames: 0
   DebugBreak: 0
 --- !u!114 &1676209661
@@ -4921,9 +4933,9 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1676209659}
   - {fileID: 519420032}
   - {fileID: 619394802}
-  - {fileID: 1676209659}
   - {fileID: 1217542086}
   - {fileID: 1498126424}
   - {fileID: 1946245859}

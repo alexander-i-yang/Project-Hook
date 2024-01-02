@@ -6,10 +6,9 @@ namespace Player
 {
     public class PlayerJostleBehavior : JostleBehavior
     {
-        [SerializeField] private float GraceTime;
         private Vector2 _gracePrevV;
-
         private GameTimer2 _graceTimer;
+        [SerializeField] private float GraceTime;
         
         protected override bool FloorStopped()
         {
@@ -32,14 +31,6 @@ namespace Player
             };
             return base.ResolveApplyV();
         }
-
-        
-        //When ridingOn stops, start a timer.
-        //If you jump before the timer ends, apply v.
-        
-        //when ridingOn.v == 0 && _prevRV != 0, start _graceTimer. _gracePrevV = _prevV.
-        //Override JumpedOff. ||= _graceTimer notFinished.
-        //When ShouldApplyV called, ret = _gracePrevV.
         
         public override Vector2 ResolveRidingOn()
         {
