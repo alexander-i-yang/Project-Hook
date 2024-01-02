@@ -10,42 +10,58 @@ namespace A2DK.Phys
     [RequireComponent(typeof(PhysObj))]
     public class JostleBehavior : MonoBehaviour
     {
-        private PhysObj _physObj;
+        protected PhysObj physObj;
 
-        private PhysObj _ridingOn;
-        private Vector2 _prevRidingV; //Prev velocity of RidingOn.
-        private PhysObj _prevRidingOn;
+        protected PhysObj ridingOn { get; private set; }
+        //Prev velocity of RidingOn
+        protected Vector2 prevRidingV { get; private set; }
+        protected PhysObj prevRidingOn { get; set; }
 
         void Awake()
         {
-            _physObj = GetComponent<PhysObj>();
+            physObj = GetComponent<PhysObj>();
         }
         
         public bool IsRiding(PhysObj p) {
-            return _ridingOn == p;
-        }
-        
-        protected virtual bool ShouldApplyV()
-        {
-            bool jumpedOff = _prevRidingOn != null && _ridingOn == null;
-            bool floorStopped = _prevRidingV != Vector2.zero && _ridingOn != null && _ridingOn.velocity == Vector2.zero;
-            return jumpedOff || floorStopped;
+            return ridingOn == p;
         }
         
         /**
-         * Set _ridingOn to whatever CalcRiding returns.
+         * When there was a floor but now there's not
          */
-        public Vector2 ResolveRidingOn()
+        protected virtual bool JumpedOff() => prevRidingOn != null && ridingOn == null;
+        
+        /**
+         * When the floor was moving but now it's not
+         */
+        protected virtual bool FloorStopped() => prevRidingV != Vector2.zero && ridingOn != null && ridingOn.velocity == Vector2.zero;
+        
+        protected virtual bool ShouldApplyV() => JumpedOff() || FloorStopped();
+        
+        /**
+         * Set _ridingOn to whatever CalcRiding returns.
+         * Should get called every frame.
+         */
+        public virtual Vector2 ResolveRidingOn()
         {
             Vector2 ret = Vector2.zero;
-            _ridingOn = _physObj.CalcRiding();
+            ridingOn = physObj.CalcRiding();
             if (ShouldApplyV())
             {
-                ret = _prevRidingV;
+                ret = ResolveApplyV();
             }
-            _prevRidingOn = _ridingOn;
-            _prevRidingV = _ridingOn == null ? Vector2.zero : _ridingOn.velocity;
+            prevRidingOn = ridingOn;
+            prevRidingV = ridingOn == null ? Vector2.zero : ridingOn.velocity;
             return ret;
+        }
+
+        /**
+         * Input previousApplyVelocity, output new apply velocity.
+         * Only called when shouldApplyV.
+         */
+        protected virtual Vector2 ResolveApplyV()
+        {
+            return prevRidingV;
         }
     }
 }

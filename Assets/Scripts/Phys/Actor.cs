@@ -72,7 +72,7 @@ namespace A2DK.Phys {
 
         protected void ApplyVelocity(Vector2 v)
         {
-            print(gameObject.name + " apply v " + v);
+            if (v != Vector2.zero) print(gameObject.name + " apply v " + v);
             velocity += v;
         }
 

@@ -39,10 +39,20 @@ namespace Helpers
                 t.OnComplete?.Invoke();
             }
         }
-
+        
+        public static bool TimerRunning(GameTimer2 t)
+        {
+            return t != null && GameTimer.GetTimerState(t._timer) == TimerState.Running;
+        }
+        
         public static bool TimerFinished(GameTimer2 t)
         {
-            return GameTimer.TimerFinished(t._timer);
+            return t != null && GameTimer.TimerFinished(t._timer);
+        }
+
+        public static void Clear(GameTimer2 t)
+        {
+            if (t != null) GameTimer.Clear(t._timer);
         }
     }
 

@@ -41,6 +41,7 @@ namespace Helpers
         public void RemoveTimer(GameTimer2 t)
         {
             _timers[t.TIncrementType].Remove(t);
+            GameTimer2.Clear(t);
         }
     }
 }
