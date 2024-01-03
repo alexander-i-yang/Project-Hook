@@ -77,17 +77,15 @@ namespace Player
                 Input.CurrentGrapplePos = Input.AttachedTo.ContinuousGrapplePos(Input.CurrentGrapplePos);
                 // Input.CurrentGrapplePos += direction;
                 
-                // var at = Input.AttachedTo;
-                // if (at == null) return direction;
-                //
-                // Vector2 atV = at.velocity;
-                // Vector2 atDisplacement = at.transform.position - smActor.transform.position;
+                var at = Input.AttachedToPhysObj;
+                if (at == null) return direction;
+                
+                Vector2 atV = at.velocity;
+                Vector2 atDisplacement = at.transform.position - smActor.transform.position;
                 // float dot = Vector2.SignedAngle(atV, atDisplacement);
                 // return direction * dot;
-                // bool atMovingTowards = Vector2.Dot(atV, atDisplacement) >= 0;
-                // if (atMovingTowards) return Vector2.zero;
-                // return direction;
-                
+                bool atMovingTowards = Vector2.Dot(atV, atDisplacement) <= 0;
+                if (atMovingTowards) return Vector2.zero;
                 return direction;
             }
 
