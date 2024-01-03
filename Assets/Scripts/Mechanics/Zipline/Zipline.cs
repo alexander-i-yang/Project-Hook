@@ -47,12 +47,16 @@ namespace Mechanics
             MoveTick();
         }
         
-        public (Vector2 curPoint, PhysObj attachedTo) GetGrapplePoint(Actor p, Vector2 rayCastHit)
+        public (Vector2 curPoint, IGrappleAble attachedTo) GetGrapplePoint(Actor p, Vector2 rayCastHit)
         {
             _sm.TouchGrapple();
             return (transform.position, this);
         }
-        
+
+        public Vector2 ContinuousGrapplePos(Vector2 origPos) => transform.position;
+
+        public PhysObj GetPhysObj() => this;
+
         //Returns true if it's past any endpoint. Works for any two endpoints.
         // public bool ReachedEndpoint() =>
         //     Vector3.Dot(trackStart.position - transform.position, trackEnd.position - transform.position) >= 0;

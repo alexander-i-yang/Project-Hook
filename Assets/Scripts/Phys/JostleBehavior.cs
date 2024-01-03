@@ -10,19 +10,19 @@ namespace A2DK.Phys
     [RequireComponent(typeof(PhysObj))]
     public class JostleBehavior : MonoBehaviour
     {
-        protected PhysObj physObj;
+        protected Actor jostledActor;
 
         protected PhysObj ridingOn { get; private set; }
         //Prev velocity of RidingOn
         protected Vector2 prevRidingV { get; private set; }
-        protected PhysObj prevRidingOn { get; set; }
+        protected PhysObj prevRidingOn { get; private set; }
 
         void Awake()
         {
-            physObj = GetComponent<PhysObj>();
+            jostledActor = GetComponent<Actor>();
         }
         
-        public bool IsRiding(PhysObj p) {
+        public virtual bool IsRiding(PhysObj p) {
             return ridingOn == p;
         }
         
@@ -45,7 +45,7 @@ namespace A2DK.Phys
         public virtual Vector2 ResolveRidingOn()
         {
             Vector2 ret = Vector2.zero;
-            ridingOn = physObj.CalcRiding();
+            ridingOn = jostledActor.CalcRiding();
             if (ShouldApplyV())
             {
                 ret = ResolveApplyV();
@@ -63,5 +63,7 @@ namespace A2DK.Phys
         {
             return prevRidingV;
         }
+
+        public Vector2 Ride(Vector2 direction) => direction;
     }
 }

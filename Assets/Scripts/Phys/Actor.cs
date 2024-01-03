@@ -77,5 +77,7 @@ namespace A2DK.Phys {
         }
 
         public bool IsRiding(Solid solid) => jostleBehavior.IsRiding(solid);
+        
+        public virtual void Ride(Vector2 direction) => Move(jostleBehavior.Ride(direction));
     }
 }

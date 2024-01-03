@@ -86,7 +86,7 @@ namespace Player
 
         public Vector2 GetGrappleExtendPos() => CurrInput.CurGrappleExtendPos;
 
-        public void Ride(Vector2 v) => CurrState.Ride(v);
+        public Vector2 ResolveRide(Vector2 v) => CurrState.ResolveRide(v);
         public PhysObj CalcRiding(PhysObj p) => CurrState.ResolveRidingOn(p);
     }
 }

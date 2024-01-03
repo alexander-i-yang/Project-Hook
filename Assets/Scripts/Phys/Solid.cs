@@ -24,24 +24,23 @@ namespace A2DK.Phys {
                     return ret;
                 });
 
-                HashSet<PhysObj> ridingActors = new HashSet<PhysObj>(GetRidingActors(allActors));
-                bool collision = CheckCollisions(direction, (p, d) => {
-                    if (p == this) return false;
+                HashSet<Actor> ridingActors = new HashSet<Actor>(GetRidingActors(allActors));
+                bool collision = CheckCollisions<Actor>(direction, (a, d) => {
                     // if (p == GrappleRider) return false;
 
                     // Debug.Break();
-                    if (ridingActors.Contains(p)) {
-                        ridingActors.Remove(p);
+                    if (ridingActors.Contains(a)) {
+                        ridingActors.Remove(a);
                     }
-                    if (!allActors.Contains(p)) {
-                        if (onCollide(p, d)) {
+                    if (!allActors.Contains(a)) {
+                        if (onCollide(a, d)) {
                             return true;
                         }
                     } else
                     {
                         //Push actors
-                        p.MoveGeneral(direction, 1, (ps, ds) => {
-                            if (ps != this) return p.Squish(ps, ds);
+                        a.MoveGeneral(direction, 1, (ps, ds) => {
+                            if (ps != this) return a.Squish(ps, ds);
                             return false;
                         });
                     }

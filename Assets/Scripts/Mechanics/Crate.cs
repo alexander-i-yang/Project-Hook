@@ -20,11 +20,15 @@ namespace Mechanics {
             return false;
         }
 
-        public (Vector2 curPoint, PhysObj attachedTo) GetGrapplePoint(Actor p, Vector2 rayCastHit)
+        public (Vector2 curPoint, IGrappleAble attachedTo) GetGrapplePoint(Actor p, Vector2 rayCastHit)
         {
             velocity = p.transform.position - transform.position;
-            return (rayCastHit, this);
+            return (transform.position, this);
         }
+
+        public Vector2 ContinuousGrapplePos(Vector2 origPos) => transform.position;
+
+        public PhysObj GetPhysObj() => this;
 
         private void FixedUpdate()
         {

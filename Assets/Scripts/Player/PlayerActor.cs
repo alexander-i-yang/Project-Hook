@@ -102,7 +102,8 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     /// <param name="jumpHeight"></param>
     public void Bounce(int jumpHeight)
     {
-        velocityY = GetJumpSpeedFromHeight(jumpHeight);
+        float applyV = GetJumpSpeedFromHeight(jumpHeight);
+        velocityY = Math.Max(applyV, velocityY + applyV);
     }
 
     public void DoubleJump(int jumpHeight, int moveDirection = 0)
@@ -153,8 +154,8 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         return hit.point;
     }
 
-    public (Vector2 curPoint, PhysObj attachedTo) GrappleExtendUpdate(float grappleDuration, Vector2 grapplePoint) {
-        var ret = (curPoint: Vector2.zero, attachedTo: (PhysObj)null);
+    public (Vector2 curPoint, IGrappleAble attachedTo) GrappleExtendUpdate(float grappleDuration, Vector2 grapplePoint) {
+        var ret = (curPoint: Vector2.zero, attachedTo: (IGrappleAble)null);
         Vector2 grappleOrigin = transform.position;
         float dist = _core.GrappleExtendSpeed * grappleDuration;
         Vector2 curPos = (Vector2) transform.position;
@@ -239,8 +240,8 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
     public override void Ride(Vector2 direction)
     {
-        _core.GrappleStateMachine.Ride(direction);
-        base.Ride(direction);
+        Vector2 ret = _core.GrappleStateMachine.ResolveRide(direction);
+        base.Ride(ret);
     }
 
     public Vector2 MoveXGrapple(Vector2 oldV, Vector2 gPos, int direction) {

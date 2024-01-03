@@ -18,12 +18,12 @@ public class PauseInputProvider : MonoBehaviour
     
     void OnEnable()
     {
-        FindObjectOfType<PlayerInputController>().AddToPauseAction(OnPausePressed);
+        FindObjectOfType<PlayerInputController>()?.AddToPauseAction(OnPausePressed);
     }
     
     void OnDisable()
     {
-        FindObjectOfType<PlayerInputController>().AddToPauseAction(OnPausePressed);
+        FindObjectOfType<PlayerInputController>()?.AddToPauseAction(OnPausePressed);
     }
 
     void OnPausePressed()

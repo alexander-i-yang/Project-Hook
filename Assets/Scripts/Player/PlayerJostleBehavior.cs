@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Player
 {
+    [RequireComponent(typeof(PlayerCore))]
     public class PlayerJostleBehavior : JostleBehavior
     {
         private Vector2 _gracePrevV;
@@ -13,24 +14,19 @@ namespace Player
         
         protected override bool FloorStopped()
         {
-            if (prevRidingOn == physObj.CalcRiding()) return false;
+            if (prevRidingOn == jostledActor.GetBelowPhysObj()) return false;
             return base.FloorStopped();
-        }
-
-        protected override bool ShouldApplyV()
-        {
-            
-            return base.ShouldApplyV();
         }
 
         protected override Vector2 ResolveApplyV()
         {
+            Vector2 ret = base.ResolveApplyV();
             if (_graceTimer != null && GameTimer2.TimerRunning(_graceTimer))
             {
                 GameTimerManager.Instance.RemoveTimer(_graceTimer);
-                return _gracePrevV;
+                ret = _gracePrevV;
             };
-            return base.ResolveApplyV();
+            return ret;
         }
         
         public override Vector2 ResolveRidingOn()

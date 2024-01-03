@@ -72,12 +72,26 @@ namespace Player
                 return velocity;
             }
 
-            public override void Ride(Vector2 direction)
+            public override Vector2 ResolveRide(Vector2 direction)
             {
-                Input.CurrentGrapplePos += direction;
+                Input.CurrentGrapplePos = Input.AttachedTo.ContinuousGrapplePos(Input.CurrentGrapplePos);
+                // Input.CurrentGrapplePos += direction;
+                
+                // var at = Input.AttachedTo;
+                // if (at == null) return direction;
+                //
+                // Vector2 atV = at.velocity;
+                // Vector2 atDisplacement = at.transform.position - smActor.transform.position;
+                // float dot = Vector2.SignedAngle(atV, atDisplacement);
+                // return direction * dot;
+                // bool atMovingTowards = Vector2.Dot(atV, atDisplacement) >= 0;
+                // if (atMovingTowards) return Vector2.zero;
+                // return direction;
+                
+                return direction;
             }
 
-            public override PhysObj ResolveRidingOn(PhysObj p) => Input.AttachedTo;
+            public override PhysObj ResolveRidingOn(PhysObj p) => Input.AttachedToPhysObj;
         }
     }
 }

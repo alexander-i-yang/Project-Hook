@@ -65,20 +65,27 @@ namespace A2DK.Phys {
 
         public bool IsOverlapping(PhysObj p)
         {
-            return CheckCollisions(Vector2.zero, (checkCol, dir) =>
-            {
-                return p == checkCol;
-            });
+            return CheckCollisions(Vector2.zero, (checkCol, dir) => { return p == checkCol; });
         }
 
+        /// <summary>
+        /// See CheckCollisions<T>
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <param name="onCollide"></param>
+        /// <returns></returns>
+        public PhysObj CheckCollisions(Vector2 direction, Func<PhysObj, Vector2, bool> onCollide) =>
+            CheckCollisions<PhysObj>(direction, onCollide);
+        
         /// <summary>
         /// Checks the interactable layer for any collisions. Will call onCollide if it hits anything.
         /// </summary>
         /// <param name="direction"><b>MUST</b> be a cardinal direction with a <b>magnitude of one.</b></param>
         /// <param name="onCollide">(<b>physObj</b> collided with, <b>Vector2</b> direction),
         /// returns physObj when collide, otherwise null.</param>
+        /// <typeparam name="T">Type of physObj to check against. Must inherit from PhysObj.</typeparam>
         /// <returns></returns>
-        public PhysObj CheckCollisions(Vector2 direction, Func<PhysObj, Vector2, bool> onCollide) {
+        public T CheckCollisions<T>(Vector2 direction, Func<T, Vector2, bool> onCollide) where T : PhysObj{
             Vector2 colliderSize = myCollider.size;
             Vector2 sizeMult = colliderSize - Vector2.one;
             List<RaycastHit2D> hits = new List<RaycastHit2D>();
@@ -87,26 +94,21 @@ namespace A2DK.Phys {
             filter.useLayerMask = true;
             Physics2D.BoxCast(transform.position, sizeMult, 0, direction, filter, hits, 8f);
 
-            List<Solid> solids = new();
-            List<Actor> actors = new();
+            List<T> collideTs = new();
             
             foreach (var hit in hits) {
                 if (hit.transform == transform)
                 {
                     continue;
                 }
-                var s = hit.transform.GetComponent<Solid>();
-                var a = hit.transform.GetComponent<Actor>();
-                if (s != null)
+                var t = hit.transform.GetComponent<T>();
+                if (t != null)
                 {
-                    solids.Add(s);
-                } else if (a != null)
-                {
-                    actors.Add(a);
+                    collideTs.Add(t);
                 }
             }
             
-            foreach (var s in solids)
+            foreach (var s in collideTs)
             {
                 bool proactiveCollision = ProactiveBoxCast(
                     s.transform, 
@@ -122,26 +124,6 @@ namespace A2DK.Phys {
                     if (col)
                     {
                         return s;
-                    }
-                }
-            }
-            
-            foreach (var a in actors)
-            {
-                bool proactiveCollision = ProactiveBoxCast(
-                    a.transform, 
-                    a.NextFrameOffset,
-                    sizeMult,
-                    1,
-                    direction, 
-                    filter
-                );
-                if (proactiveCollision)
-                {
-                    bool col = onCollide.Invoke(a, direction);
-                    if (col)
-                    {
-                        return a;
                     }
                 }
             }
@@ -185,7 +167,7 @@ namespace A2DK.Phys {
             );
         }
 
-        public void Move(Vector2 vel) {
+        protected void Move(Vector2 vel) {
             vel += MoveRemainder;
             int moveX = (int) Math.Abs(vel.x);
             if (moveX != 0) {
@@ -227,13 +209,11 @@ namespace A2DK.Phys {
         /**
          * Gets the physObj underneath this PhysObj's feet.
          */
-        private PhysObj GetBelowPhysObj() => CheckCollisions(Vector2.down, (p, d) => p.Collidable());
+        public PhysObj GetBelowPhysObj() => CheckCollisions(Vector2.down, (p, d) => p.Collidable());
 
         /**
          * Calculates the physics object this PhysObj is riding on.
          */
         public virtual PhysObj CalcRiding() => GetBelowPhysObj();
-        
-        public virtual void Ride(Vector2 direction) => Move(direction);
     }
 }

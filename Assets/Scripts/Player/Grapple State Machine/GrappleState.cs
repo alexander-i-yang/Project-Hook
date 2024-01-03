@@ -34,7 +34,7 @@ namespace Player
 
             public virtual Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction) => velocity;
 
-            public virtual void Ride(Vector2 v) {}
+            public virtual Vector2 ResolveRide(Vector2 v) => v;
 
             public virtual PhysObj ResolveRidingOn(PhysObj p) => p;
         }
