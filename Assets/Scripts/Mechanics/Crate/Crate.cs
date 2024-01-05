@@ -33,7 +33,7 @@ namespace Mechanics {
         private void FixedUpdate()
         {
             Fall();
-            ApplyVelocity(jostleBehavior.ResolveRidingOn());
+            ApplyVelocity(ResolveJostle());
             MoveTick();
         }
     }

@@ -1,4 +1,5 @@
-﻿using A2DK.Phys;
+﻿using System.Data;
+using A2DK.Phys;
 using ASK.Core;
 using UnityEngine;
 
@@ -72,19 +73,26 @@ namespace Player
                 return velocity;
             }
 
+            /**
+             * Returns true when AttachedTo is moving towards the player.
+             * Constraint: AttachedTo cannot be null.
+             */
+            private bool AttachedMovingTowards()
+            {
+                var at = Input.AttachedToPhysObj;
+                if (at == null) throw new ConstraintException("AttachedTo must not be null");
+                Vector2 atV = at.velocity;
+                Vector2 atDisplacement = at.transform.position - smActor.transform.position;
+                return Vector2.Dot(atV, atDisplacement) <= 0;
+            }
+
             public override Vector2 ResolveRide(Vector2 direction)
             {
                 Input.CurrentGrapplePos = Input.AttachedTo.ContinuousGrapplePos(Input.CurrentGrapplePos);
-                // Input.CurrentGrapplePos += direction;
+
+                if (Input.AttachedTo == null) return direction;
+                bool atMovingTowards = AttachedMovingTowards();
                 
-                var at = Input.AttachedToPhysObj;
-                if (at == null) return direction;
-                
-                Vector2 atV = at.velocity;
-                Vector2 atDisplacement = at.transform.position - smActor.transform.position;
-                // float dot = Vector2.SignedAngle(atV, atDisplacement);
-                // return direction * dot;
-                bool atMovingTowards = Vector2.Dot(atV, atDisplacement) <= 0;
                 if (atMovingTowards) return Vector2.zero;
                 return direction;
             }

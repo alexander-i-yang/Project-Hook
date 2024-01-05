@@ -24,7 +24,7 @@ namespace A2DK.Phys {
                     return ret;
                 });
 
-                HashSet<Actor> ridingActors = new HashSet<Actor>(GetRidingActors(allActors));
+                HashSet<Actor> ridingActors = GetRidingActors(allActors);
                 bool collision = CheckCollisions<Actor>(direction, (a, d) => {
                     // if (p == GrappleRider) return false;
 
@@ -39,10 +39,7 @@ namespace A2DK.Phys {
                     } else
                     {
                         //Push actors
-                        a.MoveGeneral(direction, 1, (ps, ds) => {
-                            if (ps != this) return a.Squish(ps, ds);
-                            return false;
-                        });
+                        a.Push(direction, this);
                     }
 
                     return false;
@@ -50,7 +47,6 @@ namespace A2DK.Phys {
 
                 //Ride actors
                 foreach (var a in ridingActors) {
-                    //Might cause a bug due to a being a PhysObj and GrappleRider is an actor
                     a.Ride(direction);
                 }
                 

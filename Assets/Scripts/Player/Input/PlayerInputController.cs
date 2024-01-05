@@ -25,13 +25,17 @@ namespace Player
             inputActions.Enable();
 
             inputActions.Pause.performed += OnPause;
+            #if UNITY_EDITOR
             inputActions.Debug.performed += OnDebug;
+            #endif
         }
 
         private void OnDisable()
         {
             inputActions.Pause.performed -= OnPause;
+            #if UNITY_EDITOR
             inputActions.Debug.performed -= OnDebug;
+            #endif
             inputActions.Disable();
         }
 

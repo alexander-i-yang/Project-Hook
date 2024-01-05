@@ -6,6 +6,7 @@ using A2DK.Phys;
 using Mechanics;
 using Player;
 using World;
+using Helpers;
 
 using MyBox;
 using UnityEditor;
@@ -52,8 +53,8 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
     private void FixedUpdate()
     {
+        ApplyVelocity(ResolveJostle());
         MoveTick();
-        ApplyVelocity(jostleBehavior.ResolveRidingOn());
 
         Vector2 newV = Vector2.zero;
         newV = _movementStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
@@ -236,12 +237,6 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
                 velocity *= 0.25f;
             }
         }
-    }
-
-    public override void Ride(Vector2 direction)
-    {
-        Vector2 ret = _core.GrappleStateMachine.ResolveRide(direction);
-        base.Ride(ret);
     }
 
     public Vector2 MoveXGrapple(Vector2 oldV, Vector2 gPos, int direction) {
@@ -452,14 +447,53 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         }
         return false;
     }
-
-    public override PhysObj CalcRiding()
-    {
-        PhysObj p = base.CalcRiding();
-        return _grappleStateMachine.CalcRiding(p);
-    }
     #endregion
 
+    #region Jostling
+    
+    private Vector2 _gracePrevV;
+    private GameTimer2 _graceTimer;
+
+    protected override bool FloorStopped()
+    {
+        if (prevRidingOn == GetBelowPhysObj()) return false;
+        return base.FloorStopped();
+    }
+
+    protected override Vector2 ResolveApplyV(Vector2 v)
+    {
+        v = base.ResolveApplyV(v);
+        if (_graceTimer != null && GameTimer2.TimerRunning(_graceTimer))
+        {
+            GameTimerManager.Instance.RemoveTimer(_graceTimer);
+            v = _gracePrevV;
+        }
+        return v;
+    }
+        
+    public override Vector2 ResolveJostle()
+    {
+        if (base.FloorStopped())
+        {
+            _gracePrevV = prevRidingV;
+            _graceTimer = GameTimerManager.Instance.StartTimer(_core.JostleBoostGraceTime, () => { }, IncrementType.FIXED_UPDATE);
+        }
+        return base.ResolveJostle();
+    }
+        
+    public override void Ride(Vector2 direction)
+    {
+        Vector2 ret = _core.GrappleStateMachine.ResolveRide(direction);
+        base.Ride(ret);
+    }
+    
+    public override PhysObj RidingOn()
+    {
+        PhysObj p = base.RidingOn();
+        return _grappleStateMachine.CalcRiding(p);
+    }
+
+    #endregion
     public void BonkHead() {
         velocityY = Math.Min(_core.BonkHeadV, velocityY);
     }

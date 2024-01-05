@@ -4,20 +4,17 @@ using MyBox;
 using UnityEngine;
 
 namespace A2DK.Phys {
-    [RequireComponent(typeof(JostleBehavior))]
     public abstract class Actor : PhysObj
     {
-        protected JostleBehavior jostleBehavior;
-        
         [SerializeField, Foldout("Gravity")] protected int GravityDown;
         [SerializeField, Foldout("Gravity")] protected int GravityUp;
         [SerializeField, Foldout("Gravity")] protected int MaxFall;
         public bool IsMovingUp => velocityY >= 0;
 
-        private void Awake()
-        {
-            jostleBehavior = GetComponent<JostleBehavior>();
-        }
+        // private void Awake()
+        // {
+        //     JostleBehavior = GetComponent<JostleBehavior>();
+        // }
 
         /// <summary>
         /// Moves this actor a specified number of pixels.
@@ -76,8 +73,57 @@ namespace A2DK.Phys {
             velocity += v;
         }
 
-        public bool IsRiding(Solid solid) => jostleBehavior.IsRiding(solid);
+        #region Jostling
+        protected PhysObj ridingOn { get; private set; }
+        //Prev velocity of RidingOn
+        protected Vector2 prevRidingV { get; private set; }
+        protected PhysObj prevRidingOn { get; private set; }
+        public virtual bool IsRiding(Solid solid) => ridingOn == solid;
+        public virtual void Ride(Vector2 direction) => Move(direction);
         
-        public virtual void Ride(Vector2 direction) => Move(jostleBehavior.Ride(direction));
+        /**
+         * When there was a floor but now there's not
+         */
+        protected virtual bool JumpedOff() => prevRidingOn != null && ridingOn == null;
+        
+        /**
+         * When the floor was moving but now it's not
+         */
+        protected virtual bool FloorStopped() => prevRidingV != Vector2.zero && ridingOn != null && ridingOn.velocity == Vector2.zero;
+        
+        protected virtual bool ShouldApplyV() => JumpedOff() || FloorStopped();
+        
+        /**
+         * Set _ridingOn to whatever CalcRiding returns.
+         * Should get called every frame.
+         */
+        public virtual Vector2 ResolveJostle()
+        {
+            Vector2 ret = Vector2.zero;
+            ridingOn = RidingOn();
+            if (ShouldApplyV())
+            {
+                ret = ResolveApplyV(ret);
+            }
+            prevRidingOn = ridingOn;
+            prevRidingV = ridingOn == null ? Vector2.zero : ridingOn.velocity;
+            return ret;
+        }
+        
+        /**
+         * Input previousApplyVelocity, output new apply velocity.
+         * Only called when shouldApplyV.
+         */
+        protected virtual Vector2 ResolveApplyV(Vector2 v) => prevRidingV;
+        
+        public void Push(Vector2 direction, Solid pusher)
+        {
+            MoveGeneral(direction, 1, (ps, ds) => {
+                if (ps != pusher) return Squish(ps, ds);
+                return false;
+            });
+        }
+        
+        #endregion
     }
 }

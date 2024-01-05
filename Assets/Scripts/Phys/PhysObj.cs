@@ -120,7 +120,7 @@ namespace A2DK.Phys {
                 );
                 if (proactiveCollision)
                 {
-                    bool col = onCollide.Invoke(s, direction);
+                    bool col = onCollide(s, direction);
                     if (col)
                     {
                         return s;
@@ -214,6 +214,6 @@ namespace A2DK.Phys {
         /**
          * Calculates the physics object this PhysObj is riding on.
          */
-        public virtual PhysObj CalcRiding() => GetBelowPhysObj();
+        public virtual PhysObj RidingOn() => GetBelowPhysObj();
     }
 }

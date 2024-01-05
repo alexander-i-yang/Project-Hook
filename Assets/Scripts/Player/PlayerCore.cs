@@ -36,6 +36,10 @@ namespace Player
 
         [Tooltip("Cornerboost speed multiplier")]
         [SerializeField] public float CornerboostMultiplier;
+        
+        [Tooltip("Delay for jumping off whatever the player is riding")]
+        [SerializeField]
+        public float JostleBoostGraceTime;
 
         [Foldout("Jump", true)]
         [SerializeField] public int JumpHeight;
