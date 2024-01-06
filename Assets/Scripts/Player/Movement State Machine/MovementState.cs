@@ -28,7 +28,7 @@ namespace Player
             public virtual void JumpReleased() { }
             public virtual void DivePressed() { }
             public virtual void SetGrounded(bool isGrounded, bool isMovingUp) { }
-            public virtual Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction) => Vector2.zero;
+            public virtual Vector2 MoveX(Vector2 velocity, int direction) => Vector2.zero;
 
             public void RefreshAbilities()
             {
@@ -50,14 +50,14 @@ namespace Player
                 Input.canJumpCut = true;
                 GameTimer.Clear(Input.jumpBufferTimer);
                 // PlayAnimation(PlayerAnimations.JUMP_INIT);
-                smActor.JumpFromGround(MyCore.JumpHeight);
+                MySM.MyPhysObj.JumpFromGround(MyCore.JumpHeight);
                 SetGrounded(false, true); 
             }
 
             protected void DoubleJump()
             {
                 Input.canJumpCut = true;
-                smActor.DoubleJump(MyCore.DoubleJumpHeight, Input.moveDirection);
+                MySM.MyPhysObj.DoubleJump(Input.moveDirection);
                 Input.canDoubleJump = false;
                 SetGrounded(false, true);
             }
@@ -66,7 +66,7 @@ namespace Player
             {
                 if (Input.canJumpCut)
                 {
-                    smActor.JumpCut();
+                    MySM.MyPhysObj.JumpCut();
                     Input.canJumpCut = false;
                 }
             }

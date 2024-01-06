@@ -33,16 +33,16 @@ namespace Player
                 }
             }
 
-            public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction)
+            public override Vector2 MoveX(Vector2 velocity, int direction)
             {
                 UpdateSpriteFacing(direction);
                 AnimSetRunning(direction != 0);
-                return p.CalcMovementX(direction, MyCore.MaxAcceleration, MyCore.MaxDeceleration);
+                return MySM.MyPhysObj.CalcMovementX(direction, MyCore.MaxAcceleration, MyCore.MaxDeceleration);
             }
 
             public override void FixedUpdate() {
                 base.FixedUpdate();
-                if (!smActor.IsGrounded()) {
+                if (!MySM.MyPhysObj.IsGrounded()) {
                     MySM.Transition<Airborne>();
                 }
             }

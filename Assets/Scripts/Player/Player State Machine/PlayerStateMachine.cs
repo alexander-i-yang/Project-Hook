@@ -1,12 +1,12 @@
 using ASK.Core;
 using ASK.Helpers;
-
+using Phys.PhysObjStateMachine;
 using UnityEngine;
 using UnityEngine.Events;        
 
 namespace Player
 {
-    public abstract partial class PlayerStateMachine<M, S, I> : StateMachine<M, S, I>
+    public abstract partial class PlayerStateMachine<M, S, I> : PhysObjStateMachine<M, S, I, PlayerActor>
         where M : PlayerStateMachine<M, S, I>
         where S : PlayerStateMachine.PlayerState<M, S, I>
         where I : PlayerStateInput
@@ -20,12 +20,5 @@ namespace Player
                 return _core;
             }
         }
-
-        #region Overrides
-        protected override void Init()
-        {
-            _core = GetComponent<PlayerCore>();
-        }
-        #endregion
     }
 }

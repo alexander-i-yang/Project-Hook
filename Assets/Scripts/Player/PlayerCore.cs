@@ -45,6 +45,8 @@ namespace Player
         [SerializeField] public int JumpHeight;
 
         [SerializeField] public int DoubleJumpHeight;
+        
+        [SerializeField] public int AddDoubleJumpHeight;
 
         [SerializeField] public float JumpCoyoteTime;
 

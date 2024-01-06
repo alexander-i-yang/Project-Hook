@@ -9,6 +9,11 @@ namespace A2DK.Phys {
         [SerializeField, Foldout("Gravity")] protected int GravityDown;
         [SerializeField, Foldout("Gravity")] protected int GravityUp;
         [SerializeField, Foldout("Gravity")] protected int MaxFall;
+        [SerializeField, Foldout("Gravity")] protected int BonkHeadV;
+        
+        [Foldout("Movement Events")]
+        [SerializeField] public ActorEvent OnLand;
+
         public bool IsMovingUp => velocityY >= 0;
 
         // private void Awake()
@@ -69,7 +74,6 @@ namespace A2DK.Phys {
 
         protected void ApplyVelocity(Vector2 v)
         {
-            if (v != Vector2.zero) print(gameObject.name + " apply v " + v);
             velocity += v;
         }
 
@@ -116,12 +120,22 @@ namespace A2DK.Phys {
          */
         protected virtual Vector2 ResolveApplyV(Vector2 v) => prevRidingV;
         
-        public void Push(Vector2 direction, Solid pusher)
+        public virtual bool Push(Vector2 direction, Solid pusher)
         {
-            MoveGeneral(direction, 1, (ps, ds) => {
+            return MoveGeneral(direction, 1, (ps, ds) => {
                 if (ps != pusher) return Squish(ps, ds);
                 return false;
             });
+        }
+        
+        public virtual void BonkHead() {
+            velocityY = Math.Min(BonkHeadV, velocityY);
+        }
+        
+        public virtual void Land()
+        {
+            OnLand?.Invoke(transform.position + Vector3.down * 5.5f);
+            velocityY = 0;
         }
         
         #endregion

@@ -12,7 +12,7 @@ namespace Player
                 // PlayAnimation(PlayerAnimations.DOGOING);
                 //MySM._drillEmitter.SetParameter("PlayerGrounded", 1);
                 //MySM._drillEmitter.Play();
-                i.oldVelocity = smActor.Dogo();
+                i.oldVelocity = MySM.MyPhysObj.Dogo();
                 i.ultraTimer = GameTimerWindowed.StartNewWindowedTimer(
                     MyCore.UltraTimeDelay, 
                     MyCore.UltraTimeWindow
@@ -32,10 +32,10 @@ namespace Player
                 base.FixedUpdate();
             }
 
-            public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction)
+            public override Vector2 MoveX(Vector2 velocity, int direction)
             {
                 UpdateSpriteFacing(direction);
-                return p.CalcMovementX(direction, MyCore.MaxAirAcceleration, MyCore.AirResistance);
+                return MySM.MyPhysObj.CalcMovementX(direction, MyCore.MaxAirAcceleration, MyCore.AirResistance);
             }
 
             public override void Update()

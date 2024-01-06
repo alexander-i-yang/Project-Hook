@@ -9,13 +9,13 @@ namespace Mechanics
             MySM.Transition<ZiplineStateToStart>();
         }
 
-        public override Vector2 CalculateVelocity() => MySM.MyZ.VToEnd();
+        public override Vector2 CalculateVelocity() => MySM.MyPhysObj.VToEnd();
 
         public override void FixedUpdate()
         {
-            if (MySM.MyZ.ReachedEnd())
+            if (MySM.MyPhysObj.ReachedEnd())
             {
-                MySM.MyZ.SetPosEnd();
+                MySM.MyPhysObj.SetPosEnd();
                 MySM.Transition<ZiplineStateEnd>();
             }
         }

@@ -26,7 +26,7 @@ namespace VFX
 
         private void OnDisable()
         {
-            Game.TimeManager.OnTimeScaleChange -= ChangeTimeScale;
+            if (Game.Instance != null) Game.TimeManager.OnTimeScaleChange -= ChangeTimeScale;
         }
 
         private void ChangeTimeScale()

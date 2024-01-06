@@ -10,7 +10,7 @@ namespace Player
             public override void Enter(MovementStateInput i)
             {
                 // PlayAnimation(PlayerAnimations.DIVING);
-                smActor.Dive();
+                MySM.MyPhysObj.Dive();
                 Input.canDive = false;
                 Input.canJumpCut = false;
                 
@@ -47,13 +47,13 @@ namespace Player
             }
 
             public override void FixedUpdate() {
-                smActor.UpdateWhileDiving();
+                MySM.MyPhysObj.UpdateWhileDiving();
             }
 
-            public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction)
+            public override Vector2 MoveX(Vector2 velocity, int direction)
             {
                 UpdateSpriteFacing(direction);
-                return p.CalcMovementX(direction, MyCore.MaxAirAcceleration, MyCore.AirResistance);
+                return MySM.MyPhysObj.CalcMovementX(direction, MyCore.MaxAirAcceleration, MyCore.AirResistance);
             }
         }
     }

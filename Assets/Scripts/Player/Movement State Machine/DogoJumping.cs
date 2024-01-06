@@ -19,7 +19,7 @@ namespace Player
             }
 
             private int GetDogoJumpDirection() {
-                int facing = smActor.Facing;
+                int facing = MySM.MyPhysObj.Facing;
                 int moveDir = Input.moveDirection;
                 if (moveDir == 0) moveDir = facing;
                 return moveDir;
@@ -30,7 +30,7 @@ namespace Player
                 Input.canJumpCut = true;
                 _dogoJumpTimer = GameTimer.StartNewTimer(MyCore.DogoJumpTime);
                 int jumpDir = GetDogoJumpDirection();
-                smActor.DogoJump(jumpDir, conserveMomentum, oldXV);
+                MySM.MyPhysObj.DogoJump(jumpDir, conserveMomentum, oldXV);
                 int oldJumpDir = jumpDir;
                 
                 yield return Helper.DelayAction(MyCore.DogoJumpGraceTime, () => {
@@ -38,7 +38,7 @@ namespace Player
                     if (jumpDir != oldJumpDir)
                     {
                         _dogoJumpTimer = GameTimer.StartNewTimer(MyCore.DogoJumpTime);
-                        smActor.DogoJump(jumpDir, conserveMomentum, oldXV);
+                        MySM.MyPhysObj.DogoJump(jumpDir, conserveMomentum, oldXV);
                     }
                 });
             }
@@ -75,16 +75,16 @@ namespace Player
                 }
             }
 
-            public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction)
+            public override Vector2 MoveX(Vector2 velocity, int direction)
             {
                 UpdateSpriteFacing(direction);
-                return p.CalcMovementX(direction, MyCore.MaxAirAcceleration, MyCore.AirResistance);
+                return MySM.MyPhysObj.CalcMovementX(direction, MyCore.MaxAirAcceleration, MyCore.AirResistance);
             }
 
             public override void FixedUpdate()
             {
                 GameTimer.FixedUpdate(_dogoJumpTimer);
-                smActor.Fall();
+                MySM.MyPhysObj.Fall();
                 if (GameTimer.GetTimerState(_dogoJumpTimer) == TimerState.Finished)
                 {
                     MySM.Transition<Airborne>();

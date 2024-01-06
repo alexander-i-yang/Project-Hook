@@ -62,15 +62,15 @@ namespace Player
                 }
             }
 
-            public override Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction)
+            public override Vector2 MoveX(Vector2 velocity, int direction)
             {
                 UpdateSpriteFacing(direction);
-                return p.CalcMovementX(direction, MyCore.MaxAirAcceleration, MyCore.AirResistance);
+                return MySM.MyPhysObj.CalcMovementX(direction, MyCore.MaxAirAcceleration, MyCore.AirResistance);
             }
 
             public override void FixedUpdate()
             {
-                smActor.Fall();
+                MySM.MyPhysObj.Fall();
                 GameTimer.FixedUpdate(_jumpCoyoteTimer);
             }
         }

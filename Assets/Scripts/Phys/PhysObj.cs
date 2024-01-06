@@ -186,17 +186,17 @@ namespace A2DK.Phys {
         }
         public abstract bool MoveGeneral(Vector2 direction, int magnitude, Func<PhysObj, Vector2, bool> onCollide);
         
-        public abstract bool Collidable();
+        public abstract bool Collidable(PhysObj collideWith);
         public virtual bool OnCollide(PhysObj p, Vector2 direction) {
-            return Collidable();
+            return Collidable(p);
         }
 
-        public virtual bool PlayerCollide(Actor p, Vector2 direction) {
+        /*public virtual bool PlayerCollide(Actor p, Vector2 direction) {
             return OnCollide(p, direction);
-        }
+        }*/
 
         public virtual bool IsGround(PhysObj whosAsking) {
-            return Collidable();
+            return Collidable(whosAsking);
         }
 
         //TODO: change this so that it only looks for actors near me
@@ -209,7 +209,7 @@ namespace A2DK.Phys {
         /**
          * Gets the physObj underneath this PhysObj's feet.
          */
-        public PhysObj GetBelowPhysObj() => CheckCollisions(Vector2.down, (p, d) => p.Collidable());
+        public PhysObj GetBelowPhysObj() => CheckCollisions(Vector2.down, (p, d) => this.Collidable(p));
 
         /**
          * Calculates the physics object this PhysObj is riding on.

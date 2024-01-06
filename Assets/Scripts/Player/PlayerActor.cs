@@ -26,11 +26,10 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     public int Facing => sprite.flipX ? -1 : 1;    //-1 is facing left, 1 is facing right
 
     [Foldout("Movement Events", true)]
-    public PlayerEvent OnJumpFromGround;
-    public PlayerEvent OnDoubleJump;
+    public ActorEvent OnJumpFromGround;
+    public ActorEvent OnDoubleJump;
     public UnityEvent OnDiveStart;
-    public PlayerEvent OnDogo;
-    public PlayerEvent OnLand;
+    public ActorEvent OnDogo;
     
     private Func<Vector2, Vector2> _deathRecoilFunc;
 
@@ -54,12 +53,12 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     private void FixedUpdate()
     {
         ApplyVelocity(ResolveJostle());
-        MoveTick();
 
         Vector2 newV = Vector2.zero;
         newV = _movementStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
         newV = _grappleStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
         velocity += newV;
+        MoveTick();
     }
 
     #region Movement
@@ -87,11 +86,10 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         // return new Vector2(Mathf.MoveTowards(velocityX, targetVelocityX, accel), velocityY);
     }
 
-    public void Land()
+    public override void Land()
     {
-        OnLand?.Invoke(transform.position + Vector3.down * 5.5f);
         _movementStateMachine.SetGrounded(true, IsMovingUp);
-        velocityY = 0;
+        base.Land();
     }
     #endregion
 
@@ -107,9 +105,11 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         velocityY = Math.Max(applyV, velocityY + applyV);
     }
 
-    public void DoubleJump(int jumpHeight, int moveDirection = 0)
+    public void DoubleJump(int moveDirection = 0)
     {
-        Bounce(jumpHeight);
+        float doubleJumpVelocity = GetJumpSpeedFromHeight(_core.DoubleJumpHeight);
+        float addDoubleJumpVelocity = GetJumpSpeedFromHeight(_core.AddDoubleJumpHeight);
+        velocityY = Math.Max(doubleJumpVelocity, velocityY + addDoubleJumpVelocity);
 
         // If the player is trying to go in the opposite direction of their x velocity, instantly switch direction.
         if (moveDirection != 0 && moveDirection != Math.Sign(velocityX))
@@ -207,7 +207,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         velocity = ortho.normalized * (Mathf.Lerp(ortho.magnitude, velocity.magnitude, _core.GrappleStartMult));
     }
 
-    public void PullGrappleUpdate(Vector2 gPoint, float warmPercent) {
+    public void PullGrappleUpdate(Vector2 gPoint) {
         Vector2 rawV = gPoint - (Vector2) transform.position;
         Vector2 targetV = rawV.normalized * _core.MaxGrappleSpeed;
         velocity = Vector2.Lerp(velocity, targetV, _core.GrappleLerpPercent);
@@ -389,8 +389,8 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     #endregion
 
     #region Actor Overrides
-    public override bool Collidable() {
-        return true;
+    public override bool Collidable(PhysObj collideWith) {
+        return collideWith.Collidable(this);
     }
 
     public override bool OnCollide(PhysObj p, Vector2 direction) {
@@ -398,7 +398,11 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         {
             FilterLogger.Log(this, $"Player collided with object {p} from direction {direction}");
         }
-        bool col = p.PlayerCollide(this, direction);
+        else
+        {
+            return false;
+        }
+        bool col = p.OnCollide(this, direction);
         if (col) {
             if (direction.x != 0) {
                 
@@ -428,10 +432,10 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         velocity = Vector2.left * oldV.x * _core.ParryVMult;
     }
 
-    public override bool PlayerCollide(Actor p, Vector2 direction)
+    /*public override bool PlayerCollide(Actor p, Vector2 direction)
     {
         return false;     
-    }
+    }*/
 
     public override bool IsGround(PhysObj whosAsking)
     {
@@ -493,10 +497,13 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         return _grappleStateMachine.CalcRiding(p);
     }
 
-    #endregion
-    public void BonkHead() {
-        velocityY = Math.Min(_core.BonkHeadV, velocityY);
+    public override bool Push(Vector2 direction, Solid solid)
+    {
+        _core.GrappleStateMachine.Push(direction, solid);
+        return base.Push(direction, solid);
     }
+
+    #endregion
 
     private Vector2 HitWall(int direction) {
         // _abilityStateMachine.HitWall();
@@ -518,7 +525,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
             bool stillNextToWall = CheckCollisions(
                 Vector2.right * direction, 
                 (physObj, d) => {
-                return physObj != this && physObj.Collidable();
+                return physObj != this && physObj.Collidable(this);
             });
             if (!stillNextToWall) {
                 velocityX = _hitWallPrevSpeed * _core.CornerboostMultiplier;

@@ -5,16 +5,16 @@ namespace Player {
     public class GrappleHook : Solid {
         public bool DidCollide {get; private set;} //TODO think of a better way to do this. WOW is it bad practice.
         
-        public override bool Collidable() {
+        public override bool Collidable(PhysObj collideWith) {
             return false;
         }
 
-        public override bool PlayerCollide(Actor p, Vector2 direction) {
+        /*public override bool PlayerCollide(Actor p, Vector2 direction) {
             return false;
-        }
+        }*/
 
         public override bool OnCollide(PhysObj p, Vector2 v) {
-            if (p.Collidable()) {DidCollide = true; return true;}
+            if (p.Collidable(this)) {DidCollide = true; return true;}
             return false;
         }
 

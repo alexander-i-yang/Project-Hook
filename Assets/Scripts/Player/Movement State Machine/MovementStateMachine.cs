@@ -106,7 +106,7 @@ namespace Player
         }
 
         public Vector2 ProcessMoveX(PlayerActor p, Vector2 velocity, int direction) {
-            return CurrState.MoveX(p, velocity, direction);
+            return CurrState.MoveX(velocity, direction);
         }
     }
 }

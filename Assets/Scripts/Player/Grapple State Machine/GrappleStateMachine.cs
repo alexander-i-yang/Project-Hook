@@ -69,14 +69,14 @@ namespace Player
         }
 
         public Vector2 ProcessMoveX(PlayerActor p, Vector2 velocity, int direction) {
-            return CurrState.MoveX(p, velocity, direction);
+            return CurrState.MoveX(velocity, direction);
         }
 
         public virtual Vector2 ProcessCollideHorizontal(Vector2 oldV, Vector2 newV) => CurrState.ProcessCollideHorizontal(oldV, newV);
 
         #endregion
 
-        public bool IsGrappling() => IsOnState<Grappling>();
+        public bool IsGrappling() => IsOnState<Swinging>() || IsOnState<Pulling>();
 
         public bool IsGrappleExtending() => IsOnState<ExtendGrapple>();
 
@@ -88,5 +88,7 @@ namespace Player
 
         public Vector2 ResolveRide(Vector2 v) => CurrState.ResolveRide(v);
         public PhysObj CalcRiding(PhysObj p) => CurrState.ResolveRidingOn(p);
+
+        public void Push(Vector2 direction, PhysObj pusher) => CurrState.Push(direction, pusher);
     }
 }

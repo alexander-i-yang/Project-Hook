@@ -32,11 +32,13 @@ namespace Player
 
             public virtual Vector2 ProcessCollideHorizontal(Vector2 oldV, Vector2 newV) => newV;
 
-            public virtual Vector2 MoveX(PlayerActor p, Vector2 velocity, int direction) => velocity;
+            public virtual Vector2 MoveX(Vector2 velocity, int direction) => velocity;
 
             public virtual Vector2 ResolveRide(Vector2 v) => v;
 
             public virtual PhysObj ResolveRidingOn(PhysObj p) => p;
+
+            public virtual void Push(Vector2 direction, PhysObj pusher) {}
         }
     }
 }

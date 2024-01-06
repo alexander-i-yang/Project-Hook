@@ -2,13 +2,13 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Player
+namespace A2DK.Phys
 {
     [Serializable]
-    public class PlayerEvent : UnityEvent<Vector3>
+    public class ActorEvent : UnityEvent<Vector3>
     {
         [SerializeField]
-        PlayerEvent pEvent;
+        ActorEvent pEvent;
 
         public void OnEventRaised(Vector3 pos)
         {

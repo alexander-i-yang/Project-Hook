@@ -36,7 +36,7 @@ namespace Mechanics
             return base.OnCollide(p, direction);
         }
         
-        public override bool Collidable()
+        public override bool Collidable(PhysObj collideWith)
         {
             return true;
         }
@@ -53,7 +53,9 @@ namespace Mechanics
             return (transform.position, this);
         }
 
-        public Vector2 ContinuousGrapplePos(Vector2 origPos) => transform.position;
+        public Vector2 ContinuousGrapplePos(Vector2 origPos, Actor grapplingActor) => transform.position;
+        
+        public GrappleapleType GrappleapleType() => Mechanics.GrappleapleType.SWING;
 
         public PhysObj GetPhysObj() => this;
 

@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 namespace Mechanics {
     public class GrapplePoint : Solid, IGrappleAble {
-        public override bool Collidable() {
+        public override bool Collidable(PhysObj collideWith) {
             return false;
         }
 
-        public override bool PlayerCollide(Actor p, Vector2 direction) {
+        /*public override bool PlayerCollide(Actor p, Vector2 direction) {
             // if (direction.y > 0) {
             //     p.BonkHead();
             // }
             return false;
-        }
+        }*/
 
         public (Vector2 curPoint, IGrappleAble attachedTo) GetGrapplePoint(Actor p, Vector2 rayCastHit) {
             bool pOverlap = false;
@@ -38,8 +38,9 @@ namespace Mechanics {
             return (transform.position, this);
         }
 
-        public Vector2 ContinuousGrapplePos(Vector2 origPos) => transform.position;
+        public Vector2 ContinuousGrapplePos(Vector2 origPos, Actor grapplingActor) => transform.position;
 
         public PhysObj GetPhysObj() => this;
+        public GrappleapleType GrappleapleType() => Mechanics.GrappleapleType.SWING;
     }
 }

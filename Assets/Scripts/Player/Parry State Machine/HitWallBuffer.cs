@@ -13,13 +13,13 @@ namespace Player
             public override void Enter(ParryStateInput i)
             {
                 base.Enter(i);
-                oldV = smActor.velocity;
+                oldV = MySM.MyPhysObj.velocity;
                 _parryTimer = GameTimer.StartNewTimer(MyCore.ParryPostCollisionWindow);
             }
 
             public override void ParryStarted() {
                 MySM.Transition<Idle>();
-                smActor.Parry(oldV);
+                MySM.MyPhysObj.Parry(oldV);
             }
 
             public override void OnCollide() {

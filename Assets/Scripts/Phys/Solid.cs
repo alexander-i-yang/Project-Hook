@@ -24,7 +24,7 @@ namespace A2DK.Phys {
                     return ret;
                 });
 
-                HashSet<Actor> ridingActors = GetRidingActors(allActors);
+                HashSet<Actor> ridingActors = new HashSet<Actor>(allActors.Where(c => c.IsRiding(this)));
                 bool collision = CheckCollisions<Actor>(direction, (a, d) => {
                     // if (p == GrappleRider) return false;
 
@@ -58,10 +58,6 @@ namespace A2DK.Phys {
             }
             
             return false;
-        }
-
-        public HashSet<Actor> GetRidingActors(Actor[] allActors) {
-            return new HashSet<Actor>(allActors.Where(c => c.IsRiding(this)));
         }
 
         public override bool Squish(PhysObj p, Vector2 d) {

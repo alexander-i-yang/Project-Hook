@@ -1,5 +1,6 @@
 using ASK.Core;
 using Helpers;
+using Mechanics;
 using UnityEngine;
 
 namespace Player
@@ -14,9 +15,9 @@ namespace Player
             
             public override void Enter(GrappleStateInput i) {
                 _grappleDuration = 0;
-                smActor.ResetMyGrappleHook();
+                MySM.MyPhysObj.ResetMyGrappleHook();
                 _prevTimeScale = Game.TimeManager.TimeScale;
-                Input.CurGrappleExtendPos = smActor.transform.position;
+                Input.CurGrappleExtendPos = MySM.MyPhysObj.transform.position;
 
                 // _timescaleTimer = GameTimerManager.Instance.StartTimer(
                 //     MyCore.GrappleBulletTimeDuration,
@@ -43,12 +44,15 @@ namespace Player
             {
                 base.FixedUpdate();
                 _grappleDuration += Game.TimeManager.FixedDeltaTime;
-                var updateData = smActor.GrappleExtendUpdate(_grappleDuration, MySM.GetGrappleInputPos());
+                
+                var updateData = MySM.MyPhysObj.GrappleExtendUpdate(_grappleDuration, MySM.GetGrappleInputPos());
                 Input.CurGrappleExtendPos = updateData.curPoint;
-                if (updateData.attachedTo != null)
+                Input.AttachedTo = updateData.attachedTo;
+                
+                if (Input.AttachedTo != null)
                 {
-                    Input.AttachedTo = updateData.attachedTo;
-                    MySM.Transition<Grappling>();
+                    if (Input.AttachedTo.GrappleapleType() == GrappleapleType.SWING) MySM.Transition<Swinging>();
+                    if (Input.AttachedTo.GrappleapleType() == GrappleapleType.PULL) MySM.Transition<Pulling>();
                 }
             }
 
