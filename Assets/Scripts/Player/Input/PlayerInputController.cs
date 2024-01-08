@@ -153,11 +153,22 @@ namespace Player
             return inputActions.Parry.WasReleasedThisFrame();
         }
 
-        public Vector2 GetMousePos()
+        public Vector3 GetMousePos()
         {
             Vector2 mPos = Mouse.current.position.ReadValue();
             return Camera.main.ScreenToWorldPoint(mPos);
-            // return GameObject.Find("FinalCamera").ScreenToWorldPoint(mPos);
+        }
+
+        public Vector2 GetStickAim()
+        {
+            return inputActions.Aim.ReadValue<Vector2>();
+        }
+        
+        public Vector2 GetGrappleAimPos(Vector3 playerPos)
+        {
+            Vector2 stickInput = GetStickAim();
+            if (stickInput != Vector2.zero) return stickInput*30 + (Vector2)playerPos;
+            return GetMousePos();
         }
 
         public void AddToPauseAction(System.Action action)

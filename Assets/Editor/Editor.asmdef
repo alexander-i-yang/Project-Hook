@@ -12,7 +12,8 @@
         "Unity.RenderPipelines.Universal.Runtime",
         "Mechanics",
         "World",
-        "Spawning"
+        "Spawning",
+        "VFX"
     ],
     "includePlatforms": [
         "Editor"

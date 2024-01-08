@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public interface IInputController
 {
     //Get -> Returns if the button is pressed
@@ -28,5 +30,7 @@ public interface IInputController
     public bool ParryStarted();
     public bool ParryFinished();
 
-    public UnityEngine.Vector2 GetMousePos();
+    public Vector3 GetMousePos();
+
+    public Vector2 GetStickAim();
 }

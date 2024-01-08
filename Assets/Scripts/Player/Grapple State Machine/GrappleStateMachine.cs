@@ -80,7 +80,7 @@ namespace Player
 
         public bool IsGrappleExtending() => IsOnState<ExtendGrapple>();
 
-        public Vector2 GetGrappleInputPos() => MyCore.Input.GetMousePos();
+        public Vector2 GetGrappleInputPos() => MyCore.Input.GetGrappleAimPos(MyPhysObj.transform.position);
 
         public Vector2 GetGrapplePos() => CurrInput.CurrentGrapplePos;
 

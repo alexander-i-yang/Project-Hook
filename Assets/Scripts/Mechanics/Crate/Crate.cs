@@ -24,6 +24,7 @@ namespace Mechanics {
 
         public override bool Collidable(PhysObj collideWith)
         {
+            //TODO: :grimmace:
             if (collideWith as Solid)
             {
                 return collideWith.Collidable(this);
@@ -91,15 +92,6 @@ namespace Mechanics {
         public override void Land()
         {
             _stateMachine.CurrState.SetGrounded(true, IsMovingUp);
-        }
-
-        public override bool MoveGeneral(Vector2 direction, int magnitude, Func<PhysObj, Vector2, bool> onCollide)
-        {
-            if (magnitude != 0)
-            {
-                bool b;
-            }
-            return base.MoveGeneral(direction, magnitude, onCollide);
         }
 
         public float ApplyXFriction(float prevXVelocity, float frictionAccel)
