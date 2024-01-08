@@ -44,3 +44,9 @@ TagManager:
   - name: Grapple
     uniqueID: 3898004579
     locked: 0
+  - name: MainDecor
+    uniqueID: 391745469
+    locked: 0
+  - name: Main
+    uniqueID: 1357993775
+    locked: 0

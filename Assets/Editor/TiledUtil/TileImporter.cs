@@ -258,7 +258,7 @@ namespace TiledUtil {
         
         private void ImportGroundTilemap(GameObject g)
         {
-            g.GetRequiredComponent<TilemapRenderer>().SetSortingLayer("Ground");
+            g.GetRequiredComponent<TilemapRenderer>().SetSortingLayer("Main");
         }
         
         private void ImportSemisolidTilemap(GameObject g)

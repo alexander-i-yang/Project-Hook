@@ -7,18 +7,26 @@ namespace Editor
     [CustomEditor(typeof(Scarf))]
     public class DoorBakerEditor : UnityEditor.Editor
     {
+        private int _numPoints;
+        private int _prevNumPoints;
+        
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
             var script = target as Scarf;
-            if(GUILayout.Button("Set Scarf Points"))
+            
+            _numPoints = EditorGUILayout.IntSlider(_numPoints, 0, 32);
+            if (_numPoints != _prevNumPoints)
             {
-                script.InitScarfPoints();
+                script.DestroyChildrenEditor();
+                script.InitScarfPoints(_numPoints);
+                
+                #if UNITY_EDITOR
+                EditorUtility.SetDirty(script);
+                #endif
             }
-            if(GUILayout.Button("Destroy Children"))
-            {
-                script.DestroyChildren();
-            }
+            
+            _prevNumPoints = _numPoints;
         }
     }
 }
