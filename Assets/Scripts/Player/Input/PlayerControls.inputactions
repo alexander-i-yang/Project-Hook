@@ -69,15 +69,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Shotgun",
-                    "type": "Button",
-                    "id": "241c28f1-ffe9-4717-a5c8-101c7ceed2e0",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Parry",
                     "type": "Button",
                     "id": "894f0469-9095-4f78-946c-a5f4b1d210d2",
@@ -284,30 +275,8 @@
                 },
                 {
                     "name": "",
-                    "id": "a4c71910-f94c-48f7-8294-b5b0d6a02392",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Shotgun",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c4f8e945-ce0a-4223-89b4-4bd810fe7537",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Shotgun",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "81314343-8cf6-40d3-a252-7eb9b5b72cfa",
-                    "path": "<Keyboard>/shift",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

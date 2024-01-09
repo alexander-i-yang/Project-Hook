@@ -4,7 +4,8 @@
     "references": [
         "ASKRuntime",
         "Phys",
-        "Helpers"
+        "Helpers",
+        "Combat"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

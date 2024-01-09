@@ -122,21 +122,6 @@ namespace Player
         {
             return inputActions.Grapple.WasReleasedThisFrame();
         }
-
-        public bool GetShotgunInput()
-        {
-            return inputActions.Shotgun.IsPressed();
-        }
-
-        public bool ShotgunStarted()
-        {
-            return inputActions.Shotgun.WasPressedThisFrame();
-        }
-
-        public bool ShotgunFinished()
-        {
-            return inputActions.Shotgun.WasReleasedThisFrame();
-        }
         
         public bool GetParryInput()
         {
@@ -164,7 +149,7 @@ namespace Player
             return inputActions.Aim.ReadValue<Vector2>();
         }
         
-        public Vector2 GetGrappleAimPos(Vector3 playerPos)
+        public Vector2 GetAimPos(Vector3 playerPos)
         {
             Vector2 stickInput = GetStickAim();
             if (stickInput != Vector2.zero) return stickInput*30 + (Vector2)playerPos;

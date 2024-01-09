@@ -10,7 +10,7 @@ namespace Player
         
         void Update()
         {
-            reticle.position = _playerInputController.GetGrappleAimPos(playerOrigin.transform.position);
+            reticle.position = _playerInputController.GetAimPos(playerOrigin.transform.position);
         }
     }
 }

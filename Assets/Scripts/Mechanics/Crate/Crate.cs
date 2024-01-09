@@ -2,15 +2,17 @@
 using A2DK.Phys;
 using ASK.Core;
 using UnityEngine;
+using Combat;
 
 namespace Mechanics {
     [RequireComponent(typeof(CrateStateMachine))]
-    public class Crate : Actor, IGrappleAble
+    public class Crate : Actor, IGrappleAble, IPunchable
     {
 
-        [SerializeField] private float maxPullV;
+        [SerializeField] private float minPullV;
         [SerializeField] private float grappleLerp;
         [SerializeField] private float _groundedFrictionAccel;
+        [SerializeField] private float distanceScale;
         public float GroundedFrictionAccel => _groundedFrictionAccel;
         [SerializeField] private float _airborneFrictionAccel;
         public float AirborneFrictionAccel => _airborneFrictionAccel;
@@ -52,7 +54,11 @@ namespace Mechanics {
         public Vector2 ContinuousGrapplePos(Vector2 origPos, Actor grapplingActor)
         {
             Vector2 rawV = grapplingActor.transform.position - transform.position;
-            Vector2 targetV = rawV.normalized * (maxPullV + Mathf.Sqrt(grapplingActor.velocity.magnitude));
+
+            float newMag = rawV.magnitude * distanceScale;
+            newMag = Mathf.Max(minPullV, newMag);
+            
+            Vector2 targetV = rawV.normalized * newMag;
             velocity = Vector2.Lerp(velocity, targetV, grappleLerp);
             return transform.position;
         }
@@ -99,6 +105,11 @@ namespace Mechanics {
             float accel = frictionAccel;
             accel *= Game.TimeManager.FixedDeltaTime;
             return Mathf.SmoothStep(prevXVelocity, 0f, accel);
+        }
+
+        public void ReceivePunch(Vector2 v)
+        {
+            velocity = v;
         }
     }
 }

@@ -7,9 +7,9 @@ namespace Player
     {
         public class Idle : ParryState
         {
-            public override void ParryStarted() {
-                MySM.Transition<Parrying>();
-                print("Parry started!");
+            public override void ReadParryInput(bool parryInput)
+            {
+                if (parryInput) MySM.Transition<ParryAiming>();
             }
 
             public override Vector2 ProcessCollideHorizontal(Vector2 oldV, Vector2 newV)

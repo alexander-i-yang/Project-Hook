@@ -1,6 +1,6 @@
 using ASK.Core;
 using ASK.Helpers;
-
+using Combat;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -42,19 +42,12 @@ namespace Player
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-            
-            if (MyCore.Input.ParryStarted())
-            {
-                CurrState.ParryStarted();
-            }
+            CurrState.ReadParryInput(MyCore.Input.GetParryInput());
         }
         #endregion
 
         public Vector2 ProcessCollideHorizontal(Vector2 oldV, Vector2 newV) => CurrState.ProcessCollideHorizontal(oldV, newV);
+
+        public Vector2 GetAimInputPos() => MyCore.Input.GetAimPos(MyPhysObj.transform.position);
     }
 }

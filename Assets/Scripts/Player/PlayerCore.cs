@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using Combat;
 using UnityEngine;
 
 using MyBox;
@@ -163,6 +164,7 @@ namespace Player
         public ParryStateMachine ParryStateMachine { get; private set; }
         public PlayerInputController Input { get; private set; }
         public PlayerActor Actor { get; private set; }
+        public Parrier Parrier { get; private set; }
         
         public PlayerDeathManager DeathManager { get; private set; }
         
@@ -178,6 +180,7 @@ namespace Player
             Actor = gameObject.GetComponent<PlayerActor>();
             AnimManager = GetComponentInChildren<PlayerAnimationStateManager>();
             DeathManager = GetComponentInChildren<PlayerDeathManager>();
+            Parrier = GetComponentInChildren<Parrier>();
             
             if (MyGrappleHook == null) throw new ConstraintException("PlayerCore must have GrappleHook");
             if (AnimManager == null) throw new ConstraintException("PlayerCore must have AnimManager");

@@ -151,9 +151,10 @@ MonoBehaviour:
   OnLand:
     m_PersistentCalls:
       m_Calls: []
-  maxPullV: 250
+  minPullV: 150
   grappleLerp: 0.5
   _groundedFrictionAccel: 8
+  distanceScale: 0
   _airborneFrictionAccel: 4
 --- !u!114 &2932941269113771518
 MonoBehaviour:

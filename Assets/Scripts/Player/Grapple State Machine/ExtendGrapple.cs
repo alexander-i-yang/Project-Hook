@@ -10,13 +10,13 @@ namespace Player
         public class ExtendGrapple : GrappleState
         {
             private float _grappleDuration;
-            private float _prevTimeScale;
+            private Timescaler.TimeScale _timescale;
             // private GameTimer2 _timescaleTimer;
             
             public override void Enter(GrappleStateInput i) {
                 _grappleDuration = 0;
                 MySM.MyPhysObj.ResetMyGrappleHook();
-                _prevTimeScale = Game.TimeManager.TimeScale;
+                _timescale = Game.TimeManager.ApplyTimescale(MyCore.GrappleBulletTimeScale, 2);
                 Input.CurGrappleExtendPos = MySM.MyPhysObj.transform.position;
 
                 // _timescaleTimer = GameTimerManager.Instance.StartTimer(
@@ -25,19 +25,13 @@ namespace Player
                 //     // ResetTimeScale,
                 //     IncrementType.FIXED_UPDATE
                 // );
-                Game.TimeManager.TimeScale = MyCore.GrappleBulletTimeScale;
             }
 
             public override void Exit(GrappleStateInput i) {
                 base.Exit(i);
-                ResetTimeScale();
+                Game.TimeManager.RemoveTimescale(_timescale);
                 // GameTimerManager.Instance.RemoveTimer(_timescaleTimer);
                 Input.CurrentGrapplePos = Input.CurGrappleExtendPos;
-            }
-
-            private void ResetTimeScale() 
-            {
-                Game.TimeManager.TimeScale = _prevTimeScale;
             }
             
             public override void FixedUpdate()

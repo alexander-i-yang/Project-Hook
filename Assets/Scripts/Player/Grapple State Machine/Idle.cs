@@ -14,6 +14,8 @@ namespace Player
             }
 
             public override void GrappleStarted() {
+                MySM.Transition<ExtendGrapple>();
+                return;
                 Vector2 mousePos = MySM.GetGrappleInputPos();
                 // Vector2 mousePos = (Vector2)smActor.transform.position + new Vector2(smActor.Facing * 2, 1) * 10;
                 // Vector2? grapplePoint = smActor.GetGrapplePoint(mousePos);

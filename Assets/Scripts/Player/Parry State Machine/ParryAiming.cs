@@ -1,7 +1,32 @@
-﻿namespace Player
+﻿using ASK.Core;
+
+namespace Player
 {
-    public class ParryAiming
+    public partial class ParryStateMachine
     {
-        
+        public class ParryAiming : ParryState
+        {
+            private Timescaler.TimeScale _timescale;
+
+            public override void Enter(ParryStateInput i)
+            {
+                _timescale = Game.TimeManager.ApplyTimescale(MyCore.GrappleBulletTimeScale, 2);
+            }
+
+            public override void Exit(ParryStateInput i) {
+                Game.TimeManager.RemoveTimescale(_timescale);
+            }
+            
+            public override void FixedUpdate()
+            {
+                Input.CurAimPos = MySM.GetAimInputPos();
+                MySM.MyCore.Parrier.SetAim(Input.CurAimPos);
+            }
+
+            public override void ReadParryInput(bool parryInput)
+            {
+                if (!parryInput) MySM.Transition<Parrying>();
+            }
+        }
     }
 }

@@ -6,7 +6,8 @@ using UnityEngine;
 
 namespace Player
 {   
-    public class ParryStateInput : PlayerStateInput {
-        
+    public class ParryStateInput : PlayerStateInput
+    {
+        public Vector2 CurAimPos;
     }
 }

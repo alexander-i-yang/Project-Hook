@@ -91,15 +91,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Shotgun"",
-                    ""type"": ""Button"",
-                    ""id"": ""241c28f1-ffe9-4717-a5c8-101c7ceed2e0"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Parry"",
                     ""type"": ""Button"",
                     ""id"": ""894f0469-9095-4f78-946c-a5f4b1d210d2"",
@@ -306,30 +297,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a4c71910-f94c-48f7-8294-b5b0d6a02392"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Shotgun"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c4f8e945-ce0a-4223-89b4-4bd810fe7537"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Shotgun"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""81314343-8cf6-40d3-a252-7eb9b5b72cfa"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -373,7 +342,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
         m_Gameplay_Restart = m_Gameplay.FindAction("Restart", throwIfNotFound: true);
         m_Gameplay_Grapple = m_Gameplay.FindAction("Grapple", throwIfNotFound: true);
-        m_Gameplay_Shotgun = m_Gameplay.FindAction("Shotgun", throwIfNotFound: true);
         m_Gameplay_Parry = m_Gameplay.FindAction("Parry", throwIfNotFound: true);
         m_Gameplay_Debug = m_Gameplay.FindAction("Debug", throwIfNotFound: true);
         m_Gameplay_Aim = m_Gameplay.FindAction("Aim", throwIfNotFound: true);
@@ -445,7 +413,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Pause;
     private readonly InputAction m_Gameplay_Restart;
     private readonly InputAction m_Gameplay_Grapple;
-    private readonly InputAction m_Gameplay_Shotgun;
     private readonly InputAction m_Gameplay_Parry;
     private readonly InputAction m_Gameplay_Debug;
     private readonly InputAction m_Gameplay_Aim;
@@ -460,7 +427,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
         public InputAction @Restart => m_Wrapper.m_Gameplay_Restart;
         public InputAction @Grapple => m_Wrapper.m_Gameplay_Grapple;
-        public InputAction @Shotgun => m_Wrapper.m_Gameplay_Shotgun;
         public InputAction @Parry => m_Wrapper.m_Gameplay_Parry;
         public InputAction @Debug => m_Wrapper.m_Gameplay_Debug;
         public InputAction @Aim => m_Wrapper.m_Gameplay_Aim;
@@ -494,9 +460,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Grapple.started += instance.OnGrapple;
             @Grapple.performed += instance.OnGrapple;
             @Grapple.canceled += instance.OnGrapple;
-            @Shotgun.started += instance.OnShotgun;
-            @Shotgun.performed += instance.OnShotgun;
-            @Shotgun.canceled += instance.OnShotgun;
             @Parry.started += instance.OnParry;
             @Parry.performed += instance.OnParry;
             @Parry.canceled += instance.OnParry;
@@ -531,9 +494,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Grapple.started -= instance.OnGrapple;
             @Grapple.performed -= instance.OnGrapple;
             @Grapple.canceled -= instance.OnGrapple;
-            @Shotgun.started -= instance.OnShotgun;
-            @Shotgun.performed -= instance.OnShotgun;
-            @Shotgun.canceled -= instance.OnShotgun;
             @Parry.started -= instance.OnParry;
             @Parry.performed -= instance.OnParry;
             @Parry.canceled -= instance.OnParry;
@@ -569,7 +529,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnPause(InputAction.CallbackContext context);
         void OnRestart(InputAction.CallbackContext context);
         void OnGrapple(InputAction.CallbackContext context);
-        void OnShotgun(InputAction.CallbackContext context);
         void OnParry(InputAction.CallbackContext context);
         void OnDebug(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);

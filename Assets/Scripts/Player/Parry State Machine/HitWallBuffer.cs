@@ -17,13 +17,12 @@ namespace Player
                 _parryTimer = GameTimer.StartNewTimer(MyCore.ParryPostCollisionWindow);
             }
 
-            public override void ParryStarted() {
-                MySM.Transition<Idle>();
-                MySM.MyPhysObj.Parry(oldV);
-            }
-
-            public override void OnCollide() {
-
+            public override void ReadParryInput(bool parryInput) {
+                if (parryInput)
+                {
+                    MySM.Transition<Idle>();
+                    MySM.MyPhysObj.Parry(oldV);
+                }
             }
 
             public override void FixedUpdate()

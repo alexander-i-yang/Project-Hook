@@ -15,7 +15,7 @@ namespace Editor
             DrawDefaultInspector();
             var script = target as Scarf;
             
-            _numPoints = EditorGUILayout.IntSlider(_numPoints, 0, 32);
+            _numPoints = EditorGUILayout.IntSlider("NumPoints: ", _numPoints, 0, 32);
             if (_numPoints != _prevNumPoints)
             {
                 script.DestroyChildrenEditor();

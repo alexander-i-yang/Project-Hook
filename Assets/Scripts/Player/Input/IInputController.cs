@@ -21,10 +21,6 @@ public interface IInputController
     public bool GetGrappleInput();
     public bool GrappleStarted();
     public bool GrappleFinished();
-
-    public bool GetShotgunInput();
-    public bool ShotgunStarted();
-    public bool ShotgunFinished();
     
     public bool GetParryInput();
     public bool ParryStarted();
