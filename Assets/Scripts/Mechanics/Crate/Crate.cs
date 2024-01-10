@@ -3,6 +3,7 @@ using A2DK.Phys;
 using ASK.Core;
 using UnityEngine;
 using Combat;
+using static Helpers.Helpers;
 
 namespace Mechanics {
     [RequireComponent(typeof(CrateStateMachine))]
@@ -49,11 +50,10 @@ namespace Mechanics {
 
         public (Vector2 curPoint, IGrappleAble attachedTo) AttachGrapple(Actor p, Vector2 rayCastHit)
         {
-            // velocity = p.transform.position - transform.position;
-            Vector2 rawV = (p.transform.position - transform.position).normalized * initPullMag;
-            Vector2 proj = Vector3.Project(velocity, rawV);
-            bool oppositeDir = Vector2.Dot(rawV, proj) < 0;
-            velocity = rawV + (oppositeDir ? Vector2.zero : proj);
+            Vector2 apply = (p.transform.position - transform.position).normalized * initPullMag;
+
+            Vector2 ret = CombineVectorsWithReset(velocity, apply);
+            velocity = ret;
             return (transform.position, this);
         }
 

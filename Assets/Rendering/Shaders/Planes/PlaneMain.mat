@@ -70,7 +70,7 @@ Material:
     - _Coord: {r: 0, g: 0, b: 0, a: 0}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ScreenRez: {r: 320, g: 180, b: 0, a: 0}
+    - _ScreenRez: {r: 480, g: 270, b: 0, a: 0}
     - _ScreenSize: {r: 0, g: 0, b: 0, a: 0}
     - _cells: {r: 4, g: 1, b: 0, a: 0}
     - _coord: {r: 0, g: 0, b: 0, a: 0}

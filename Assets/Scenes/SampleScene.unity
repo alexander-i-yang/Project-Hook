@@ -392,7 +392,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -3}
-  m_LocalScale: {x: 322, y: 182, z: 1}
+  m_LocalScale: {x: 482, y: 272, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 519420032}
@@ -1170,7 +1170,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 32, y: 8}
+  m_Size: {x: 32, y: 12}
   m_EdgeRadius: 0
 --- !u!114 &516359802
 MonoBehaviour:
@@ -1502,7 +1502,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 91
+  orthographic size: 136
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2179,7 +2179,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 91
+  orthographic size: 136
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2338,7 +2338,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 90
+  orthographic size: 135
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -2465,7 +2465,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -2}
-  m_LocalScale: {x: 322, y: 182, z: 1}
+  m_LocalScale: {x: 482, y: 272, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 519420032}
@@ -3085,7 +3085,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 322, y: 182, z: 1}
+  m_LocalScale: {x: 482, y: 272, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 519420032}
@@ -3420,7 +3420,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 91
+  orthographic size: 136
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4910,7 +4910,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 91
+  orthographic size: 136
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -5120,7 +5120,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 322, y: 182, z: 1}
+  m_LocalScale: {x: 482, y: 272, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 519420032}
@@ -6201,7 +6201,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -4}
-  m_LocalScale: {x: 322, y: 182, z: 1}
+  m_LocalScale: {x: 482, y: 272, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 519420032}
@@ -6354,7 +6354,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 91
+  orthographic size: 136
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
