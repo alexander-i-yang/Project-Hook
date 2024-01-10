@@ -4,6 +4,11 @@ namespace Mechanics
 {
     public class Grounded : CrateState
     {
+        public override void Enter(CrateStateInput i)
+        {
+            MySM.MyPhysObj.Land();
+        }
+
         public override void FixedUpdate() {
             if (!MySM.MyPhysObj.IsGrounded()) {
                 MySM.Transition<Airborne>();

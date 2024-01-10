@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6832990551664093954
+--- !u!1001 &2827496523240859748
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -9,12 +9,32 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 859126552812268263, guid: b55ae777cadd6524f9915f621f4ec788, type: 3}
-      propertyPath: m_Parameters.widthMultiplier
-      value: 1
+      propertyPath: m_Parameters.colorGradient.key0.b
+      value: 0.20392157
+      objectReference: {fileID: 0}
+    - target: {fileID: 859126552812268263, guid: b55ae777cadd6524f9915f621f4ec788, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.g
+      value: 0.27450982
+      objectReference: {fileID: 0}
+    - target: {fileID: 859126552812268263, guid: b55ae777cadd6524f9915f621f4ec788, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.r
+      value: 0.45882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 859126552812268263, guid: b55ae777cadd6524f9915f621f4ec788, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.b
+      value: 0.20392157
+      objectReference: {fileID: 0}
+    - target: {fileID: 859126552812268263, guid: b55ae777cadd6524f9915f621f4ec788, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.g
+      value: 0.27450982
+      objectReference: {fileID: 0}
+    - target: {fileID: 859126552812268263, guid: b55ae777cadd6524f9915f621f4ec788, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.r
+      value: 0.45882353
       objectReference: {fileID: 0}
     - target: {fileID: 3425263993108248734, guid: b55ae777cadd6524f9915f621f4ec788, type: 3}
       propertyPath: m_Name
-      value: ScarfPointThin
+      value: ScarfPointHair
       objectReference: {fileID: 0}
     - target: {fileID: 6338812897969022438, guid: b55ae777cadd6524f9915f621f4ec788, type: 3}
       propertyPath: m_LocalPosition.x
@@ -58,15 +78,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8520212237988523794, guid: b55ae777cadd6524f9915f621f4ec788, type: 3}
       propertyPath: gravity
-      value: 1
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8520212237988523794, guid: b55ae777cadd6524f9915f621f4ec788, type: 3}
+      propertyPath: gravity.x
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8520212237988523794, guid: b55ae777cadd6524f9915f621f4ec788, type: 3}
       propertyPath: gravity.y
-      value: -0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8520212237988523794, guid: b55ae777cadd6524f9915f621f4ec788, type: 3}
-      propertyPath: velocityDecay
-      value: 0.6
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

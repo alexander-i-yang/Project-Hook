@@ -40,7 +40,7 @@ namespace Player
             {
                 if (moveDirection != 0)
                 {
-                    MySM._spriteR.flipX = moveDirection == -1;
+                    MySM._spriteR.transform.localScale = new Vector3(moveDirection, 1, 0);
                 }
             }
 

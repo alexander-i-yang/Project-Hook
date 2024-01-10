@@ -7,7 +7,7 @@ namespace Mechanics {
             return true;
         }
 
-        public (Vector2 curPoint, IGrappleAble attachedTo) GetGrapplePoint(Actor p, Vector2 rayCastHit) => (rayCastHit, this);
+        public (Vector2 curPoint, IGrappleAble attachedTo) AttachGrapple(Actor p, Vector2 rayCastHit) => (rayCastHit, this);
         public Vector2 ContinuousGrapplePos(Vector2 origPos, Actor grapplingActor) => origPos;
 
         public PhysObj GetPhysObj() => this;

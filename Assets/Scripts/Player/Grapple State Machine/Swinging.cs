@@ -89,9 +89,8 @@ namespace Player
             public override Vector2 ResolveRide(Vector2 direction)
             {
                 if (Input.AttachedTo == null) return direction;
-                bool atMovingTowards = AttachedMovingTowards();
                 
-                if (atMovingTowards) return Vector2.zero;
+                if (AttachedMovingTowards() && direction.y >= 0) return Vector2.zero;
                 return direction;
             }
 

@@ -15,7 +15,7 @@ namespace Mechanics {
             return false;
         }*/
 
-        public (Vector2 curPoint, IGrappleAble attachedTo) GetGrapplePoint(Actor p, Vector2 rayCastHit) {
+        public (Vector2 curPoint, IGrappleAble attachedTo) AttachGrapple(Actor p, Vector2 rayCastHit) {
             bool pOverlap = false;
             
             // Collider2D pCollider = p.GetComponent<Collider2D>();

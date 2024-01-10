@@ -175,7 +175,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
             if (hit.collider != null) {
                 IGrappleAble p = hit.collider.GetComponent<IGrappleAble>();
                 if (p != null) {
-                    var newRet = p.GetGrapplePoint(this, hit.point);
+                    var newRet = p.AttachGrapple(this, hit.point);
                     if (newRet.attachedTo != null) {
                         ret = newRet;
                         
@@ -558,12 +558,6 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     {
         return Mathf.Sqrt(-2f * GravityUp * jumpHeight);
     }
-
-    #if UNITY_EDITOR
-    private void OnDrawGizmosSelected() {
-        Handles.Label(transform.position, $"Velocity: <{(int)velocityX}, {(int)velocityY}>");
-    }
-    #endif
 
     public LogLevel GetLogLevel()
     {

@@ -10,7 +10,7 @@ namespace Mechanics {
     }
     
     public interface IGrappleAble {
-        public (Vector2 curPoint, IGrappleAble attachedTo) GetGrapplePoint(Actor p, Vector2 rayCastHit);
+        public (Vector2 curPoint, IGrappleAble attachedTo) AttachGrapple(Actor p, Vector2 rayCastHit);
 
         /**
          * Called every frame. Returns new position of grapple regardless of attached PhysObj movement.

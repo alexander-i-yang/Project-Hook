@@ -187,4 +187,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocityDecay: 0.8
   _attachedTo: {fileID: 0}
-  gravity: -0.5
+  gravity: {x: 0, y: -0.5}

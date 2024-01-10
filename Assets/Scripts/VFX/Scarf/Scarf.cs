@@ -1,20 +1,22 @@
 ﻿using System;
 using A2DK.Phys;
+using MyBox;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 namespace VFX
 {
     public class Scarf : MonoBehaviour
     {
+        [SerializeField] private Transform anchor;
         [SerializeField] private Actor attachedActor;
         [SerializeField] private GameObject _scarfPointPrefab;
         [SerializeField] private float minSpacing;
         [SerializeField] private float maxSpacing;
 
         private ScarfPoint[] _scarfPoints;
+
+        [SerializeField] private SpriteRenderer _sr;
 
         private void Awake()
         {
@@ -42,7 +44,7 @@ namespace VFX
         {
             for (int n = 0; n < numPoints; ++n)
             {
-                var prevChild = n == 0 ? attachedActor.transform : transform.GetChild(n-1);
+                var prevChild = n == 0 ? anchor : transform.GetChild(n-1);
                 var curChild = Instantiate(_scarfPointPrefab, transform);
 
                 curChild.name += $" ({n})";
@@ -64,6 +66,12 @@ namespace VFX
         {
             // float workingMinSpacing = Mathf.Max(attachedActor.velocity.magnitude, minSpacing);
             float workingMaxSpacing = minSpacing + attachedActor.velocity.magnitude;
+
+            if (_sr != null)
+            {
+                _scarfPoints.ForEach(s => s.FlipGravityX = (int)_sr.transform.localScale.x);
+            }
+            
             for (int i = 0; i < _scarfPoints.Length; ++i)
             {
                 _scarfPoints[i].CalcPos(minSpacing, maxSpacing);

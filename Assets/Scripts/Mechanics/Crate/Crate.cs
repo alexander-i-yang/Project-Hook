@@ -10,9 +10,11 @@ namespace Mechanics {
     {
 
         [SerializeField] private float minPullV;
+        [SerializeField] private float initPullMag;
         [SerializeField] private float grappleLerp;
         [SerializeField] private float _groundedFrictionAccel;
         [SerializeField] private float distanceScale;
+        [SerializeField] private float stickyDistance;
         public float GroundedFrictionAccel => _groundedFrictionAccel;
         [SerializeField] private float _airborneFrictionAccel;
         public float AirborneFrictionAccel => _airborneFrictionAccel;
@@ -45,29 +47,47 @@ namespace Mechanics {
             return false;
         }
 
-        public (Vector2 curPoint, IGrappleAble attachedTo) GetGrapplePoint(Actor p, Vector2 rayCastHit)
+        public (Vector2 curPoint, IGrappleAble attachedTo) AttachGrapple(Actor p, Vector2 rayCastHit)
         {
             // velocity = p.transform.position - transform.position;
+            Vector2 rawV = (p.transform.position - transform.position).normalized * initPullMag;
+            Vector2 proj = Vector3.Project(velocity, rawV);
+            bool oppositeDir = Vector2.Dot(rawV, proj) < 0;
+            velocity = rawV + (oppositeDir ? Vector2.zero : proj);
             return (transform.position, this);
         }
+
+        public PhysObj GetPhysObj() => this;
 
         public Vector2 ContinuousGrapplePos(Vector2 origPos, Actor grapplingActor)
         {
             Vector2 rawV = grapplingActor.transform.position - transform.position;
 
+            if (rawV.magnitude <= stickyDistance)
+            {
+                velocity = Vector2.zero;
+                Move(rawV);
+                return transform.position;
+            }
+            
             float newMag = rawV.magnitude * distanceScale;
             newMag = Mathf.Max(minPullV, newMag);
             
             Vector2 targetV = rawV.normalized * newMag;
-            velocity = Vector2.Lerp(velocity, targetV, grappleLerp);
+            velocity += Vector2.Lerp(Vector2.zero, targetV, grappleLerp);
+            
             return transform.position;
+            
+            /*var rb = GetComponent<Rigidbody2D>();
+            rb.AddForceAtPosition(velocity, transform.position);
+            return transform.position;*/
         }
 
-        public PhysObj GetPhysObj() => this;
         public GrappleapleType GrappleapleType() => Mechanics.GrappleapleType.PULL;
 
-        private void FixedUpdate()
+        void FixedUpdate()
         {
+            _stateMachine.CurrState.SetGrounded(IsGrounded(), IsMovingUp);
             ApplyVelocity(ResolveJostle());
             velocityX = _stateMachine.ApplyXFriction(velocityX);
             MoveTick();
@@ -97,7 +117,7 @@ namespace Mechanics {
 
         public override void Land()
         {
-            _stateMachine.CurrState.SetGrounded(true, IsMovingUp);
+            base.Land();
         }
 
         public float ApplyXFriction(float prevXVelocity, float frictionAccel)

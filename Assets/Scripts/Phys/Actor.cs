@@ -1,6 +1,7 @@
 ﻿using System;
 using ASK.Core;
 using MyBox;
+using UnityEditor;
 using UnityEngine;
 
 namespace A2DK.Phys {
@@ -137,6 +138,12 @@ namespace A2DK.Phys {
             OnLand?.Invoke(transform.position + Vector3.down * 5.5f);
             velocityY = 0;
         }
+        
+        #if UNITY_EDITOR
+        private void OnDrawGizmosSelected() {
+            Handles.Label(transform.position, $"Velocity: <{(int)velocityX}, {(int)velocityY}>");
+        }
+        #endif
         
         #endregion
     }
