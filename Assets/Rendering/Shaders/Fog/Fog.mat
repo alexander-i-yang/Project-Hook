@@ -57,15 +57,15 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _cutoff: 0
-    - _scale: 1
+    - _scale: 1.56
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _color: {r: 1, g: 1, b: 1, a: 0.2784314}
+    - _color: {r: 1, g: 1, b: 1, a: 0.14117648}
     - _offset: {r: 0, g: 0, b: 0, a: 0}
-    - _speed: {r: 0.02, g: 0, b: 0, a: 0}
-    - _stretch: {r: 1, g: 1, b: 0, a: 0}
+    - _speed: {r: 0.05, g: 0.01, b: 0, a: 0}
+    - _stretch: {r: 3.08, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &8112855705033273624
 MonoBehaviour:

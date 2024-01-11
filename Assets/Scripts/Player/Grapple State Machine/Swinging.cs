@@ -61,6 +61,7 @@ namespace Player
 
             public override void GrappleFinished()
             {
+                Input.AttachedTo.DetachGrapple();
                 MySM.MyPhysObj.GrappleBoost(Input.CurrentGrapplePos);
                 MySM.Transition<Idle>();
                 MyCore.MovementStateMachine.RefreshAbilities();

@@ -11,13 +11,8 @@ namespace Player
         public class Pulling : GrappleState
         {
             
-            // private PhysObj _attachedTo;
-            // private Vector2 _prevV;
-
             public override void Enter(GrappleStateInput i)
             {
-                
-                
                 // smActor.StartGrapple(Input.CurrentGrapplePos);
             }
 
@@ -33,58 +28,12 @@ namespace Player
                 // GameTimer.FixedUpdate(_grappleTimer);
             }
 
-            /*public override void CollideHorizontal() {
-                if (MyCore.GrappleCollideWallStop)
-                {
-                    smActor.CollideHorizontalGrapple();
-                    MySM.Transition<Idle>();
-                }
-            }
-
-            public override Vector2 ProcessCollideHorizontal(Vector2 oldV, Vector2 newV) {
-                if (MyCore.GrappleCollideWallStop)
-                {
-                    MySM.Transition<Idle>();
-                    return smActor.CollideHorizontalGrapple();
-                }
-
-                return newV;
-            }   
-
-            public override void CollideVertical() {
-                smActor.CollideVerticalGrapple();
-                if (MyCore.GrappleCollideWallStop) MySM.Transition<Idle>();
-            }*/
-
             public override void GrappleFinished()
             {
+                Input.AttachedTo.DetachGrapple();
                 MySM.Transition<Idle>();
                 MyCore.MovementStateMachine.RefreshAbilities();
             }
-            
-            /*
-            
-
-            public override Vector2 ResolveRide(Vector2 direction)
-            {
-                Input.CurrentGrapplePos = Input.AttachedTo.ContinuousGrapplePos(Input.CurrentGrapplePos);
-
-                if (Input.AttachedTo == null) return direction;
-                bool atMovingTowards = AttachedMovingTowards();
-
-                if (atMovingTowards) return Vector2.zero;
-                return direction;
-            }
-
-            public override PhysObj ResolveRidingOn(PhysObj p) => Input.AttachedToPhysObj;
-
-            public override void Push(Vector2 direction, Solid pusher)
-            {
-                if (pusher == Input.AttachedToPhysObj)
-                {
-                    Input.CurrentGrapplePos = Input.AttachedTo.ContinuousGrapplePos(Input.CurrentGrapplePos);
-                }
-            }*/
         }
     }
 }

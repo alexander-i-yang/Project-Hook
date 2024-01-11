@@ -3,13 +3,14 @@ using A2DK.Phys;
 using MyBox;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace VFX
 {
     public class Scarf : MonoBehaviour
     {
         [SerializeField] private Transform anchor;
-        [SerializeField] private Actor attachedActor;
+        private Actor _attachedActor;
         [SerializeField] private GameObject _scarfPointPrefab;
         [SerializeField] private float minSpacing;
         [SerializeField] private float maxSpacing;
@@ -21,6 +22,8 @@ namespace VFX
         private void Awake()
         {
             _scarfPoints = GetComponentsInChildren<ScarfPoint>();
+            _attachedActor = GetComponentInParent<Actor>();
+            transform.parent = _attachedActor.transform.parent;
         }
 
         public void DestroyChildrenEditor() => DestroyChildren(DestroyImmediate);
@@ -65,7 +68,7 @@ namespace VFX
         void FixedUpdate()
         {
             // float workingMinSpacing = Mathf.Max(attachedActor.velocity.magnitude, minSpacing);
-            float workingMaxSpacing = minSpacing + attachedActor.velocity.magnitude;
+            float workingMaxSpacing = minSpacing + _attachedActor.velocity.magnitude;
 
             if (_sr != null)
             {

@@ -146,8 +146,11 @@ namespace Player
         [Tooltip("Time window before hitting a wall")]
         [SerializeField] public float ParryPreCollisionWindow;
 
-        [Tooltip("Time window afteri hitting a wall")]
+        [Tooltip("Time window after hitting a wall")]
         [SerializeField] public float ParryPostCollisionWindow;
+        
+        [Tooltip("Velocity to add after punch bouncing")]
+        [SerializeField] public float PunchBounceBoost;
 
         
         [Foldout("RoomTransitions", true)]
@@ -164,7 +167,7 @@ namespace Player
         public ParryStateMachine ParryStateMachine { get; private set; }
         public PlayerInputController Input { get; private set; }
         public PlayerActor Actor { get; private set; }
-        public Parrier Parrier { get; private set; }
+        public Puncher Puncher { get; private set; }
         
         public PlayerDeathManager DeathManager { get; private set; }
         
@@ -180,7 +183,7 @@ namespace Player
             Actor = gameObject.GetComponent<PlayerActor>();
             AnimManager = GetComponentInChildren<PlayerAnimationStateManager>();
             DeathManager = GetComponentInChildren<PlayerDeathManager>();
-            Parrier = GetComponentInChildren<Parrier>();
+            Puncher = GetComponentInChildren<Puncher>();
             
             if (MyGrappleHook == null) throw new ConstraintException("PlayerCore must have GrappleHook");
             if (AnimManager == null) throw new ConstraintException("PlayerCore must have AnimManager");

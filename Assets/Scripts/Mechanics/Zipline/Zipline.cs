@@ -1,11 +1,12 @@
 ﻿using A2DK.Phys;
+using Combat;
 using Helpers;
 using UnityEngine;
 
 namespace Mechanics
 {
     [RequireComponent(typeof(ZiplineStateMachine))]
-    public class Zipline : Solid, IGrappleAble 
+    public class Zipline : Solid, IPunchable
     {
         [SerializeField] private Transform trackStart;
         [SerializeField] private Transform trackEnd;
@@ -47,18 +48,6 @@ namespace Mechanics
             MoveTick();
         }
         
-        public (Vector2 curPoint, IGrappleAble attachedTo) AttachGrapple(Actor p, Vector2 rayCastHit)
-        {
-            _sm.TouchGrapple();
-            return (transform.position, this);
-        }
-
-        public Vector2 ContinuousGrapplePos(Vector2 origPos, Actor grapplingActor) => transform.position;
-        
-        public GrappleapleType GrappleapleType() => Mechanics.GrappleapleType.SWING;
-
-        public PhysObj GetPhysObj() => this;
-
         //Returns true if it's past any endpoint. Works for any two endpoints.
         // public bool ReachedEndpoint() =>
         //     Vector3.Dot(trackStart.position - transform.position, trackEnd.position - transform.position) >= 0;
@@ -73,5 +62,10 @@ namespace Mechanics
 
         public void SetPosStart() => Move(trackStart.position - transform.position);
         public void SetPosEnd() => Move(trackEnd.position - transform.position);
+        public bool ReceivePunch(Vector2 v)
+        {
+            _sm.TouchGrapple();
+            return true;
+        }
     }
 }

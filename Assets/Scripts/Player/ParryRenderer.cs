@@ -5,16 +5,16 @@ using UnityEngine;
 
 namespace Player
 {
-    [RequireComponent(typeof(Parrier))]
+    [RequireComponent(typeof(Puncher))]
     public class ParryRenderer : MonoBehaviour
     {
         private SpriteRenderer _sr;
-        private Parrier _parrier;
+        private Puncher _puncher;
 
         private void Awake()
         {
             _sr = GetComponent<SpriteRenderer>();
-            _parrier = GetComponent<Parrier>();
+            _puncher = GetComponent<Puncher>();
         }
 
         /*private void OnEnable()

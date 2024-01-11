@@ -3,6 +3,7 @@ using System.Collections;
 using ASK.Core;
 using ASK.Helpers;
 using A2DK.Phys;
+using Combat;
 using Mechanics;
 using Player;
 using World;
@@ -149,14 +150,14 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
             LayerMask.GetMask("Ground", "Interactable")
         );
         if (hit.collider == null) return null;
-        
         PhysObj p = hit.collider.GetComponent<PhysObj>();
         if (p == null) return null;
         return hit.point;
     }
 
-    public (Vector2 curPoint, IGrappleAble attachedTo) GrappleExtendUpdate(float grappleDuration, Vector2 grapplePoint) {
-        var ret = (curPoint: Vector2.zero, attachedTo: (IGrappleAble)null);
+    public (Vector2 curPoint, IGrappleable attachedTo, GrappleapleType grappleType) GrappleExtendUpdate(float grappleDuration, Vector2 grapplePoint)
+    {
+        (Vector2 curPoint, IGrappleable attachedTo, GrappleapleType grappleType) ret = (Vector2.zero, null, GrappleapleType.SWING);
         Vector2 grappleOrigin = transform.position;
         float dist = _core.GrappleExtendSpeed * grappleDuration;
         Vector2 curPos = (Vector2) transform.position;
@@ -173,7 +174,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
         foreach (var hit in hits) {
             if (hit.collider != null) {
-                IGrappleAble p = hit.collider.GetComponent<IGrappleAble>();
+                IGrappleable p = hit.collider.GetComponent<IGrappleable>();
                 if (p != null) {
                     var newRet = p.AttachGrapple(this, hit.point);
                     if (newRet.attachedTo != null) {
@@ -429,7 +430,22 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     //TODO: figure out what to do with this
     public void Parry(Vector2 oldV) {
         float prevV = velocity.x;
-        velocity = Vector2.left * oldV.x * _core.ParryVMult;
+        // velocity = Vector2.left * oldV.x * _core.ParryVMult;
+    }
+
+    public void ParryBounce(Vector2 punchDir)
+    {
+        Vector2 v0 = velocity;
+        
+        //Split v0 into ortho + normal components
+        Vector2 v0n = Vector3.Project(v0, punchDir);
+        Vector2 v0o = v0 - v0n;
+        Vector2 vf = -v0n + v0o;
+        velocity = vf;
+
+        velocity += -punchDir.normalized * _core.PunchBounceBoost;
+        
+        _movementStateMachine.RefreshAbilities();
     }
 
     /*public override bool PlayerCollide(Actor p, Vector2 direction)
@@ -563,6 +579,24 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     {
         return LogLevel.Error;
     }
-
     
+    #if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        Vector2 v = velocity;
+        Puncher p = GetComponentInChildren<Puncher>();
+        
+        float a = p.transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+        Vector2 punchV = new Vector2(Mathf.Cos(a), Mathf.Sin(a));
+        
+        //Split v0 into ortho + normal components
+        Vector2 v0n = Vector3.Project(v, punchV);
+        Vector2 v0o = v - v0n;
+        Vector2 vf = -v0n + v0o;
+        
+        Helper.DrawArrow(transform.position, v.normalized * 24, Color.blue);
+        Helper.DrawArrow(transform.position, punchV.normalized * 24, Color.red);
+        Helper.DrawArrow(transform.position, vf.normalized * 24, Color.yellow);
+    }
+    #endif
 }

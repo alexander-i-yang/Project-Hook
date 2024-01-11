@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1760058058466876261}
   - component: {fileID: 3041316882891174105}
   - component: {fileID: -481124193501258021}
+  - component: {fileID: 7901747988026388375}
   m_Layer: 3
   m_Name: Ground
   m_TagString: Untagged
@@ -114,3 +115,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7901747988026388375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6602010226284401963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c8ba079039448c1a9fdfc23c4d0500b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onAttachGrapple:
+    m_PersistentCalls:
+      m_Calls: []
+  useAnchor: 0
+  anchor: {fileID: 0}
+  anchorOffset: {x: 0, y: 0}

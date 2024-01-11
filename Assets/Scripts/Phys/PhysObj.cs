@@ -215,5 +215,9 @@ namespace A2DK.Phys {
          * Calculates the physics object this PhysObj is riding on.
          */
         public virtual PhysObj RidingOn() => GetBelowPhysObj();
+
+        public int ColliderBottomY() => Convert.ToInt16(transform.position.y + myCollider.offset.y - myCollider.bounds.extents.y);
+        
+        public int ColliderTopY() => Convert.ToInt16(transform.position.y + myCollider.offset.y + myCollider.bounds.extents.y);
     }
 }

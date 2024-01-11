@@ -11,7 +11,7 @@ namespace Player
         //Grapple
         public Vector2 CurrentGrapplePos;
         public Vector2 CurGrappleExtendPos;
-        public IGrappleAble AttachedTo;
+        public IGrappleable AttachedTo;
         public PhysObj AttachedToPhysObj => AttachedTo.GetPhysObj();
     }
 }

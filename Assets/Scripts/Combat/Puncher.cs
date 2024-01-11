@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace Combat
 {
-    public class Parrier : MonoBehaviour
+    public class Puncher : MonoBehaviour
     {
         private Collider2D _myCollider;
 
@@ -32,14 +32,16 @@ namespace Combat
             OnAim?.Invoke();
         }
 
-        public void Parry(Vector2 aimPos, Vector2 velocity)
+        public void Punch(Vector2 aimPos, Vector2 velocity, Action<Vector2> onPunchConnect)
         {
             Vector2 v = (aimPos - (Vector2)transform.position).normalized * _punchV;
             v = v.normalized * (v.magnitude + velocity.magnitude);
+            bool punchConnect = false;
             foreach (var p in _curPunchables)
             {
-                p.ReceivePunch(v);
+                if (p.ReceivePunch(v)) punchConnect = true;
             }
+            if (punchConnect) onPunchConnect?.Invoke(v);
             OnPunch?.Invoke();
         }
 

@@ -20,7 +20,7 @@ namespace Player
             public override void FixedUpdate()
             {
                 Input.CurAimPos = MySM.GetAimInputPos();
-                MySM.MyCore.Parrier.SetAim(Input.CurAimPos);
+                MySM.MyCore.Puncher.SetAim(Input.CurAimPos);
             }
 
             public override void ReadParryInput(bool parryInput)

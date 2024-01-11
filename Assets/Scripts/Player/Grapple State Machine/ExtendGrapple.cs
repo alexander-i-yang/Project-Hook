@@ -41,12 +41,15 @@ namespace Player
                 
                 var updateData = MySM.MyPhysObj.GrappleExtendUpdate(_grappleDuration, MySM.GetGrappleInputPos());
                 Input.CurGrappleExtendPos = updateData.curPoint;
+                
+                
+                
                 Input.AttachedTo = updateData.attachedTo;
                 
                 if (Input.AttachedTo != null)
                 {
-                    if (Input.AttachedTo.GrappleapleType() == GrappleapleType.SWING) MySM.Transition<Swinging>();
-                    if (Input.AttachedTo.GrappleapleType() == GrappleapleType.PULL) MySM.Transition<Pulling>();
+                    if (updateData.grappleType == GrappleapleType.SWING) MySM.Transition<Swinging>();
+                    if (updateData.grappleType == GrappleapleType.PULL) MySM.Transition<Pulling>();
                 }
             }
 

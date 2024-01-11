@@ -9,13 +9,13 @@ namespace Player
 
         public override void Enter(ParryStateInput i)
         {
-            MySM.MyCore.Parrier.Parry(i.CurAimPos, MySM.MyPhysObj.velocity);
+            MySM.MyCore.Puncher.Punch(i.CurAimPos, MySM.MyPhysObj.velocity, MySM.MyPhysObj.ParryBounce);
             _parryTimer = GameTimer.StartNewTimer(MyCore.ParryPreCollisionWindow);
         }
 
         public override void Exit(ParryStateInput i)
         {
-            MySM.MyCore.Parrier.Idle();
+            MySM.MyCore.Puncher.Idle();
         }
 
         public override void FixedUpdate()

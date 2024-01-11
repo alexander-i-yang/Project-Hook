@@ -7,20 +7,17 @@ using static Helpers.Helpers;
 
 namespace Mechanics {
     [RequireComponent(typeof(CrateStateMachine))]
-    public class Crate : Actor, IGrappleAble, IPunchable
+    public class Crate : Actor, IPunchable
     {
 
-        [SerializeField] private float minPullV;
-        [SerializeField] private float initPullMag;
-        [SerializeField] private float grappleLerp;
         [SerializeField] private float _groundedFrictionAccel;
-        [SerializeField] private float distanceScale;
-        [SerializeField] private float stickyDistance;
         public float GroundedFrictionAccel => _groundedFrictionAccel;
         [SerializeField] private float _airborneFrictionAccel;
         public float AirborneFrictionAccel => _airborneFrictionAccel;
-
+        
         private CrateStateMachine _stateMachine;
+
+        private bool _useOutsideForces = true;
         
         void Awake()
         {
@@ -48,42 +45,11 @@ namespace Mechanics {
             return false;
         }
 
-        public (Vector2 curPoint, IGrappleAble attachedTo) AttachGrapple(Actor p, Vector2 rayCastHit)
-        {
-            Vector2 apply = (p.transform.position - transform.position).normalized * initPullMag;
-
-            Vector2 ret = CombineVectorsWithReset(velocity, apply);
-            velocity = ret;
-            return (transform.position, this);
-        }
-
         public PhysObj GetPhysObj() => this;
-
-        public Vector2 ContinuousGrapplePos(Vector2 origPos, Actor grapplingActor)
+        public void OnStickyEnter(Collider2D stickyCollider)
         {
-            Vector2 rawV = grapplingActor.transform.position - transform.position;
-
-            if (rawV.magnitude <= stickyDistance)
-            {
-                velocity = Vector2.zero;
-                Move(rawV);
-                return transform.position;
-            }
-            
-            float newMag = rawV.magnitude * distanceScale;
-            newMag = Mathf.Max(minPullV, newMag);
-            
-            Vector2 targetV = rawV.normalized * newMag;
-            velocity += Vector2.Lerp(Vector2.zero, targetV, grappleLerp);
-            
-            return transform.position;
-            
-            /*var rb = GetComponent<Rigidbody2D>();
-            rb.AddForceAtPosition(velocity, transform.position);
-            return transform.position;*/
+            throw new NotImplementedException();
         }
-
-        public GrappleapleType GrappleapleType() => Mechanics.GrappleapleType.PULL;
 
         void FixedUpdate()
         {
@@ -115,21 +81,26 @@ namespace Mechanics {
             return col;
         }
 
-        public override void Land()
-        {
-            base.Land();
-        }
-
         public float ApplyXFriction(float prevXVelocity, float frictionAccel)
         {
+            if (!_useOutsideForces) return prevXVelocity;
+            
             float accel = frictionAccel;
             accel *= Game.TimeManager.FixedDeltaTime;
             return Mathf.SmoothStep(prevXVelocity, 0f, accel);
         }
 
-        public void ReceivePunch(Vector2 v)
+        public override void Fall()
+        {
+            if (_useOutsideForces) base.Fall();
+        }
+
+        public bool ReceivePunch(Vector2 v)
         {
             velocity = v;
+            return false;
         }
+
+        public void SetUseOutsideForces(bool b) => _useOutsideForces = b;
     }
 }

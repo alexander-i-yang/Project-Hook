@@ -4,6 +4,6 @@ namespace Combat
 {
     public interface IPunchable
     {
-        public void ReceivePunch(Vector2 v);
+        public bool ReceivePunch(Vector2 v);
     }
 }

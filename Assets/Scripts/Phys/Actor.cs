@@ -73,7 +73,7 @@ namespace A2DK.Phys {
             GravityUp *= -1;
         }
 
-        protected void ApplyVelocity(Vector2 v)
+        public void ApplyVelocity(Vector2 v)
         {
             velocity += v;
         }
@@ -146,5 +146,13 @@ namespace A2DK.Phys {
         #endif
         
         #endregion
+
+        public void SetVelocity(Vector2 newV) => velocity = newV;
+
+        public void StickyPullMove(Vector2 moveBy)
+        {
+            velocity = Vector2.zero;
+            Move(moveBy);
+        }
     }
 }
