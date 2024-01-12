@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 5916464485552418174}
   - component: {fileID: 8266562469811367957}
   - component: {fileID: 2932941269113771518}
-  - component: {fileID: 6325989277463271439}
+  - component: {fileID: 6931261051847611717}
+  - component: {fileID: 3133102934329453}
   m_Layer: 7
   m_Name: Crate
   m_TagString: Untagged
@@ -170,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010b3bb57ab04709b15d682527d7a27a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6325989277463271439
+--- !u!114 &6931261051847611717
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -179,13 +180,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1785287368530505969}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e739748882dc4dc7a802012428b1185f, type: 3}
+  m_Script: {fileID: 11500000, guid: f4fe6ecf43544549b405797084560950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3133102934329453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785287368530505969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63c22b6bf1ab437faaa22f0b486e262d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   minPullV: 24
   initPullMag: 100
-  grappleLerp: 0.5
-  distanceScale: 0
+  grappleLerp: 0.8
+  distanceScale: 0.1
   _onAttachGrapple:
     m_PersistentCalls:
       m_Calls:

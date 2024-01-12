@@ -32,7 +32,7 @@ namespace TiledUtil {
         {
             var typePrefabReplacements = data.AssetImporter.SuperImportContext.Settings.PrefabReplacements;
             _prefabReplacements = typePrefabReplacements.ToDictionary(so => so.m_TypeName, so => so.m_Prefab);
-            SuperMap map = data.ImportedSuperMap;            
+            SuperMap map = data.ImportedSuperMap;     
             
             //Don't import automap Tilesets
             if (map.gameObject.name.StartsWith("automap")) return;

@@ -48,12 +48,6 @@ namespace Mechanics {
             return false;
         }
 
-        public PhysObj GetPhysObj() => this;
-        public void OnStickyEnter(Collider2D stickyCollider)
-        {
-            throw new NotImplementedException();
-        }
-
         void FixedUpdate()
         {
             _stateMachine.CurrState.SetGrounded(IsGrounded(), IsMovingUp);

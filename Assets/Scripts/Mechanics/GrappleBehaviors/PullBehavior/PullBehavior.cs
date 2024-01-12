@@ -5,12 +5,12 @@ using static Helpers.Helpers;
 
 namespace Mechanics
 {
+    [RequireComponent(typeof(PullBehaviorStateMachine), typeof(Actor))]
     public class PullBehavior : MonoBehaviour, IGrappleable, IPullable
 
     {
         private Actor _myActor;
-
-        private bool _inSticky;
+        private PullBehaviorStateMachine _sm;
 
         [SerializeField] private float minPullV;
         [SerializeField] private float initPullMag;
@@ -23,62 +23,45 @@ namespace Mechanics
         private void Awake()
         {
             _myActor = GetComponent<Actor>();
+            _sm = GetComponent<PullBehaviorStateMachine>();
         }
 
         public (Vector2 curPoint, IGrappleable attachedTo, GrappleapleType grappleType) AttachGrapple(Actor p,
             Vector2 rayCastHit)
         {
+            _sm.CurrState.AttachGrapple();
             _onAttachGrapple?.Invoke();
             
             Vector2 apply = (p.transform.position - transform.position).normalized * initPullMag;
 
             Vector2 newV = CombineVectorsWithReset(p.velocity, apply);
             _myActor.SetVelocity(newV);
+            
             return (transform.position, this, GrappleapleType.PULL);
         }
 
-        public Vector2 ContinuousGrapplePos(Vector2 origPos, Actor grapplingActor)
+        public Vector2 ContinuousGrapplePos(Vector2 grapplePos, Actor grapplingActor)
         {
             Vector2 rawV = grapplingActor.transform.position - transform.position;
-
-            if (_inSticky)
-            {
-                _myActor.StickyPullMove(rawV);
-                return transform.position;
-            }
-
-            float newMag = rawV.magnitude * distanceScale;
-            newMag = Mathf.Max(minPullV, newMag);
-
-            Vector2 targetV = rawV.normalized * newMag;
-            
-            _myActor.ApplyVelocity(grappleLerp * targetV);
-            
-            _myActor.SetVelocity(Vector3.Project(_myActor.velocity, rawV));   
-            
-            // _myActor.SetVelocity(Vector2.Lerp(_myActor.velocity, newV, grappleLerp));
-
+            _sm.CurrState.ContinuousGrapplePos(rawV, _myActor, distanceScale, minPullV, grappleLerp);
             return transform.position;
-
-            /*var rb = GetComponent<Rigidbody2D>();
-            rb.AddForceAtPosition(velocity, transform.position);
-            return transform.position;*/
         }
         
         public void OnStickyEnter(Collider2D stickyCollider)
         {
-            _inSticky = true;
+            _sm.CurrState.StickyEnter();
         }
 
         public void OnStickyExit(Collider2D stickyCollider)
         {
-            _inSticky = false;
+            _sm.CurrState.StickyExit();
         }
 
         public PhysObj GetPhysObj() => _myActor;
 
         public void DetachGrapple()
         {
+            _sm.CurrState.DetachGrapple();
             _onDetachGrapple?.Invoke();
         }
     }

@@ -32,7 +32,7 @@ namespace Mechanics
             
             return (GetGrapplePos(rayCastHit), this, GrappleapleType.SWING);
         }
-        public Vector2 ContinuousGrapplePos(Vector2 origPos, Actor grapplingActor) => GetGrapplePos(origPos);
+        public Vector2 ContinuousGrapplePos(Vector2 grapplePos, Actor grapplingActor) => GetGrapplePos(grapplePos);
 
         public Vector2 GetGrapplePos(Vector2 origPos)
         {

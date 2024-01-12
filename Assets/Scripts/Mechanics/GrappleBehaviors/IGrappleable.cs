@@ -15,7 +15,7 @@ namespace Mechanics {
         /**
          * Called every frame. Returns new position of grapple regardless of attached PhysObj movement.
          */
-        public Vector2 ContinuousGrapplePos(Vector2 origPos, Actor grapplingActor);
+        public Vector2 ContinuousGrapplePos(Vector2 grapplePos, Actor grapplingActor);
 
         public PhysObj GetPhysObj();
 

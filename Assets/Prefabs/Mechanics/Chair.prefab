@@ -811,11 +811,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6376839867236131931, guid: e6925e1d85904384c832bcb3917106cf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 172
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 6376839867236131931, guid: e6925e1d85904384c832bcb3917106cf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -180
+      value: 8.5
       objectReference: {fileID: 0}
     - target: {fileID: 6376839867236131931, guid: e6925e1d85904384c832bcb3917106cf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -893,7 +893,8 @@ PrefabInstance:
       propertyPath: onBreak.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6325989277463271439, guid: e6925e1d85904384c832bcb3917106cf, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6376839867236131931, guid: e6925e1d85904384c832bcb3917106cf, type: 3}
