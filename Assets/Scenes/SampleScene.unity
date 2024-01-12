@@ -4896,7 +4896,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1407630304}
   - component: {fileID: 1407630303}
-  m_Layer: 4
+  m_Layer: 7
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5837,7 +5837,7 @@ MonoBehaviour:
   ParryVMult: 1
   ParryPreCollisionWindow: 0.25
   ParryPostCollisionWindow: 0.125
-  PunchBounceBoost: 0
+  PunchBounceBoost: 50
   RoomTransitionVCutX: 0.5
   RoomTransitionVCutY: 0.5
   DeathTime: 0.25

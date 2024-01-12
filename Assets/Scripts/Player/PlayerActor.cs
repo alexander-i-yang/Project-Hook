@@ -441,9 +441,9 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         Vector2 v0n = Vector3.Project(v0, punchDir);
         Vector2 v0o = v0 - v0n;
         Vector2 vf = -v0n + v0o;
-        velocity = vf;
+        // velocity = vf;
 
-        velocity += -punchDir.normalized * _core.PunchBounceBoost;
+        velocity = Helpers.Helpers.CombineVectorsWithReset(velocity, -punchDir.normalized * _core.PunchBounceBoost);
         
         _movementStateMachine.RefreshAbilities();
     }
