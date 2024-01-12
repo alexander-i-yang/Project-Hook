@@ -3,7 +3,7 @@ using A2DK.Phys;
 using ASK.Core;
 using UnityEngine;
 using Combat;
-using static Helpers.Helpers;
+using UnityEngine.Events;
 
 namespace Mechanics {
     [RequireComponent(typeof(CrateStateMachine))]
@@ -17,7 +17,10 @@ namespace Mechanics {
         
         private CrateStateMachine _stateMachine;
 
-        private bool _useOutsideForces = true;
+        private bool _beingGrappled = false;
+
+        [SerializeField] private float breakVelocity;
+        [SerializeField] private UnityEvent<Vector2> onBreak;
         
         void Awake()
         {
@@ -62,6 +65,12 @@ namespace Mechanics {
         public override bool OnCollide(PhysObj p, Vector2 direction) {
             bool col = base.OnCollide(p, direction);
             if (col) {
+                if ((velocity * direction).magnitude >= breakVelocity && !_beingGrappled)
+                {
+                    Break();
+                    return true;
+                }
+                
                 if (direction.x != 0) {
                 
                     // Vector2 newV = Vector2.zero;
@@ -81,9 +90,15 @@ namespace Mechanics {
             return col;
         }
 
+        private void Break()
+        {
+            onBreak?.Invoke(velocity);
+            gameObject.SetActive(false);
+        }
+
         public float ApplyXFriction(float prevXVelocity, float frictionAccel)
         {
-            if (!_useOutsideForces) return prevXVelocity;
+            if (_beingGrappled) return prevXVelocity;
             
             float accel = frictionAccel;
             accel *= Game.TimeManager.FixedDeltaTime;
@@ -92,7 +107,7 @@ namespace Mechanics {
 
         public override void Fall()
         {
-            if (_useOutsideForces) base.Fall();
+            if (!_beingGrappled) base.Fall();
         }
 
         public bool ReceivePunch(Vector2 v)
@@ -101,6 +116,6 @@ namespace Mechanics {
             return false;
         }
 
-        public void SetUseOutsideForces(bool b) => _useOutsideForces = b;
+        public void SetBeingGrappled(bool b) => _beingGrappled = b;
     }
 }

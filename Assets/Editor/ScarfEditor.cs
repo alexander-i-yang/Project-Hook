@@ -5,7 +5,7 @@ using VFX;
 namespace Editor
 {
     [CustomEditor(typeof(Scarf))]
-    public class DoorBakerEditor : UnityEditor.Editor
+    public class ScarfEditor : UnityEditor.Editor
     {
         private int _numPoints;
         private int _prevNumPoints;

@@ -61,6 +61,9 @@ namespace TiledUtil {
             {
                 Vector2[] rectanglePoints = ColliderPointsToRectanglePoints(g, points);
                 SetBoxColliderPoints(g, rectanglePoints);
+            } else if (g.GetComponent<PolygonCollider2D>() != null)
+            {
+                SetPolygonColliderPoints(g, points);
             }
             
             //Set shadowcaster points

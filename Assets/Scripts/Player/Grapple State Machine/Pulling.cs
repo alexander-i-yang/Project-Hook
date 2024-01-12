@@ -18,6 +18,7 @@ namespace Player
 
             public override void FixedUpdate()
             {
+                if (!Input.AttachedToPhysObj.gameObject.activeSelf) GrappleFinished();
                 Input.CurrentGrapplePos = Input.AttachedTo.ContinuousGrapplePos(Input.CurrentGrapplePos, MySM.MyPhysObj);
                 base.FixedUpdate();
                 // if (_attachedTo.velocity == Vector2.zero && _prevV != Vector2.zero)
