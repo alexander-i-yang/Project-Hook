@@ -26,11 +26,5 @@ namespace Player
                 MySM.Transition<ParryStateMachine.Idle>();
             }
         }
-
-        public override Vector2 ProcessCollideHorizontal(Vector2 oldV, Vector2 newV)
-        {
-            MySM.Transition<ParryStateMachine.Idle>();
-            return Vector2.left * 2 * oldV.x * MyCore.ParryVMult;
-        }
     }
 }

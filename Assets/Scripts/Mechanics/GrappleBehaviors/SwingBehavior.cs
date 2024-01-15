@@ -1,5 +1,7 @@
 ﻿using A2DK.Phys;
+#if UNITY_EDITOR
 using ASK.Editor;
+#endif
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,14 +13,18 @@ namespace Mechanics
         [SerializeField] private UnityEvent onAttachGrapple;
         [SerializeField] private bool useAnchor;
 
+        #if UNITY_EDITOR
         [ShowIf(ActionOnConditionFail.JustDisable, ConditionOperator.And,
             nameof(useAnchor))]
         [SerializeField]
+        #endif
         private Transform anchor;
 
+        #if UNITY_EDITOR
         [ShowIf(ActionOnConditionFail.JustDisable, ConditionOperator.And,
             nameof(useAnchor))]
         [SerializeField]
+        #endif
         private Vector2 anchorOffset;
         
         void Awake()

@@ -427,12 +427,6 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         return col;
     }
 
-    //TODO: figure out what to do with this
-    public void Parry(Vector2 oldV) {
-        float prevV = velocity.x;
-        // velocity = Vector2.left * oldV.x * _core.ParryVMult;
-    }
-
     public void ParryBounce(Vector2 punchDir)
     {
         Vector2 v0 = velocity;
@@ -490,7 +484,12 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         }
         return v;
     }
-        
+
+    protected override bool ShouldApplyV()
+    {
+        return base.ShouldApplyV() && _grappleStateMachine.CurrState.ShouldApplyV();
+    }
+
     public override Vector2 ResolveJostle()
     {
         if (base.FloorStopped())

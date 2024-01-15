@@ -39,6 +39,7 @@ namespace Player
             public virtual PhysObj ResolveRidingOn(PhysObj p) => p;
 
             public virtual void Push(Vector2 direction, PhysObj pusher) {}
+            public virtual bool ShouldApplyV() => true;
         }
     }
 }

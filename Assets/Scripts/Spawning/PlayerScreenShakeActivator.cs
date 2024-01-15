@@ -1,6 +1,7 @@
 ﻿using ASK.Helpers;
 using ASK.ScreenShake;
 using Cinemachine;
+using Helpers;
 using Player;
 using UnityEditor;
 using UnityEngine;
@@ -16,9 +17,12 @@ namespace Spawning
         private PlayerDeathManager _deathManager;
         
         public ScreenShakeDataBurst DeathData;
+        public ScreenShakeDataBurst PunchData;
         public ScreenShakeDataContinuous DiveData;
 
         public ScreenShakeDataContinuous CurShake;
+
+        [SerializeField] private CinemachineVirtualCamera _mainCam;
 
         private void Awake()
         {
@@ -37,13 +41,11 @@ namespace Spawning
             // Room.RoomTransitionEvent -= SwitchRooms;
             _deathManager.OnDeath -= DeathScreenShake;
         }
-
+        
         private Coroutine _shakeRoutine;
         public void ScreenShakeBurst(ScreenShakeDataBurst d)
         {
-            // base.ScreenShakeBurst(_spawnManager.CurrentVCam, d);
             _spawnManager.CurrentVCamManager.SetNoise(d.NoiseProfile);
-
             if (_shakeRoutine != null)
             {
                 StopCoroutine(_shakeRoutine);
@@ -54,6 +56,8 @@ namespace Spawning
                 _spawnManager.CurrentVCamManager.SetNoise(null);
             }));
         }
+
+        public void ScreenShakePunch() => ScreenShakeBurst(PunchData);
         
         public void ScreenShakeContinuousOn(ScreenShakeDataContinuous d)
         {

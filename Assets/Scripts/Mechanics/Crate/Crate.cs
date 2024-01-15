@@ -20,7 +20,7 @@ namespace Mechanics {
         private bool _beingGrappled = false;
 
         [SerializeField] private float breakVelocity;
-        [SerializeField] private UnityEvent<Vector2> onBreak;
+        [SerializeField] private UnityEvent<Vector2, Vector2> onBreak;
         
         void Awake()
         {
@@ -86,7 +86,7 @@ namespace Mechanics {
 
         private void Break()
         {
-            onBreak?.Invoke(velocity);
+            onBreak?.Invoke(velocity, transform.position);
             gameObject.SetActive(false);
         }
 

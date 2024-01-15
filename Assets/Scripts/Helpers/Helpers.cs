@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cinemachine;
+using UnityEngine;
 
 namespace Helpers
 {
@@ -12,5 +13,6 @@ namespace Helpers
             bool oppositeDir = Vector2.Dot(apply, proj) < 0;
             return apply + (oppositeDir ? Vector2.zero : proj);
         }
+        public static void SetNoise(this CinemachineVirtualCamera c, NoiseSettings n) => c.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_NoiseProfile = n;
     }
 }

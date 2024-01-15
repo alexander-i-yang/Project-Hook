@@ -13,9 +13,15 @@ namespace Mechanics
         private PullBehaviorStateMachine _sm;
 
         [SerializeField] private float minPullV;
+        public float MinPullV => minPullV;
         [SerializeField] private float initPullMag;
+        public float InitPullMag => initPullMag;
         [SerializeField] private float grappleLerp;
+        public float GrappleLerp => grappleLerp;
         [SerializeField] private float distanceScale;
+        public float DistanceScale => distanceScale;
+        [SerializeField] private float keepVGraceTime;
+        public float KeepVGraceTime => keepVGraceTime;
 
         [SerializeField] private UnityEvent _onAttachGrapple;
         [SerializeField] private UnityEvent _onDetachGrapple;
@@ -43,13 +49,13 @@ namespace Mechanics
         public Vector2 ContinuousGrapplePos(Vector2 grapplePos, Actor grapplingActor)
         {
             Vector2 rawV = grapplingActor.transform.position - transform.position;
-            _sm.CurrState.ContinuousGrapplePos(rawV, _myActor, distanceScale, minPullV, grappleLerp);
+            _sm.CurrState.ContinuousGrapplePos(rawV, _myActor);
             return transform.position;
         }
         
         public void OnStickyEnter(Collider2D stickyCollider)
         {
-            _sm.CurrState.StickyEnter();
+            _sm.CurrState.StickyEnter(_myActor.velocity, stickyCollider.transform);
         }
 
         public void OnStickyExit(Collider2D stickyCollider)
@@ -63,6 +69,11 @@ namespace Mechanics
         {
             _sm.CurrState.DetachGrapple();
             _onDetachGrapple?.Invoke();
+        }
+
+        public void SetV(Vector2 inputBeforeStickyV)
+        {
+            _myActor.SetVelocity(inputBeforeStickyV);
         }
     }
 }

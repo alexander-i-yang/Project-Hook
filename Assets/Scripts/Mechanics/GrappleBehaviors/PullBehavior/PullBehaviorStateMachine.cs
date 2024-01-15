@@ -1,3 +1,4 @@
+using System;
 using A2DK.Phys;
 using Mechanics.GrappleBehaviors.PullBehavior;
 using Phys.PhysObjStateMachine;
@@ -7,9 +8,14 @@ namespace Mechanics
 {
     public class PullBehaviorStateMachine : PhysObjStateMachine<PullBehaviorStateMachine, PullBehaviorState, PullBehaviorStateInput, Actor>
     {
-        protected override void SetInitialState()
+        public PullBehavior MyPullBehavior { get; private set; }
+        
+        protected override void SetInitialState() => SetState<Idle>();
+
+        protected override void Init()
         {
-            SetState<Idle>();
+            base.Init();
+            MyPullBehavior = GetComponent<PullBehavior>();
         }
     }
 
@@ -17,15 +23,16 @@ namespace Mechanics
     {
         public virtual void AttachGrapple() {}
         public virtual void DetachGrapple() {}
-        public virtual void StickyEnter() {}
+        public virtual void StickyEnter(Vector2 myActorVelocity, Transform sticky) {}
         public virtual void StickyExit() {}
 
-        public abstract void ContinuousGrapplePos(Vector2 grappleVector, Actor grappledActor, float distanceScale,
-            float minPullV, float grappleLerp);
+        public abstract void ContinuousGrapplePos(Vector2 grappleVector, Actor grappledActor);
     }
 
     public class PullBehaviorStateInput : PhysObjStateInput
     {
-        
+        public bool KeepV;
+        public Vector2 BeforeStickyV;
+        public Transform Sticky;
     }
 }

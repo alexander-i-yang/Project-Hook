@@ -199,6 +199,7 @@ MonoBehaviour:
   initPullMag: 100
   grappleLerp: 0.8
   distanceScale: 0.1
+  keepVGraceTime: 0.1
   _onAttachGrapple:
     m_PersistentCalls:
       m_Calls:

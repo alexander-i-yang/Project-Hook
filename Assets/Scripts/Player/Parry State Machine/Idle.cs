@@ -11,12 +11,6 @@ namespace Player
             {
                 if (parryInput) MySM.Transition<ParryAiming>();
             }
-
-            public override Vector2 ProcessCollideHorizontal(Vector2 oldV, Vector2 newV)
-            {
-                MySM.Transition<HitWallBuffer>();
-                return base.ProcessCollideHorizontal(oldV, newV);
-            }
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Linq;
 using Cinemachine;
 using MyBox;
 using Player;
+using UnityEngine.Events;
 
 namespace Spawning
 {
@@ -34,6 +35,8 @@ namespace Spawning
         [SerializeField] private float roomSizeMaxReverb;
 
         private PlayerCore _core;
+
+        private UnityEvent _onDie;
         
         // public event Action OnRoomTransition;
 

@@ -6,7 +6,8 @@
         "Phys",
         "Helpers",
         "Combat",
-        "ASKEditor"
+        "ASKEditor",
+        "MyBox"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

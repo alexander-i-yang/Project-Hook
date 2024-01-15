@@ -44,7 +44,9 @@ namespace VFX
             {
                 newPos = Vector3.MoveTowards(curPos, targetPos, ((curPos - targetPos).magnitude - minSpacing));
             }
+
             transform.position = newPos;
+            // transform.position = Vector3.Lerp(transform.position, newPos, Game.TimeManager.TimeScale);
         }
     }
 }

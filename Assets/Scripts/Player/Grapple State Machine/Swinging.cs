@@ -104,6 +104,11 @@ namespace Player
                     Input.CurrentGrapplePos = Input.AttachedTo.ContinuousGrapplePos(Input.CurrentGrapplePos, MySM.MyPhysObj);
                 }
             }
+
+            public override bool ShouldApplyV()
+            {
+                return AttachedMovingTowards();
+            }
         }
     }
 }
