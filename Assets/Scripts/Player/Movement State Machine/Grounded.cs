@@ -12,7 +12,7 @@ namespace Player
                 Input.jumpedFromGround = false;
                 RefreshAbilities();
                 // smActor.Land();
-                if (GameTimer.GetTimerState(Input.jumpBufferTimer) == TimerState.Running && !MySM.PrevStateEquals<Diving>())
+                if (GameTimer.GetTimerState(Input.jumpBufferTimer) == TimerState.Running)
                 {
                     JumpFromGround();
                 }

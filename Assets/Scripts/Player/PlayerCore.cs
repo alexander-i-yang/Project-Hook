@@ -64,68 +64,6 @@ namespace Player
         [SerializeField] public int DiveDeceleration;
 
         [Foldout("Dogo", true)]
-        [SerializeField] public float DogoJumpHeight;
-
-        [SerializeField] public float DogoJumpXV;
-
-        [SerializeField] public int DogoJumpAcceleration;
-
-        [Tooltip("Time where acceleration/decelartion is 0")]
-        [SerializeField] public float DogoJumpTime;
-        
-        [Tooltip("Amount of time you need to wait to press jump in order to ultra")]
-        [SerializeField] public float UltraTimeDelay;
-        
-        [Tooltip("Window of time you need to press jump in order to ultra")]
-        [FormerlySerializedAs("dogoConserveXVTime")]
-        [SerializeField] public float UltraTimeWindow;
-        
-        [Tooltip("Speed multiplier on the boost you get from ultraing")]
-        [FormerlySerializedAs("dogoConserveXVTime")]
-        [SerializeField] public float UltraSpeedMult;
-
-        [Tooltip("Debug option to change sprite color to green when u can ultra")]
-        [SerializeField] public bool UltraHelper;
-        
-        [Tooltip("Time to let players input a direction change")]
-        [SerializeField] public float DogoJumpGraceTime;
-
-        /*[Foldout("Grapple", true)]
-
-        [SerializeField] public float GrappleBulletTimeScale;
-       
-        [Tooltip("Lerp percent for grapple acceleration")]
-        [SerializeField] public float GrappleLerpPercent;
-
-        [Tooltip("Max grapple speed")]
-        [SerializeField] public float MaxGrappleSpeed;
-
-        [Tooltip("Start grapple energy loss")]
-        [SerializeField] public float GrappleStartMult;
-
-        [Tooltip("Multiplier for magnitude of normal component of velocity")]
-        [SerializeField] public float GrappleNormalMult;
-
-        [Tooltip("Multiplier for magnitude of ortho component of velocity")]
-        [SerializeField] public float GrappleOrthMult;
-
-        [Tooltip("Boost magnitude multiplier after leaving the grapple")]
-        [SerializeField] public float GrappleBoost;
-        
-        [Tooltip("Min Boost Velocity")]
-        [SerializeField] public float GrappleMinBoost;
-
-        [Tooltip("Angle from the vertical that it takes to slow down a grapple")]
-        [SerializeField] public float SmallAngle;
-
-        [Tooltip("Magnitude that u need to slow down a small angle grapple")]
-        [SerializeField] public float SmallAngleMagnitude;
-
-        [Tooltip("Angle that u need to be at to zero out your velocity")]
-        [SerializeField] public float ZeroAngle;
-
-        [Tooltip("Max boost magnitude")]
-        [SerializeField] public float MaxGrappleBoostMagnitude;*/
 
         [Tooltip("Velocity multiplier from the discarded direction after you it a wall")]
         [SerializeField] public float HitWallGrappleMult;

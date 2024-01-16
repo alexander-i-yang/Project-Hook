@@ -30,6 +30,7 @@ namespace Mechanics.GrappleBehaviors.PullBehavior
         
         public override void BreakGrapple()
         {
+            Input.Grappler.BreakGrapple();
             MySM.Transition<Idle>();
         }
     }

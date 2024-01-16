@@ -219,5 +219,7 @@ namespace Mechanics
             return ret;
         }
         protected abstract void ResetMyGrappleHook();
+
+        public void BreakGrapple() => CurrState.BreakGrapple();
     }
 }

@@ -78,6 +78,7 @@ namespace Mechanics
 
         public void BreakGrapple()
         {
+            _onDetachGrapple?.Invoke();
             _sm.CurrState.BreakGrapple();
         }
     }

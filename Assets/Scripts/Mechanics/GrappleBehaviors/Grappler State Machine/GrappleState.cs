@@ -40,6 +40,8 @@ namespace Mechanics
 
             public virtual void Push(Vector2 direction, PhysObj pusher) {}
             public virtual bool ShouldApplyV() => true;
+
+            public virtual void BreakGrapple() => MySM.Transition<Idle>();
         }
     }
 }

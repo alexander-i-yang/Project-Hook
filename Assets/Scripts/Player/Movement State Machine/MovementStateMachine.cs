@@ -12,9 +12,6 @@ namespace Player
         //Expose to inspector
         public UnityEvent<MovementStateMachine> OnPlayerStateChange;
 
-        public bool UsingDrill => IsOnState<Diving>() || IsOnState<Dogoing>();
-        public bool DrillingIntoGround => IsOnState<Dogoing>();
-
         private bool _hasInputted;
 
         #region Overrides

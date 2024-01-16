@@ -35,7 +35,7 @@ namespace Mechanics
         /**
          * Called when the grappledObject wants to stop grappling
          */
-        public virtual void BreakGrapple() {}
+        public virtual void BreakGrapple() { }
     }
 
     public class PullBehaviorStateInput : PhysObjStateInput

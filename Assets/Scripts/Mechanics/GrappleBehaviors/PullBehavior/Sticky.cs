@@ -39,6 +39,8 @@ namespace Mechanics.GrappleBehaviors.PullBehavior
 
         public override void BreakGrapple()
         {
+            Input.Grappler.BreakGrapple();
+            GameTimerManager.Instance.RemoveTimer(_keepVGraceTimer);
             MySM.Transition<Idle>();
         }
     }

@@ -137,101 +137,6 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     }
     #endregion
 
-    #region Dive
-    public void Dive()
-    {
-        /*if (EndCutsceneManager.IsBeegBouncing)
-        {
-            velocityY = Mathf.Min(_core.DiveVelocity, velocityY);
-        }
-        else
-        {
-            velocityY = _core.DiveVelocity;
-        }*/
-        velocityY = _core.DiveVelocity;
-
-        _divePosY = transform.position.y;
-        OnDiveStart?.Invoke();
-    }
-
-    public void UpdateWhileDiving()
-    {
-        /*if (EndCutsceneManager.IsBeegBouncing)
-        {
-            velocityY += GravityDown * Game.Instance.FixedDeltaTime;
-        }*/
-        
-        float oldYV = velocityY;
-        if (FallVelocityExceedsMax())
-        {
-            velocityY += _core.DiveDeceleration;
-        }
-        else
-        {
-            Fall();
-        }
-    }
-
-    public bool IsDiving()
-    {
-        return _movementStateMachine.IsOnState<MovementStateMachine.Diving>();
-    }
-    #endregion
-
-    #region Dogo
-    public float Dogo() {
-        OnDogo?.Invoke(transform.position);
-        float v = velocityX;
-        velocityX = 0;
-        return v;
-    }
-
-    public void DogoJump(int moveDirection, bool conserveMomentum, double oldXV) {
-        if (!(moveDirection == 1 || moveDirection == -1)) {
-            throw new ArgumentException(
-            $"Cannot dogo jump in direction({moveDirection})"
-            );
-        }
-        velocityX = moveDirection * _core.DogoJumpXV;
-        if (conserveMomentum)
-        {
-            float addSpeed = _core.DogoJumpXV * _core.UltraSpeedMult;
-            if (moveDirection == 1)
-            {
-                velocityX = (float)Math.Max(oldXV + addSpeed, _core.DogoJumpXV);
-            }
-            else if (moveDirection == -1)
-            {
-                velocityX = (float)Math.Min(oldXV - addSpeed, -_core.DogoJumpXV);
-            }
-        }
-
-        velocityY = GetJumpSpeedFromHeight(_core.DogoJumpHeight);
-    }
-    
-    public bool IsDogoJumping()
-    {
-        return _movementStateMachine.IsOnState<MovementStateMachine.DogoJumping>();
-    }
-    
-    public bool IsDogoing()
-    {
-        return _movementStateMachine.IsOnState<MovementStateMachine.Dogoing>();
-    }
-
-    public void BallBounce(Vector2 direction)
-    {
-        if (direction.x != 0)
-        {
-            velocityX = Math.Sign(direction.x) * -150;
-        }
-    }
-    
-    public bool IsDrilling() {
-        return _movementStateMachine.UsingDrill;
-    }
-    #endregion
-
     #region  Death
 
     public void Die(Func<Vector2, Vector2> recoilFunc = null)
@@ -299,15 +204,16 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
     public void ParryBounce(Vector2 punchDir)
     {
+        punchDir = punchDir.normalized * _core.PunchBounceBoost;
         Vector2 v0 = velocity;
         
         //Split v0 into ortho + normal components
         Vector2 v0n = Vector3.Project(v0, punchDir);
         Vector2 v0o = v0 - v0n;
-        Vector2 vf = -v0n + v0o;
-        // velocity = vf;
+        velocity = v0o + (Vector2.Dot(punchDir, v0n) <= 0 ? v0n - punchDir : -punchDir);
 
-        velocity = Helpers.Helpers.CombineVectorsWithReset(velocity, -punchDir.normalized * _core.PunchBounceBoost);
+        // velocity = Helpers.Helpers.CombineVectorsWithReset(velocity, -punchDir.normalized * _core.PunchBounceBoost);
+        // velocity += -punchDir.normalized * _core.PunchBounceBoost;
         
         _movementStateMachine.RefreshAbilities();
     }
@@ -452,11 +358,11 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         //Split v0 into ortho + normal components
         Vector2 v0n = Vector3.Project(v, punchV);
         Vector2 v0o = v - v0n;
-        Vector2 vf = -v0n + v0o;
+        Vector2 vf = v0o + (Vector2.Dot(punchV, v0n) >= 0 ? v0n : Vector2.zero) - punchV;
         
-        Helper.DrawArrow(transform.position, v.normalized * 24, Color.blue);
-        Helper.DrawArrow(transform.position, punchV.normalized * 24, Color.red);
-        Helper.DrawArrow(transform.position, vf.normalized * 24, Color.yellow);
+        Helper.DrawArrow(transform.position, v.normalized * (v.magnitude+8), Color.blue);
+        Helper.DrawArrow(transform.position, punchV * 24, Color.red);
+        Helper.DrawArrow(transform.position, vf.normalized * (vf.magnitude+8), Color.yellow);
     }
     #endif
 }

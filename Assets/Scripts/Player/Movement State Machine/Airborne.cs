@@ -44,20 +44,10 @@ namespace Player
                 TryJumpCut();
             }
 
-            public override void DivePressed()
-            {
-                base.DivePressed();
-                if (Input.canDive)
-                {
-                    MySM.Transition<Diving>();
-                }
-            }
-
             public override void SetGrounded(bool isGrounded, bool isMovingUp)
             {
                 base.SetGrounded(isGrounded, isMovingUp);
                 if (!isMovingUp && isGrounded) {
-                    // PlayAnimation(PlayerAnimations.LANDING);
                     MySM.Transition<Grounded>();
                 }
             }
