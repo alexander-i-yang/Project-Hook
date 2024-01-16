@@ -21,12 +21,21 @@ namespace Mechanics
 
     public abstract class PullBehaviorState : PhysObjStateMachine.PhysObjState<PullBehaviorStateMachine, PullBehaviorState, PullBehaviorStateInput, Actor>
     {
-        public virtual void AttachGrapple() {}
+        public virtual void AttachGrapple(GrapplerStateMachine grappler) {}
+        
+        /**
+         * Called when the player stops pressing grapple
+         */
         public virtual void DetachGrapple() {}
         public virtual void StickyEnter(Vector2 myActorVelocity, Transform sticky) {}
         public virtual void StickyExit() {}
 
         public abstract void ContinuousGrapplePos(Vector2 grappleVector, Actor grappledActor);
+
+        /**
+         * Called when the grappledObject wants to stop grappling
+         */
+        public virtual void BreakGrapple() {}
     }
 
     public class PullBehaviorStateInput : PhysObjStateInput
@@ -34,5 +43,6 @@ namespace Mechanics
         public bool KeepV;
         public Vector2 BeforeStickyV;
         public Transform Sticky;
+        public GrapplerStateMachine Grappler;
     }
 }

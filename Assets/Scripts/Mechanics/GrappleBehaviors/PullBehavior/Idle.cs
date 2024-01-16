@@ -15,8 +15,9 @@ namespace Mechanics.GrappleBehaviors.PullBehavior
             Input.KeepV = false;
         }
 
-        public override void AttachGrapple()
+        public override void AttachGrapple(GrapplerStateMachine grappler)
         {
+            Input.Grappler = grappler;
             MySM.Transition<Pulling>();
         }
 

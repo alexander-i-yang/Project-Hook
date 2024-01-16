@@ -17,14 +17,12 @@ using UnityEngine.Events;
 [RequireComponent(typeof(BoxCollider2D))]
 public class PlayerActor : Actor, IFilterLoggerTarget {
     private MovementStateMachine _movementStateMachine => _core.MovementStateMachine;
-    private GrappleStateMachine _grappleStateMachine => _core.GrappleStateMachine;
+    private GrapplerStateMachine GrapplerStateMachine => _core.GrapplerStateMachine;
     [SerializeField, AutoProperty(AutoPropertyMode.Parent)] private BoxCollider2D _collider;
     [SerializeField] private SpriteRenderer sprite;
 
     private bool _hitWallCoroutineRunning;
     private float _hitWallPrevSpeed;
-
-    public int Facing => sprite.flipX ? -1 : 1;    //-1 is facing left, 1 is facing right
 
     [Foldout("Movement Events", true)]
     public ActorEvent OnJumpFromGround;
@@ -37,6 +35,8 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     private float _divePosY;
 
     private PlayerCore _core;
+
+    public override int Facing => sprite.flipX ? -1 : 1;
 
     private void OnEnable()
     {
@@ -57,7 +57,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
         Vector2 newV = Vector2.zero;
         newV = _movementStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
-        newV = _grappleStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
+        newV = GrapplerStateMachine.ProcessMoveX(newV, _core.Input.GetMovementInput());
         velocity += newV;
         MoveTick();
     }
@@ -135,136 +135,6 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
             velocityY *= _core.JumpCutMultiplier;
         }
     }
-    #endregion
-
-    #region Grapple
-    public Vector2? GetGrapplePoint(Vector2 grapplePos)
-    {
-        Vector2 grappleOrigin = transform.position;
-        Vector2 dir = grapplePos - grappleOrigin;
-        // RaycastHit2D[] hits = Physics2D.RaycastAll(grappleOrigin, Vector2.right, 1000, LayerMask.NameToLayer("Ground"));
-        RaycastHit2D hit = Physics2D.Raycast(
-            grappleOrigin, 
-            dir.normalized,
-            1000f,
-            LayerMask.GetMask("Ground", "Interactable")
-        );
-        if (hit.collider == null) return null;
-        PhysObj p = hit.collider.GetComponent<PhysObj>();
-        if (p == null) return null;
-        return hit.point;
-    }
-
-    public (Vector2 curPoint, IGrappleable attachedTo, GrappleapleType grappleType) GrappleExtendUpdate(float grappleDuration, Vector2 grapplePoint)
-    {
-        (Vector2 curPoint, IGrappleable attachedTo, GrappleapleType grappleType) ret = (Vector2.zero, null, GrappleapleType.SWING);
-        Vector2 grappleOrigin = transform.position;
-        float dist = _core.GrappleExtendSpeed * grappleDuration;
-        Vector2 curPos = (Vector2) transform.position;
-        Vector2 dir = (grapplePoint - curPos).normalized;
-        RaycastHit2D[] hits = Physics2D.RaycastAll(
-            grappleOrigin, 
-            dir,
-            dist,
-            LayerMask.GetMask("Ground", "Interactable")
-        );
-
-        Vector2 newPoint = curPos + dir * dist;
-        ret.curPoint = newPoint;
-
-        foreach (var hit in hits) {
-            if (hit.collider != null) {
-                IGrappleable p = hit.collider.GetComponent<IGrappleable>();
-                if (p != null) {
-                    var newRet = p.AttachGrapple(this, hit.point);
-                    if (newRet.attachedTo != null) {
-                        ret = newRet;
-                        
-                        break;
-                    }
-                };
-            }
-        }
-        // if (Mathf.Abs(dir.magnitude) <= dist) ret.hit = true;
-        
-        // ret.hit = _core.MyGrappleHook.SetPos(newPoint);
-
-        // _core.MyGrappleHook.Move(dir * _core.GrappleExtendSpeed);
-        // ret.curPoint = _core.MyGrappleHook.transform.position;
-        // if (_core.MyGrappleHook.DidCollide) ret.hit = true;
-        return ret;
-    }
-
-    public void ResetMyGrappleHook() {_core.MyGrappleHook.Reset(transform.position);}
-
-    public void StartGrapple(Vector2 gPoint) {
-        Vector2 rawV = gPoint - (Vector2) transform.position;
-        Vector2 projection = Vector3.Project(velocity, rawV);
-        Vector2 ortho = velocity - projection; // Get the component of velocity that's orthogonal to the grapple
-        if (Vector2.Dot(projection, rawV) >= 0) {
-            return;
-        }
-        // velocity = ortho.normalized * velocity.magnitude * _core.GrappleStartMult;
-        velocity = ortho.normalized * (Mathf.Lerp(ortho.magnitude, velocity.magnitude, _core.GrappleStartMult));
-    }
-
-    public void PullGrappleUpdate(Vector2 gPoint) {
-        Vector2 rawV = gPoint - (Vector2) transform.position;
-        Vector2 targetV = rawV.normalized * _core.MaxGrappleSpeed;
-        velocity = Vector2.Lerp(velocity, targetV, _core.GrappleLerpPercent);
-        Fall();
-    }
-
-    //recalculate velocity during grapple
-    public void GrappleUpdate(Vector2 gPoint, float warmPercent)
-    {
-        Vector2 rawV = gPoint - (Vector2) transform.position;
-        Vector2 projection = Vector3.Project(velocity, rawV);
-        Vector2 ortho = velocity - projection; // Get the component of velocity that's orthogonal to the grapple
-        
-        //If ur moving towards the grapple point, just use that velocity
-        if (Vector2.Dot(projection, rawV) >= 0) {
-            return;
-        }
-        velocity = ortho.normalized * (projection.magnitude * _core.GrappleNormalMult + ortho.magnitude * _core.GrappleOrthMult);
-
-        float angle = Vector2.Angle(rawV, Vector2.up);
-        if (velocity.magnitude < _core.SmallAngleMagnitude && angle <= _core.SmallAngle) {
-            if (Mathf.Sign(rawV.x) == Mathf.Sign(velocityX)) {
-                float newMag = ClosestBetween(-_core.SmallAngleMagnitude, _core.SmallAngleMagnitude, (ortho + projection).magnitude);
-                velocity = ortho.normalized * newMag;
-            }
-            if (angle < _core.ZeroAngle) {
-                velocity *= 0.25f;
-            }
-        }
-    }
-
-    public Vector2 MoveXGrapple(Vector2 oldV, Vector2 gPos, int direction) {
-        Vector2 rawV = gPos - (Vector2) transform.position;
-        Vector2 projection = Vector3.Project(oldV, rawV);
-        Vector2 ortho = oldV - projection;
-        return direction == 0 ? oldV : ortho * _core.MoveXGrappleMult;
-    }
-
-    public float ClosestBetween(float a, float b, float x) {
-        if (x <= a || x >= b) return x;
-        return x < (b-a)/2 + a ? a : b;
-    }
-
-    public void GrappleBoost(Vector2 gPoint) {
-        // Vector2 rawV = gPoint - (Vector2) transform.position;
-        // Vector2 projection = Vector3.Project(velocity, rawV);
-        // Vector2 ortho = velocity - projection;
-        
-        // velocity += ortho * _core.GrappleBoost;
-        // if (velocityY <= 0) return;
-        int vxSign = (int) Mathf.Sign(velocityX);
-        Vector2 addV = new Vector2(Facing, 1) * Mathf.Max(_core.GrappleBoost * velocity.magnitude, _core.GrappleMinBoost);
-        addV = addV.normalized * Mathf.Clamp(addV.magnitude, -_core.MaxGrappleBoostMagnitude, _core.MaxGrappleBoostMagnitude);
-        velocity += addV;
-    }
-
     #endregion
 
     #region Dive
@@ -410,11 +280,11 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
                 Vector2 newV = Vector2.zero;
                 Vector2 oldV = velocity;
                 newV = HitWall((int)direction.x);
-                newV = _grappleStateMachine.ProcessCollideHorizontal(oldV, newV);
+                newV = GrapplerStateMachine.ProcessCollideHorizontal(oldV, newV);
                 newV = _core.ParryStateMachine.ProcessCollideHorizontal(oldV, newV);
                 velocity += newV;
             } else if (direction.y != 0) {
-                _grappleStateMachine.CollideVertical();
+                GrapplerStateMachine.CollideVertical();
                 if (direction.y > 0) {
                     BonkHead();
                 }
@@ -487,7 +357,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
     protected override bool ShouldApplyV()
     {
-        return base.ShouldApplyV() && _grappleStateMachine.CurrState.ShouldApplyV();
+        return base.ShouldApplyV() && GrapplerStateMachine.CurrState.ShouldApplyV();
     }
 
     public override Vector2 ResolveJostle()
@@ -502,19 +372,19 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         
     public override void Ride(Vector2 direction)
     {
-        Vector2 ret = _core.GrappleStateMachine.ResolveRide(direction);
+        Vector2 ret = _core.GrapplerStateMachine.ResolveRide(direction);
         base.Ride(ret);
     }
     
     public override PhysObj RidingOn()
     {
         PhysObj p = base.RidingOn();
-        return _grappleStateMachine.CalcRiding(p);
+        return GrapplerStateMachine.CalcRiding(p);
     }
 
     public override bool Push(Vector2 direction, Solid solid)
     {
-        _core.GrappleStateMachine.Push(direction, solid);
+        _core.GrapplerStateMachine.Push(direction, solid);
         return base.Push(direction, solid);
     }
 
@@ -550,15 +420,6 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         }
 
         _hitWallCoroutineRunning = false;
-    }
-
-    public Vector2 CollideHorizontalGrapple() {
-        // velocity = Vector2.up * velocity.magnitude;
-        return new Vector2(0, Math.Abs(velocityX * _core.HitWallGrappleMult));
-    }
-
-    public void CollideVerticalGrapple() {
-        velocity += new Vector2(velocityY * _core.HitWallGrappleMult * -Mathf.Sign(velocityX), 0);
     }
 
     private void OnRoomTransition(Room roomEntering)

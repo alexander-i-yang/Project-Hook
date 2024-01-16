@@ -14,7 +14,7 @@ namespace Player
 
         private void FixedUpdate()
         {
-            transform.position = _pCore.GrappleStateMachine.CurrInput.CurGrappleExtendPos;
+            transform.position = _pCore.GrapplerStateMachine.CurrInput.CurGrappleExtendPos;
         }
     }
 }

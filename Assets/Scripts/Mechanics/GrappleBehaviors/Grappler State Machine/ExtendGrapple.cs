@@ -3,9 +3,9 @@ using Helpers;
 using Mechanics;
 using UnityEngine;
 
-namespace Player
+namespace Mechanics
 {
-    public partial class GrappleStateMachine
+    public partial class GrapplerStateMachine
     {
         public class ExtendGrapple : GrappleState
         {
@@ -15,8 +15,8 @@ namespace Player
             
             public override void Enter(GrappleStateInput i) {
                 _grappleDuration = 0;
-                MySM.MyPhysObj.ResetMyGrappleHook();
-                _timescale = Game.TimeManager.ApplyTimescale(MyCore.GrappleBulletTimeScale, 2);
+                MySM.ResetMyGrappleHook();
+                _timescale = Game.TimeManager.ApplyTimescale(MySM.GrappleBulletTimeScale, 2);
                 Input.CurGrappleExtendPos = MySM.MyPhysObj.transform.position;
 
                 // _timescaleTimer = GameTimerManager.Instance.StartTimer(
@@ -39,7 +39,7 @@ namespace Player
                 base.FixedUpdate();
                 _grappleDuration += Game.TimeManager.FixedDeltaTime;
                 
-                var updateData = MySM.MyPhysObj.GrappleExtendUpdate(_grappleDuration, MySM.GetGrappleInputPos());
+                var updateData = MySM.GrappleExtendUpdate(_grappleDuration, MySM.GetGrappleInputPos());
                 Input.CurGrappleExtendPos = updateData.curPoint;
                 
                 
@@ -50,6 +50,7 @@ namespace Player
                 {
                     if (updateData.grappleType == GrappleapleType.SWING) MySM.Transition<Swinging>();
                     if (updateData.grappleType == GrappleapleType.PULL) MySM.Transition<Pulling>();
+                    MySM.OnGrappleAttach?.Invoke();
                 }
             }
 
@@ -61,7 +62,7 @@ namespace Player
 
             public override void CollideHorizontal()
             {
-                if (MyCore.GrappleCollideWallStop)
+                if (MySM.GrappleCollideWallStop)
                 {
                     MySM.Transition<Idle>();
                 }
@@ -69,7 +70,7 @@ namespace Player
             }
             public override void CollideVertical()
             {
-                if (MyCore.GrappleCollideWallStop)
+                if (MySM.GrappleCollideWallStop)
                 {
                     MySM.Transition<Idle>();
                 }

@@ -16,6 +16,8 @@ namespace A2DK.Phys {
         [SerializeField] public ActorEvent OnLand;
 
         public bool IsMovingUp => velocityY >= 0;
+        
+        public virtual int Facing => Math.Sign(velocity.x);    //-1 is facing left, 1 is facing right
 
         // private void Awake()
         // {

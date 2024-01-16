@@ -10,7 +10,7 @@ namespace Player
 
             public override void Enter(ParryStateInput i)
             {
-                _timescale = Game.TimeManager.ApplyTimescale(MyCore.GrappleBulletTimeScale, 2);
+                _timescale = Game.TimeManager.ApplyTimescale(MySM.BulletTimeScale, 2);
             }
 
             public override void Exit(ParryStateInput i) {

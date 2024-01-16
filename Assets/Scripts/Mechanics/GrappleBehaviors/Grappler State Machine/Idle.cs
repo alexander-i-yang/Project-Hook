@@ -1,9 +1,9 @@
 ﻿using ASK.Core;
 using UnityEngine;
 
-namespace Player
+namespace Mechanics
 {
-    public partial class GrappleStateMachine
+    public partial class GrapplerStateMachine
     {
         public class Idle : GrappleState
         {

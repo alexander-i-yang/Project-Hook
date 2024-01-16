@@ -32,7 +32,8 @@ namespace Mechanics
             _myPhysObj = GetComponent<PhysObj>();
         }
 
-        public (Vector2, IGrappleable, GrappleapleType) AttachGrapple(Actor p, Vector2 rayCastHit)
+        public (Vector2 curPoint, IGrappleable attachedTo, GrappleapleType grappleType) AttachGrapple(Actor grappler,
+            Vector2 rayCastHit)
         {
             onAttachGrapple?.Invoke();
             
@@ -44,7 +45,7 @@ namespace Mechanics
         {
             if (useAnchor)
             {
-                origPos = (Vector2)anchor.transform.position + anchorOffset;
+                origPos = (Vector2)anchor.position + anchorOffset;
             }
 
             return origPos;

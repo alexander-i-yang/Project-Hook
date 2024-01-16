@@ -3,74 +3,62 @@ using A2DK.Phys;
 using ASK.Core;
 using UnityEngine;
 
-namespace Player
+namespace Mechanics
 {
-    public partial class GrappleStateMachine
+    public partial class GrapplerStateMachine
     {
         
         public class Swinging : GrappleState
         {
-            
-            // private PhysObj _attachedTo;
-            // private Vector2 _prevV;
-
             public override void Enter(GrappleStateInput i)
             {
                 
                 
-                // _grappleTimer = GameTimer.StartNewTimer(core.GrappleWarmTime);
-                // _prevV = Vector2.zero;
-                MySM.MyPhysObj.StartGrapple(Input.CurrentGrapplePos);
-                // _attachedTo.GrappleRider = smActor;
+                MySM.StartGrapple(Input.CurrentGrapplePos);
             }
 
             public override void FixedUpdate()
             {
                 Input.CurrentGrapplePos = Input.AttachedTo.ContinuousGrapplePos(Input.CurrentGrapplePos, MySM.MyPhysObj);
-                MySM.MyPhysObj.GrappleUpdate(Input.CurrentGrapplePos, 0);
-                // if (_attachedTo.velocity == Vector2.zero && _prevV != Vector2.zero)
-                // {
-                //     smActor.ApplyVelocity(_prevV);
-                // }
-                // _prevV = _attachedTo.velocity;
-                // GameTimer.FixedUpdate(_grappleTimer);
+                MySM.GrappleUpdate(Input.CurrentGrapplePos, 0);
             }
 
             public override void CollideHorizontal() {
-                if (MyCore.GrappleCollideWallStop)
+                if (MySM.GrappleCollideWallStop)
                 {
-                    MySM.MyPhysObj.CollideHorizontalGrapple();
+                    MySM.CollideHorizontalGrapple();
                     MySM.Transition<Idle>();
                 }
             }
 
             public override Vector2 ProcessCollideHorizontal(Vector2 oldV, Vector2 newV) {
-                if (MyCore.GrappleCollideWallStop)
+                if (MySM.GrappleCollideWallStop)
                 {
                     MySM.Transition<Idle>();
-                    return MySM.MyPhysObj.CollideHorizontalGrapple();
+                    return MySM.CollideHorizontalGrapple();
                 }
 
                 return newV;
             }   
 
             public override void CollideVertical() {
-                MySM.MyPhysObj.CollideVerticalGrapple();
-                if (MyCore.GrappleCollideWallStop) MySM.Transition<Idle>();
+                MySM.CollideVerticalGrapple();
+                if (MySM.GrappleCollideWallStop) MySM.Transition<Idle>();
             }
 
             public override void GrappleFinished()
             {
                 Input.AttachedTo.DetachGrapple();
-                MySM.MyPhysObj.GrappleBoost(Input.CurrentGrapplePos);
+                MySM.GrappleBoost();
                 MySM.Transition<Idle>();
-                MyCore.MovementStateMachine.RefreshAbilities();
+                MySM.OnGrappleDetach?.Invoke();
+                // MyCore.MovementStateMachine.RefreshAbilities();
             }
 
             public override Vector2 MoveX(Vector2 velocity, int direction)
             {
                 // velocity = smActor.CalcMovementX(0, core.MaxAirAcceleration, core.AirResistance);
-                velocity = MySM.MyPhysObj.MoveXGrapple(velocity, Input.CurrentGrapplePos, direction);
+                velocity = MySM.MoveXGrapple(velocity, Input.CurrentGrapplePos, direction);
                 return velocity;
             }
 

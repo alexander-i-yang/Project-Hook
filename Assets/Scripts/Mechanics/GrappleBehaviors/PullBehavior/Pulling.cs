@@ -27,5 +27,10 @@ namespace Mechanics.GrappleBehaviors.PullBehavior
             grappledActor.ApplyVelocity(MySM.MyPullBehavior.GrappleLerp * targetV);
             grappledActor.SetVelocity(Vector3.Project(grappledActor.velocity, grappleVector));
         }
+        
+        public override void BreakGrapple()
+        {
+            MySM.Transition<Idle>();
+        }
     }
 }

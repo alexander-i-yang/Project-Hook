@@ -14,5 +14,10 @@ namespace Helpers
             return apply + (oppositeDir ? Vector2.zero : proj);
         }
         public static void SetNoise(this CinemachineVirtualCamera c, NoiseSettings n) => c.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_NoiseProfile = n;
+        
+        public static float ClosestBetween(float a, float b, float x) {
+            if (x <= a || x >= b) return x;
+            return x < (b-a)/2 + a ? a : b;
+        }
     }
 }

@@ -3,11 +3,12 @@ using A2DK.Phys;
 using ASK.Core;
 using ASK.Helpers;
 using Mechanics;
+using Phys.PhysObjStateMachine;
 using UnityEngine;
 
-namespace Player
+namespace Mechanics
 {   
-    public class GrappleStateInput : PlayerStateInput {
+    public class GrappleStateInput : PhysObjStateInput {
         //Grapple
         public Vector2 CurrentGrapplePos;
         public Vector2 CurGrappleExtendPos;

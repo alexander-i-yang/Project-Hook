@@ -7,21 +7,14 @@ using UnityEngine.Events;
 namespace Player
 {
     public partial class ParryStateMachine : PlayerStateMachine<ParryStateMachine, ParryStateMachine.ParryState, ParryStateInput> {
-        private SpriteRenderer _spriteR;
-
         //Expose to inspector
         public UnityEvent<ParryStateMachine> OnAbilityStateChange;
+        [SerializeField] public float BulletTimeScale;
 
         #region Overrides
         protected override void SetInitialState() 
         {
             SetState<Idle>();
-        }
-
-        protected override void Init()
-        {
-            base.Init();
-            _spriteR = GetComponentInChildren<SpriteRenderer>();
         }
 
         protected void OnEnable()

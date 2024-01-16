@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using Mechanics;
 using Player;
 using UnityEngine;
 using VFX;
 
 public class GrappleRenderer : MonoBehaviour {
     private LineRenderer _lr;
-    private GrappleStateMachine _parent;
+    private GrapplerStateMachine _parent;
     [SerializeField] private GameObject leafPrefab;
     [SerializeField] private GameObject curvePointPrefab;
     [SerializeField] private float leafSpacing;
@@ -15,7 +16,7 @@ public class GrappleRenderer : MonoBehaviour {
     
     private void Awake() {
         _lr = GetComponent<LineRenderer>();
-        _parent = transform.parent.GetComponent<GrappleStateMachine>();
+        _parent = transform.parent.GetComponent<GrapplerStateMachine>();
     }
 
 

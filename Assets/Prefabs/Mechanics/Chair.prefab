@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 386e49661788eab49b0016d8472bcf95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EditorLaunchV: {x: 0, y: 0}
   velocityRange:
     Min: 100
     Max: 200
@@ -417,6 +418,10 @@ PrefabInstance:
       objectReference: {fileID: -4939088437325349614, guid: 41f2e231c23d82b47a680da0851e45f1, type: 3}
     - target: {fileID: 8266562469811367957, guid: e6925e1d85904384c832bcb3917106cf, type: 3}
       propertyPath: breakVelocity
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 8266562469811367957, guid: e6925e1d85904384c832bcb3917106cf, type: 3}
+      propertyPath: receiveBreakVelocity
       value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 8266562469811367957, guid: e6925e1d85904384c832bcb3917106cf, type: 3}

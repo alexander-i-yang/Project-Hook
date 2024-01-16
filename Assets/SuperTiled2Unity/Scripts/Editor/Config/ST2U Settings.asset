@@ -63,3 +63,7 @@ MonoBehaviour:
     m_Prefab: {fileID: 6602010226284401963, guid: 0a0ff75c5e5428b478ed4541ff04556a, type: 3}
   - m_TypeName: Chair
     m_Prefab: {fileID: 4561628914390196607, guid: 58a9efcfb2ab27e4e9ef2fb733c597da, type: 3}
+  - m_TypeName: Potted Plant
+    m_Prefab: {fileID: 7720121506941789161, guid: a8c8ccebe280b5f4ebc352f3259859f5, type: 3}
+  - m_TypeName: Potted Mushroom
+    m_Prefab: {fileID: 7720121506941789161, guid: 1d840b2651ba6144cbb8531b11e4016c, type: 3}

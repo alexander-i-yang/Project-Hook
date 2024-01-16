@@ -12,7 +12,7 @@ namespace Player
     //L: The purpose of this class is to ensure that all player components are initialized properly, and it helps keep all of the player properties in one place.
     [RequireComponent(typeof(PlayerActor))]
     [RequireComponent(typeof(MovementStateMachine))]
-    [RequireComponent(typeof(GrappleStateMachine))]
+    [RequireComponent(typeof(PlayerGrapplerStateMachine))]
     [RequireComponent(typeof(ParryStateMachine))]
     [RequireComponent(typeof(PlayerInputController))]
     [RequireComponent(typeof(PlayerDeathManager))]
@@ -90,13 +90,7 @@ namespace Player
         [Tooltip("Time to let players input a direction change")]
         [SerializeField] public float DogoJumpGraceTime;
 
-        [Foldout("Grapple", true)]
-        
-        [Tooltip("Grapple Stops when you collide with a wall")]
-        [SerializeField] public bool GrappleCollideWallStop;
-        
-        [Tooltip("Grapple extend units per second")]
-        [SerializeField] public float GrappleExtendSpeed;
+        /*[Foldout("Grapple", true)]
 
         [SerializeField] public float GrappleBulletTimeScale;
        
@@ -131,7 +125,7 @@ namespace Player
         [SerializeField] public float ZeroAngle;
 
         [Tooltip("Max boost magnitude")]
-        [SerializeField] public float MaxGrappleBoostMagnitude;
+        [SerializeField] public float MaxGrappleBoostMagnitude;*/
 
         [Tooltip("Velocity multiplier from the discarded direction after you it a wall")]
         [SerializeField] public float HitWallGrappleMult;
@@ -163,7 +157,7 @@ namespace Player
         #endregion
 
         public MovementStateMachine MovementStateMachine { get; private set; }
-        public GrappleStateMachine GrappleStateMachine { get; private set; }
+        public PlayerGrapplerStateMachine GrapplerStateMachine { get; private set; }
         public ParryStateMachine ParryStateMachine { get; private set; }
         public PlayerInputController Input { get; private set; }
         public PlayerActor Actor { get; private set; }
@@ -177,7 +171,7 @@ namespace Player
         {
             // InitializeSingleton(false); //L: Don't make player persistent, bc then there'll be multiple players OO
             MovementStateMachine = gameObject.GetComponent<MovementStateMachine>();
-            GrappleStateMachine = gameObject.GetComponent<GrappleStateMachine>();
+            GrapplerStateMachine = gameObject.GetComponent<PlayerGrapplerStateMachine>();
             ParryStateMachine = gameObject.GetComponent<ParryStateMachine>();
             Input = gameObject.GetComponent<PlayerInputController>();
             Actor = gameObject.GetComponent<PlayerActor>();

@@ -36,5 +36,10 @@ namespace Mechanics.GrappleBehaviors.PullBehavior
             }
             grappledActor.StickyPullMove(Input.Sticky.position - grappledActor.transform.position);
         }
+
+        public override void BreakGrapple()
+        {
+            MySM.Transition<Idle>();
+        }
     }
 }

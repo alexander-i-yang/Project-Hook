@@ -21,6 +21,7 @@ namespace Mechanics {
 
         [SerializeField] private float breakVelocity;
         [SerializeField] private UnityEvent<Vector2, Vector2> onBreak;
+        [SerializeField] private UnityEvent<Vector2> onPunch;
         
         void Awake()
         {
@@ -55,11 +56,24 @@ namespace Mechanics {
             velocityX = _stateMachine.ApplyXFriction(velocityX);
             MoveTick();
         }
-        
+
+        public bool ShouldBreak(Vector2 direction)
+        {
+            return (velocity * direction).magnitude >= breakVelocity && !_beingGrappled;
+        }
+
         public override bool OnCollide(PhysObj p, Vector2 direction) {
             bool col = base.OnCollide(p, direction);
+            if (p is Crate otherCrate)
+            {
+                if (otherCrate.ShouldBreak(direction))
+                {
+                    otherCrate.Break();
+                }
+            }
+            
             if (col) {
-                if ((velocity * direction).magnitude >= breakVelocity && !_beingGrappled)
+                if (ShouldBreak(direction))
                 {
                     Break();
                     return true;
@@ -107,7 +121,8 @@ namespace Mechanics {
         public bool ReceivePunch(Vector2 v)
         {
             velocity = v;
-            return false;
+            onPunch?.Invoke(v);
+            return true;
         }
 
         public void SetBeingGrappled(bool b) => _beingGrappled = b;

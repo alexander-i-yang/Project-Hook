@@ -1,15 +1,15 @@
 ﻿using A2DK.Phys;
 using ASK.Core;
 using ASK.Helpers;
-
+using Phys.PhysObjStateMachine;
 using UnityEditor;
 using UnityEngine;
 
-namespace Player
+namespace Mechanics
 {
-    public partial class GrappleStateMachine
+    public partial class GrapplerStateMachine
     {
-        public abstract class GrappleState : PlayerStateMachine.PlayerState<GrappleStateMachine, GrappleState, GrappleStateInput>
+        public abstract class GrappleState : PhysObjStateMachine.PhysObjState<GrapplerStateMachine, GrappleState, GrappleStateInput, Actor>
         {
             public virtual void GrappleStarted() {
                 

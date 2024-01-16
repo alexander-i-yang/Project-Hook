@@ -25,13 +25,13 @@ namespace Player
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            var pullable = other.GetComponent<IPullable>();
+            var pullable = other.GetComponent<IStickyable>();
             pullable?.OnStickyEnter(_stickyCollider);
         }
         
         private void OnTriggerExit2D(Collider2D other)
         {
-            var pullable = other.GetComponent<IPullable>();
+            var pullable = other.GetComponent<IStickyable>();
             pullable?.OnStickyExit(_stickyCollider);
         }
     }

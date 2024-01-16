@@ -548,8 +548,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -7.6705, y: 4.0125, z: 0}
-    m_Extent: {x: 30.7049, y: 17.676498, z: 0}
+    m_Center: {x: -7.6679, y: 4.0205503, z: 0}
+    m_Extent: {x: 30.708, y: 17.674551, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -5924,8 +5924,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -3.1134996, y: 3.8365002, z: 0}
-    m_Extent: {x: 19.426601, y: 10.8961, z: 0}
+    m_Center: {x: -3.1146498, y: 3.8472502, z: 0}
+    m_Extent: {x: 19.42435, y: 10.89945, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -6839,7 +6839,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2048, y: -192, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7007,7 +7007,7 @@ MonoBehaviour:
     Min: 10
     Max: 50
   inheritVWeight: 1
-  _particlePrefab: {fileID: 569603349}
+  _particlePrefab: {fileID: 0}
   _numParticles: 15
 --- !u!4 &547639561
 Transform:
@@ -7108,11 +7108,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &569603349 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4021358435632073024, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-  m_PrefabInstance: {fileID: 3765340383256460706}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -7562,7 +7557,7 @@ Transform:
   m_GameObject: {fileID: 649151601}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2048, y: -192, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17006,7 +17001,7 @@ Transform:
   m_GameObject: {fileID: 1453812246}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2048, y: -192, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17609,20 +17604,20 @@ GameObject:
   m_Component:
   - component: {fileID: 1498126424}
   - component: {fileID: 1498126417}
+  - component: {fileID: 1498126433}
   - component: {fileID: 1498126422}
   - component: {fileID: 1498126421}
   - component: {fileID: 1498126420}
   - component: {fileID: 1498126419}
   - component: {fileID: 1498126425}
   - component: {fileID: 1498126427}
-  - component: {fileID: 1498126428}
   - component: {fileID: 1498126429}
   - component: {fileID: 1498126430}
   - component: {fileID: 1498126431}
   - component: {fileID: 1498126432}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17666,20 +17661,6 @@ MonoBehaviour:
   UltraSpeedMult: 2
   UltraHelper: 0
   DogoJumpGraceTime: 0.12
-  GrappleCollideWallStop: 0
-  GrappleExtendSpeed: 800
-  GrappleBulletTimeScale: 0.2
-  GrappleLerpPercent: 1200
-  MaxGrappleSpeed: 250
-  GrappleStartMult: 0.9
-  GrappleNormalMult: 0
-  GrappleOrthMult: 1
-  GrappleBoost: 0.1
-  GrappleMinBoost: 0
-  SmallAngle: 10
-  SmallAngleMagnitude: 15
-  ZeroAngle: 0.1
-  MaxGrappleBoostMagnitude: 32
   HitWallGrappleMult: 0.5
   MoveXGrappleMult: 0.2
   ParryVMult: 1
@@ -17861,21 +17842,6 @@ MonoBehaviour:
   OnPlayerStateChange:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1498126428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498126416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1adbd517a5785bb4daa4ad5a76ea966e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnAbilityStateChange:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1498126429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17891,6 +17857,7 @@ MonoBehaviour:
   OnAbilityStateChange:
     m_PersistentCalls:
       m_Calls: []
+  BulletTimeScale: 0.2
 --- !u!114 &1498126430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17939,6 +17906,63 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mass: 10
+--- !u!114 &1498126433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498126416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33b02d3e002843acae3519900e682007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GrappleCollideWallStop: 0
+  OnAbilityStateChange:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGrappleAttach:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1498126427}
+        m_TargetAssemblyTypeName: Player.MovementStateMachine, Player
+        m_MethodName: RefreshAbilities
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnGrappleDetach:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1498126427}
+        m_TargetAssemblyTypeName: Player.MovementStateMachine, Player
+        m_MethodName: RefreshAbilities
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  GrappleExtendSpeed: 800
+  GrappleBulletTimeScale: 0.2
+  GrappleStartMult: 0.9
+  GrappleNormalMult: 0
+  GrappleOrthMult: 1
+  SmallAngle: 10
+  SmallAngleMagnitude: 15
+  ZeroAngle: 0.1
+  GrappleBoostSpeed: 0.1
+  GrappleMinBoost: 0
+  MaxGrappleBoostSpeed: 32
 --- !u!1 &1520743367
 GameObject:
   m_ObjectHideFlags: 0
@@ -19829,115 +19853,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cda38d1ff7db5a84da3f6772b3cb0205, type: 3}
---- !u!1001 &3765340383256460706
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4021358435632073024, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: m_Name
-      value: LeafParticle
-      objectReference: {fileID: 0}
-    - target: {fileID: 4021358435632073024, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6038158934298229881, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 6038158934298229881, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.125
-      objectReference: {fileID: 0}
-    - target: {fileID: 6038158934298229881, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 243
-      objectReference: {fileID: 0}
-    - target: {fileID: 6038158934298229881, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -84
-      objectReference: {fileID: 0}
-    - target: {fileID: 6038158934298229881, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6038158934298229881, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6038158934298229881, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6038158934298229881, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6038158934298229881, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6038158934298229881, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6038158934298229881, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6038158934298229881, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7664962134879746737, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: _minFloatV
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7664962134879746737, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: _gravityFly
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7664962134879746737, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: gravity.Max
-      value: 0.15317447
-      objectReference: {fileID: 0}
-    - target: {fileID: 7664962134879746737, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: gravity.Min
-      value: 0.07917771
-      objectReference: {fileID: 0}
-    - target: {fileID: 7664962134879746737, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: arcAngle.Max
-      value: 0.41645655
-      objectReference: {fileID: 0}
-    - target: {fileID: 7664962134879746737, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: arcAngle.Min
-      value: 0.28940338
-      objectReference: {fileID: 0}
-    - target: {fileID: 7664962134879746737, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: waveSpeed.Max
-      value: 4.9598913
-      objectReference: {fileID: 0}
-    - target: {fileID: 7664962134879746737, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: waveSpeed.Min
-      value: 4.4038773
-      objectReference: {fileID: 0}
-    - target: {fileID: 7664962134879746737, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: arcDistance.Max
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 7664962134879746737, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
-      propertyPath: arcDistance.Min
-      value: 44.439857
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: fd1c8cdbb26df1442ad03a44dcf6dfa1, type: 3}
 --- !u!1001 &5805963827189039780
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20104,4 +20019,3 @@ SceneRoots:
   - {fileID: 800640000}
   - {fileID: 31000593}
   - {fileID: 949433414}
-  - {fileID: 3765340383256460706}

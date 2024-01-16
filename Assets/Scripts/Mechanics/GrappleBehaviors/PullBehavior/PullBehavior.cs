@@ -6,7 +6,7 @@ using static Helpers.Helpers;
 namespace Mechanics
 {
     [RequireComponent(typeof(PullBehaviorStateMachine), typeof(Actor))]
-    public class PullBehavior : MonoBehaviour, IGrappleable, IPullable
+    public class PullBehavior : MonoBehaviour, IGrappleable, IStickyable
 
     {
         private Actor _myActor;
@@ -32,15 +32,15 @@ namespace Mechanics
             _sm = GetComponent<PullBehaviorStateMachine>();
         }
 
-        public (Vector2 curPoint, IGrappleable attachedTo, GrappleapleType grappleType) AttachGrapple(Actor p,
+        public (Vector2 curPoint, IGrappleable attachedTo, GrappleapleType grappleType) AttachGrapple(Actor grappler,
             Vector2 rayCastHit)
         {
-            _sm.CurrState.AttachGrapple();
+            _sm.CurrState.AttachGrapple(grappler.GetComponent<GrapplerStateMachine>());
             _onAttachGrapple?.Invoke();
             
-            Vector2 apply = (p.transform.position - transform.position).normalized * initPullMag;
+            Vector2 apply = (grappler.transform.position - transform.position).normalized * initPullMag;
 
-            Vector2 newV = CombineVectorsWithReset(p.velocity, apply);
+            Vector2 newV = CombineVectorsWithReset(grappler.velocity, apply);
             _myActor.SetVelocity(newV);
             
             return (transform.position, this, GrappleapleType.PULL);
@@ -74,6 +74,11 @@ namespace Mechanics
         public void SetV(Vector2 inputBeforeStickyV)
         {
             _myActor.SetVelocity(inputBeforeStickyV);
+        }
+
+        public void BreakGrapple()
+        {
+            _sm.CurrState.BreakGrapple();
         }
     }
 }

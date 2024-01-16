@@ -3,9 +3,9 @@ using A2DK.Phys;
 using ASK.Core;
 using UnityEngine;
 
-namespace Player
+namespace Mechanics
 {
-    public partial class GrappleStateMachine
+    public partial class GrapplerStateMachine
     {
         
         public class Pulling : GrappleState
@@ -33,7 +33,8 @@ namespace Player
             {
                 Input.AttachedTo.DetachGrapple();
                 MySM.Transition<Idle>();
-                MyCore.MovementStateMachine.RefreshAbilities();
+                MySM.OnGrappleDetach?.Invoke();
+                // MyCore.MovementStateMachine.RefreshAbilities();
             }
         }
     }
