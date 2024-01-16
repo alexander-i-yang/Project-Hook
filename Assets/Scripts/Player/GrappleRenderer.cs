@@ -6,7 +6,7 @@ using VFX;
 
 public class GrappleRenderer : MonoBehaviour {
     private LineRenderer _lr;
-    private GrapplerStateMachine _parent;
+    private PlayerGrapplerStateMachine _parent;
     [SerializeField] private GameObject leafPrefab;
     [SerializeField] private GameObject curvePointPrefab;
     [SerializeField] private float leafSpacing;
@@ -16,7 +16,8 @@ public class GrappleRenderer : MonoBehaviour {
     
     private void Awake() {
         _lr = GetComponent<LineRenderer>();
-        _parent = transform.parent.GetComponent<GrapplerStateMachine>();
+        _parent = transform.parent.GetComponent<PlayerGrapplerStateMachine>();
+        // print(transform.parent);
     }
 
 
