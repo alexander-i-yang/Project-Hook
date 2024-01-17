@@ -120,6 +120,13 @@ namespace Mechanics
 
         public bool IsGrappleExtending() => IsOnState<ExtendGrapple>();
 
+        public Vector2 CurGrapplePos()
+        {
+            if (IsGrappleExtending()) return CurrInput.CurGrappleExtendPos;;
+            if (IsGrappling()) return CurrInput.CurrentGrapplePos;
+            return transform.position;
+        }
+
         // public Vector2 GetGrappleInputPos() => MyCore.Input.GetAimPos(MyPhysObj.transform.position);
         public abstract Vector2 GetGrappleInputPos();
 
@@ -160,7 +167,7 @@ namespace Mechanics
             velocity = ortho.normalized * (projection.magnitude * GrappleNormalMult + ortho.magnitude * GrappleOrthMult);
 
             float angle = Vector2.Angle(rawV, Vector2.up);
-            if (velocity.magnitude < SmallAngleMagnitude && angle <= SmallAngle) {
+            if (velocity.magnitude < SmallAngleMagnitude && angle <= SmallAngle && CurrInput.AttachedToPhysObj.velocity.magnitude < 1) {
                 if (Math.Sign(rawV.x) == Math.Sign(velocity.x)) {
                     float newMag = Helpers.Helpers.ClosestBetween(-SmallAngleMagnitude, SmallAngleMagnitude, (ortho + projection).magnitude);
                     velocity = ortho.normalized * newMag;

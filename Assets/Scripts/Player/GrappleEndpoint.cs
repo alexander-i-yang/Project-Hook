@@ -10,19 +10,12 @@ namespace Player
         private void Awake()
         {
             _pCore = GetComponentInParent<PlayerCore>();
+            transform.SetParent(null);
         }
 
         private void FixedUpdate()
         {
-            var grappleStateMachine = _pCore.GrapplerStateMachine;
-            if (grappleStateMachine.IsGrappleExtending() || grappleStateMachine.IsGrappling())
-            {
-                transform.position = grappleStateMachine.CurrInput.CurGrappleExtendPos;;
-            }
-            else
-            {
-                transform.position = _pCore.transform.position;
-            }
+            transform.position = _pCore.GrapplerStateMachine.CurGrapplePos();
         }
 
         public bool OutsideOfScreen()

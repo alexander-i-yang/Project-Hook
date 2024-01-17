@@ -7,7 +7,6 @@ namespace Mechanics
         //Function for Tiled importing - do not delete
         public void SetEndpoint(GameObject g)
         {
-            Debug.Log("but why");
             GetComponentInChildren<Zipline>().SetTrackEndpoint(g);
         }
 

@@ -19,7 +19,9 @@ namespace Mechanics
 
             public override void FixedUpdate()
             {
+                var oldGpos = Input.CurrentGrapplePos;
                 Input.CurrentGrapplePos = Input.AttachedTo.ContinuousGrapplePos(Input.CurrentGrapplePos, MySM.MyPhysObj);
+                var newGPos = Input.CurrentGrapplePos;
                 MySM.GrappleUpdate(Input.CurrentGrapplePos, 0);
             }
 
