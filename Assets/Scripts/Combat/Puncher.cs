@@ -16,6 +16,7 @@ namespace Combat
 
         [SerializeField] private UnityEvent OnAim;
         [SerializeField] private UnityEvent<Vector2> OnPunch;
+        [SerializeField] private UnityEvent<Vector2, Vector2> OnPunchConnect;
         [SerializeField] private UnityEvent OnIdle;
 
         private void Awake()
@@ -41,7 +42,11 @@ namespace Combat
             {
                 if (p.ReceivePunch(v)) punchConnect = true;
             }
-            if (punchConnect) onPunchConnect?.Invoke(v);
+            if (punchConnect)
+            {
+                onPunchConnect?.Invoke(v);
+                OnPunchConnect?.Invoke(v, transform.position);
+            }
             OnPunch?.Invoke(v);
         }
 

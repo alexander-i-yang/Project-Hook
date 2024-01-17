@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.2" name="Mechanics" tilewidth="24" tileheight="24" tilecount="8" columns="0">
+<tileset version="1.10" tiledversion="1.10.2" name="Mechanics" tilewidth="24" tileheight="24" tilecount="10" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0" type="Blue Crystal">
   <image width="8" height="8" source="../../Sprites/Mechanics/Crystal Blue.png"/>
@@ -30,5 +30,14 @@
  </tile>
  <tile id="10" x="2" y="7" width="9" height="17" type="Chair">
   <image width="34" height="24" source="../../Sprites/Placeholder/Chair.png"/>
+ </tile>
+ <tile id="11" type="Robot Lame">
+  <image width="13" height="15" source="../../Sprites/Enemies/Robot.png"/>
+ </tile>
+ <tile id="12" type="Zipline">
+  <properties>
+   <property name="OtherPoint" type="object" value="0"/>
+  </properties>
+  <image width="24" height="24" source="../../Sprites/Tilesets/Breakable.png"/>
  </tile>
 </tileset>

@@ -57,25 +57,25 @@ namespace Mechanics {
             MoveTick();
         }
 
-        public bool ShouldBreak(Vector2 direction)
+        public bool ShouldBreak(Vector2 direction, PhysObj against)
         {
-            return (velocity * direction).magnitude >= breakVelocity && !_beingGrappled;
+            return ((against.velocity - this.velocity) * direction).magnitude >= breakVelocity && !_beingGrappled;
         }
 
         public override bool OnCollide(PhysObj p, Vector2 direction) {
             bool col = base.OnCollide(p, direction);
             if (p is Crate otherCrate)
             {
-                if (otherCrate.ShouldBreak(direction))
+                if (otherCrate.ShouldBreak(direction, this))
                 {
-                    otherCrate.Break();
+                    otherCrate.BreakAgainst(this);
                 }
             }
             
             if (col) {
-                if (ShouldBreak(direction))
+                if (ShouldBreak(direction, p))
                 {
-                    Break();
+                    BreakAgainst(p);
                     return true;
                 }
                 
@@ -98,9 +98,9 @@ namespace Mechanics {
             return col;
         }
 
-        private void Break()
+        private void BreakAgainst(PhysObj p)
         {
-            onBreak?.Invoke(velocity, transform.position);
+            onBreak?.Invoke(p.velocity - this.velocity, transform.position);
             gameObject.SetActive(false);
         }
 

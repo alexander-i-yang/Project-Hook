@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="256" height="54" tilewidth="8" tileheight="8" infinite="0" nextlayerid="7" nextobjectid="22">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="256" height="54" tilewidth="8" tileheight="8" infinite="0" nextlayerid="7" nextobjectid="48">
  <tileset firstgid="1" source="../Tilesets/Rocks.tsx"/>
  <tileset firstgid="37" source="../Tilesets/Branches.tsx"/>
  <tileset firstgid="67" source="../Tilesets/Stalagtite.tsx"/>
  <tileset firstgid="75" source="../Tilesets/Mechanics.tsx"/>
- <tileset firstgid="86" source="../Tilesets/Decoration.tsx"/>
+ <tileset firstgid="88" source="../Tilesets/Decoration.tsx"/>
  <layer id="1" name="Ground" width="256" height="54">
   <data encoding="csv">
 8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
@@ -69,12 +69,42 @@
   <object id="8" gid="85" x="160" y="200" width="9" height="17"/>
   <object id="9" gid="85" x="144" y="200" width="9" height="17"/>
   <object id="10" gid="85" x="192" y="200" width="9" height="17"/>
+  <object id="22" gid="86" x="280" y="192" width="13" height="15"/>
+  <object id="23" gid="86" x="336" y="192" width="13" height="15"/>
+  <object id="24" gid="86" x="363" y="160" width="13" height="15"/>
+  <object id="25" gid="86" x="624" y="240" width="13" height="15"/>
+  <object id="26" gid="86" x="880" y="400" width="13" height="15"/>
+  <object id="27" gid="86" x="856" y="160" width="13" height="15"/>
+  <object id="28" gid="86" x="1056" y="152" width="13" height="15"/>
+  <object id="29" gid="86" x="1240" y="200" width="13" height="15"/>
+  <object id="30" gid="86" x="1392" y="112" width="13" height="15"/>
+  <object id="31" gid="86" x="1504" y="128" width="13" height="15"/>
+  <object id="32" gid="86" x="1832" y="328" width="13" height="15"/>
+  <object id="33" gid="86" x="1848" y="328" width="13" height="15"/>
+  <object id="34" gid="86" x="1936" y="344" width="13" height="15"/>
+  <object id="35" gid="86" x="1944" y="304" width="13" height="15"/>
+  <object id="36" gid="86" x="1888" y="328" width="13" height="15"/>
+  <object id="37" gid="86" x="1824" y="376" width="13" height="15"/>
+  <object id="38" gid="86" x="1784" y="344" width="13" height="15"/>
+  <object id="39" gid="86" x="1808" y="304" width="13" height="15"/>
+  <object id="40" gid="86" x="1872" y="288" width="13" height="15"/>
+  <object id="41" gid="86" x="1920" y="288" width="13" height="15"/>
+  <object id="42" gid="86" x="1928" y="328" width="13" height="15"/>
+  <object id="43" gid="86" x="1888" y="400" width="13" height="15"/>
+  <object id="44" gid="86" x="1848" y="400" width="13" height="15"/>
+  <object id="45" gid="86" x="1968" y="400" width="13" height="15"/>
+  <object id="46" gid="87" x="1960" y="360" width="24" height="24">
+   <properties>
+    <property name="OtherPoint" type="object" value="47"/>
+   </properties>
+  </object>
+  <object id="47" gid="82" x="1880" y="352" width="8" height="8"/>
  </objectgroup>
  <objectgroup id="6" name="Decoration">
-  <object id="13" gid="87" x="250" y="197" width="16" height="20"/>
-  <object id="14" gid="87" x="314" y="197" width="16" height="20"/>
-  <object id="18" gid="86" x="232" y="200" width="9" height="13"/>
-  <object id="21" gid="86" x="264" y="192" width="9" height="13"/>
+  <object id="13" gid="89" x="250" y="197" width="16" height="20"/>
+  <object id="14" gid="89" x="314" y="197" width="16" height="20"/>
+  <object id="18" gid="88" x="232" y="200" width="9" height="13"/>
+  <object id="21" gid="88" x="264" y="192" width="9" height="13"/>
  </objectgroup>
  <layer id="2" name="Branches" width="256" height="54">
   <data encoding="csv">

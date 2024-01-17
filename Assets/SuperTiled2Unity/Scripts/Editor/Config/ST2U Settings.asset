@@ -67,3 +67,5 @@ MonoBehaviour:
     m_Prefab: {fileID: 7720121506941789161, guid: a8c8ccebe280b5f4ebc352f3259859f5, type: 3}
   - m_TypeName: Potted Mushroom
     m_Prefab: {fileID: 7720121506941789161, guid: 1d840b2651ba6144cbb8531b11e4016c, type: 3}
+  - m_TypeName: Robot Lame
+    m_Prefab: {fileID: 1338866151570392933, guid: 824a1066f530f0b488a6eb94d20eb876, type: 3}
