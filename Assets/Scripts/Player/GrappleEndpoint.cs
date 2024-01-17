@@ -14,7 +14,20 @@ namespace Player
 
         private void FixedUpdate()
         {
-            transform.position = _pCore.GrapplerStateMachine.CurrInput.CurGrappleExtendPos;
+            var grappleStateMachine = _pCore.GrapplerStateMachine;
+            if (grappleStateMachine.IsGrappleExtending() || grappleStateMachine.IsGrappling())
+            {
+                transform.position = grappleStateMachine.CurrInput.CurGrappleExtendPos;;
+            }
+            else
+            {
+                transform.position = _pCore.transform.position;
+            }
+        }
+
+        public bool OutsideOfScreen()
+        {
+            return Vector2.Distance(transform.position, _pCore.transform.position) > 100;
         }
     }
 }

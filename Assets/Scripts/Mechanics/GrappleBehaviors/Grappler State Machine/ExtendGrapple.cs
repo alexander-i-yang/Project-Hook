@@ -37,6 +37,13 @@ namespace Mechanics
             public override void FixedUpdate()
             {
                 base.FixedUpdate();
+
+                if (MySM.GrappleTooFar())
+                {
+                    GrappleFinished();
+                    return;
+                }
+                
                 _grappleDuration += Game.TimeManager.FixedDeltaTime;
                 
                 var updateData = MySM.GrappleExtendUpdate(_grappleDuration, MySM.GetGrappleInputPos());

@@ -50,8 +50,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorLaunchV: {x: 0, y: 0}
   velocityRange:
-    Min: 100
-    Max: 200
+    Min: 24
+    Max: 52
   rotationVRange:
     Min: 10
     Max: 50

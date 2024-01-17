@@ -19,10 +19,7 @@
   </properties>
   <image width="8" height="8" source="../../Sprites/Mechanics/Crystal Yellow.png"/>
  </tile>
- <tile id="7" type="FireflyPoint">
-  <properties>
-   <property name="Next" type="object" value="0"/>
-  </properties>
+ <tile id="7" type="ZiplineEndpoint">
   <image width="8" height="8" source="../../Sprites/Mechanics/Firefly End.png"/>
  </tile>
  <tile id="8" type="Waterfall">
@@ -36,7 +33,8 @@
  </tile>
  <tile id="12" type="Zipline">
   <properties>
-   <property name="OtherPoint" type="object" value="0"/>
+   <property name="SetEndpoint" type="object" value="0"/>
+   <property name="Speed" type="int" value="100"/>
   </properties>
   <image width="24" height="24" source="../../Sprites/Tilesets/Breakable.png"/>
  </tile>

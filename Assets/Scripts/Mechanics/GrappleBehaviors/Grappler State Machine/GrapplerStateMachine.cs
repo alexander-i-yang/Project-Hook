@@ -2,6 +2,7 @@ using System;
 using A2DK.Phys;
 using ASK.Core;
 using ASK.Helpers;
+using Helpers;
 using Phys.PhysObjStateMachine;
 using UnityEngine;
 using UnityEngine.Events;
@@ -49,6 +50,10 @@ namespace Mechanics
         
         [Tooltip("Max boost speed")]
         [SerializeField] public float MaxGrappleBoostSpeed;
+
+        [Tooltip("Max grapple distance in the x and y directions.")]
+        [SerializeField] public Vector2 MaxGrappleDistance;
+        
         #region Overrides
         protected override void SetInitialState() 
         {
@@ -221,5 +226,13 @@ namespace Mechanics
         protected abstract void ResetMyGrappleHook();
 
         public void BreakGrapple() => CurrState.BreakGrapple();
+
+        private bool GrappleTooFar()
+        {
+            return false;
+            Vector2 d = CurrInput.CurGrappleExtendPos - (Vector2)transform.position;
+            d = d.Abs();
+            return d.x > MaxGrappleDistance.x || d.y > MaxGrappleDistance.y;
+        }
     }
 }

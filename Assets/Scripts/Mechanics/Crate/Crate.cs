@@ -66,7 +66,7 @@ namespace Mechanics {
             bool col = base.OnCollide(p, direction);
             if (p is Crate otherCrate)
             {
-                if (otherCrate.ShouldBreak(direction, this))
+                if (!_beingGrappled && otherCrate.ShouldBreak(direction, this))
                 {
                     otherCrate.BreakAgainst(this);
                 }
