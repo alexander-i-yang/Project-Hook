@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.2" name="Mechanics" tilewidth="24" tileheight="24" tilecount="10" columns="0">
+<tileset version="1.10" tiledversion="1.10.2" name="Mechanics" tilewidth="48" tileheight="24" tilecount="12" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0" type="Blue Crystal">
   <image width="8" height="8" source="../../Sprites/Mechanics/Crystal Blue.png"/>
@@ -37,5 +37,11 @@
    <property name="Speed" type="int" value="100"/>
   </properties>
   <image width="24" height="24" source="../../Sprites/Tilesets/Breakable.png"/>
+ </tile>
+ <tile id="13" type="Desk1">
+  <image width="33" height="16" source="../../Sprites/Decor/Desk1.png"/>
+ </tile>
+ <tile id="14" type="Desk2">
+  <image width="48" height="16" source="../../Sprites/Decor/Desk2.png"/>
  </tile>
 </tileset>

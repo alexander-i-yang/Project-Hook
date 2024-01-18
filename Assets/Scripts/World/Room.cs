@@ -10,7 +10,17 @@ namespace World {
     public class Room : MonoBehaviour {
         private Collider2D _roomCollider;
         // public CinemachineVirtualCamera VCam { get; private set; }
-        public VCamManager VCamManager { get; private set; }
+        private VCamManager _vcam;
+
+        public VCamManager VCamManager
+        {
+            get
+            {
+                if (_vcam == null) _vcam = GetComponentInChildren<VCamManager>();
+                return _vcam;
+            }
+        }
+
         private CinemachineBrain _cmBrain;
 
         public bool StopTime = true;
@@ -37,8 +47,7 @@ namespace World {
 
             // _endCutsceneManager = FindObjectOfType<EndCutsceneManager>();
             RecalculateChildren?.Invoke();
-
-            VCamManager = GetComponentInChildren<VCamManager>();
+            
             _grid = transform.GetChild(0).gameObject;
         }
 

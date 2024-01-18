@@ -73,3 +73,11 @@ MonoBehaviour:
     m_Prefab: {fileID: 1921371437540258611, guid: c8d79e41f1194be48978275b29c2cdf7, type: 3}
   - m_TypeName: Zipline
     m_Prefab: {fileID: 3786360777245694845, guid: cda38d1ff7db5a84da3f6772b3cb0205, type: 3}
+  - m_TypeName: Lamp
+    m_Prefab: {fileID: 7720121506941789161, guid: c45cd198ffb0df74baf8fc8d31c8d805, type: 3}
+  - m_TypeName: Desk Lamp
+    m_Prefab: {fileID: 7720121506941789161, guid: ea2b4ef3b59bb7c49a952871865206ae, type: 3}
+  - m_TypeName: Desk1
+    m_Prefab: {fileID: 6602010226284401963, guid: 94e08a85b7f925f40b4fe3953585df1e, type: 3}
+  - m_TypeName: Desk2
+    m_Prefab: {fileID: 6602010226284401963, guid: a0c091792fac785458bf484e7ff374d5, type: 3}

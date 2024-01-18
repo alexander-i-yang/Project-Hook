@@ -667,7 +667,7 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
-  parallaxScale: {x: 0.9, y: 0.9}
+  parallaxScale: {x: 0.9, y: 0.99}
 --- !u!4 &886096650602068493 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2350385809013767848, guid: 2a5de5ea4af3d9d4cb7ad8e561f98c49, type: 3}
@@ -799,4 +799,4 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
-  parallaxScale: {x: 0.8, y: 0.8}
+  parallaxScale: {x: 0.8, y: 0.99}
