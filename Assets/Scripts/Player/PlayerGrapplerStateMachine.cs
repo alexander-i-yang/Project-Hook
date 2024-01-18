@@ -38,7 +38,5 @@ namespace Player
             Vector2 ortho = oldV - projection;
             return direction == 0 ? oldV : ortho * _core.MoveXGrappleMult;
         }
-        
-        protected override void ResetMyGrappleHook() => _core.MyGrappleHook.Reset(transform.position);
     }
 }

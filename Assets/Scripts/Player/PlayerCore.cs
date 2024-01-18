@@ -18,7 +18,7 @@ namespace Player
     [RequireComponent(typeof(PlayerDeathManager))]
     public class PlayerCore : MonoBehaviour
     {
-        public GrappleHook MyGrappleHook;
+        // public GrappleHook MyGrappleHook;
 
         #region Player Properties
         [Foldout("Move", true)]
@@ -117,7 +117,6 @@ namespace Player
             DeathManager = GetComponentInChildren<PlayerDeathManager>();
             Puncher = GetComponentInChildren<Puncher>();
             
-            if (MyGrappleHook == null) throw new ConstraintException("PlayerCore must have GrappleHook");
             if (AnimManager == null) throw new ConstraintException("PlayerCore must have AnimManager");
             //gameObject.AddComponent<PlayerCrystalResponse>();
             //gameObject.AddComponent<PlayerSpikeResponse>();

@@ -230,7 +230,6 @@ namespace Mechanics
             // if (_core.MyGrappleHook.DidCollide) ret.hit = true;
             return ret;
         }
-        protected abstract void ResetMyGrappleHook();
 
         public void BreakGrapple() => CurrState.BreakGrapple();
 

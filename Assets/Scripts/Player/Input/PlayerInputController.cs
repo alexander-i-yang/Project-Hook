@@ -2,6 +2,7 @@ using ASK.Core;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEditor;
+using UnityEngine.Events;
 
 namespace Player
 {
@@ -12,7 +13,9 @@ namespace Player
 
         private System.Action PauseAction;
 
-        public bool HasPutInput = false;
+        public int HasPutInput = 0;
+
+        [SerializeField] private UnityEvent firstInput;
 
         private void OnEnable()
         {
@@ -115,6 +118,14 @@ namespace Player
 
         public bool GrappleStarted()
         {
+            if (inputActions.Grapple.WasPressedThisFrame())
+            {
+                HasPutInput++;
+                if (HasPutInput == 2)
+                {
+                    firstInput?.Invoke();
+                }
+            }
             return inputActions.Grapple.WasPressedThisFrame();
         }
 

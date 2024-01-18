@@ -70,6 +70,13 @@ namespace Mechanics {
                 {
                     otherCrate.BreakAgainst(this);
                 }
+            } else if (p is BreakableSolid otherSolid)
+            {
+                if (otherSolid.ShouldBreak(direction, this))
+                {
+                    otherSolid.BreakAgainst(this);
+                    return false;
+                }
             }
             
             if (col) {

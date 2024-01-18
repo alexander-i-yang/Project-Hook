@@ -15,7 +15,6 @@ namespace Mechanics
             
             public override void Enter(GrappleStateInput i) {
                 _grappleDuration = 0;
-                MySM.ResetMyGrappleHook();
                 _timescale = Game.TimeManager.ApplyTimescale(MySM.GrappleBulletTimeScale, 2);
                 Input.CurGrappleExtendPos = MySM.MyPhysObj.transform.position;
 

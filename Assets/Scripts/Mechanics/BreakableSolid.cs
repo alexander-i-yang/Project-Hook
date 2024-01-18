@@ -31,7 +31,7 @@ namespace Mechanics
             return col;
         }
         
-        private void BreakAgainst(PhysObj p)
+        public void BreakAgainst(PhysObj p)
         {
             onBreak?.Invoke(p.velocity - this.velocity, transform.position);
             gameObject.SetActive(false);
