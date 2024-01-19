@@ -121,14 +121,14 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: DialogueA
     originalName: 
-    pivot: {x: 0.5, y: -0.121212125}
-    alignment: 9
+    pivot: {x: 0.5, y: 0}
+    alignment: 7
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 278
-      y: 44
-      width: 221
+      x: 273
+      y: 4
+      width: 181
       height: 33
     spriteID: be72e41f8d4d86f4cb2da77c23544524
     spriteBone: []
@@ -138,18 +138,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 278, y: 44}
+    uvTransform: {x: 273, y: 4}
   - name: DialogueA_Frame_1
     originalName: 
-    pivot: {x: 0.59415585, y: -0.15625}
-    alignment: 9
+    pivot: {x: 0.5, y: 0}
+    alignment: 7
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 308
-      height: 32
+      width: 261
+      height: 33
     spriteID: 0551da7fa4ce8a6458576702e400b562
     spriteBone: []
     spriteOutline: []
@@ -161,14 +161,14 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 4}
   - name: DialogueA_Frame_2
     originalName: 
-    pivot: {x: 0.6879699, y: -0.121212125}
-    alignment: 9
+    pivot: {x: 0.5, y: 0}
+    alignment: 7
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 44
-      width: 266
+      y: 45
+      width: 239
       height: 33
     spriteID: 60ef924bc5ca8b24cadd917436188913
     spriteBone: []
@@ -178,18 +178,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 44}
+    uvTransform: {x: 4, y: 45}
   - name: DialogueA_Frame_3
     originalName: 
-    pivot: {x: 1.7102804, y: -0.3125}
-    alignment: 9
+    pivot: {x: 0.5, y: 0}
+    alignment: 7
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 320
-      y: 4
+      x: 251
+      y: 45
       width: 107
-      height: 16
+      height: 17
     spriteID: c289c9c20a1287d49bffa0d2058ba293
     spriteBone: []
     spriteOutline: []
@@ -198,7 +198,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 320, y: 4}
+    uvTransform: {x: 251, y: 45}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -213,32 +213,32 @@ ScriptedImporter:
       cellRect:
         x: 0
         y: 4
-        width: 221
+        width: 181
         height: 33
       spriteId: be72e41f8d4d86f4cb2da77c23544524
     - name: DialogueA_Frame_1
       frameIndex: 1
       cellRect:
         x: 0
-        y: 5
-        width: 308
-        height: 32
+        y: 4
+        width: 261
+        height: 33
       spriteId: 0551da7fa4ce8a6458576702e400b562
     - name: DialogueA_Frame_2
       frameIndex: 2
       cellRect:
         x: 0
         y: 4
-        width: 266
+        width: 239
         height: 33
       spriteId: 60ef924bc5ca8b24cadd917436188913
     - name: DialogueA_Frame_3
       frameIndex: 3
       cellRect:
         x: 0
-        y: 5
+        y: 4
         width: 107
-        height: 16
+        height: 17
       spriteId: c289c9c20a1287d49bffa0d2058ba293
     linkedCells: []
     parentIndex: -1

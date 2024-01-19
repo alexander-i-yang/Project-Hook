@@ -19,5 +19,18 @@ namespace VFX
         }
 
         public override GameObject[] GetParticles() => _originalParticles;
+        
+        public override void Launch(Vector2 actorV, Vector2 position)
+        {
+            foreach (var part in GetParticles())
+            {
+                InstantiateParticle(part, actorV, part.transform.position);
+            }
+        }
+
+        public void Launch(Vector2 actorV)
+        {
+            Launch(actorV, transform.position);
+        }
     }
 }

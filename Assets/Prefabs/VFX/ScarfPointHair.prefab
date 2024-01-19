@@ -9,6 +9,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 859126552812268263, guid: b55ae777cadd6524f9915f621f4ec788, type: 3}
+      propertyPath: m_SortingLayer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 859126552812268263, guid: b55ae777cadd6524f9915f621f4ec788, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 500620213
+      objectReference: {fileID: 0}
+    - target: {fileID: 859126552812268263, guid: b55ae777cadd6524f9915f621f4ec788, type: 3}
       propertyPath: m_Parameters.colorGradient.key0.b
       value: 0.20392157
       objectReference: {fileID: 0}
