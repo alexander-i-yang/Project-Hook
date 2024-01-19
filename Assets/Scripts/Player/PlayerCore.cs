@@ -100,9 +100,17 @@ namespace Player
         public PlayerInputController Input { get; private set; }
         public PlayerActor Actor { get; private set; }
         public Puncher Puncher { get; private set; }
-        
-        public PlayerDeathManager DeathManager { get; private set; }
-        
+
+        private PlayerDeathManager _pDM;
+        public PlayerDeathManager DeathManager
+        {
+            get
+            {
+                if (_pDM == null) _pDM = GetComponent<PlayerDeathManager>();
+                return _pDM;
+            }
+        }
+
         [NonSerialized] public PlayerAnimationStateManager AnimManager;
         
         private void Awake()
@@ -114,7 +122,6 @@ namespace Player
             Input = gameObject.GetComponent<PlayerInputController>();
             Actor = gameObject.GetComponent<PlayerActor>();
             AnimManager = GetComponentInChildren<PlayerAnimationStateManager>();
-            DeathManager = GetComponentInChildren<PlayerDeathManager>();
             Puncher = GetComponentInChildren<Puncher>();
             
             if (AnimManager == null) throw new ConstraintException("PlayerCore must have AnimManager");

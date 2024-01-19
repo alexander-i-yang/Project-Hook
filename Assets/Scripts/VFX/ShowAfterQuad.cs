@@ -19,6 +19,7 @@ namespace VFX
             StartCoroutine(Helper.DelayAction(delay, () =>
             {
                 GetComponent<MeshRenderer>().enabled=true;
+                GetComponent<Animator>().Play("BigMode");
             }));
         }
     }

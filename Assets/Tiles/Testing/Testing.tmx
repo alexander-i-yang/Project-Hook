@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="256" height="54" tilewidth="8" tileheight="8" infinite="0" nextlayerid="8" nextobjectid="50">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="256" height="54" tilewidth="8" tileheight="8" infinite="0" nextlayerid="8" nextobjectid="64">
  <tileset firstgid="1" source="../Tilesets/Rocks.tsx"/>
  <tileset firstgid="37" source="../Tilesets/Branches.tsx"/>
  <tileset firstgid="67" source="../Tilesets/Stalagtite.tsx"/>
  <tileset firstgid="75" source="../Tilesets/Mechanics.tsx"/>
- <tileset firstgid="88" source="../Tilesets/Decoration.tsx"/>
+ <tileset firstgid="91" source="../Tilesets/Decoration.tsx"/>
  <layer id="1" name="Ground" width="256" height="54">
   <data encoding="csv">
 8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
@@ -105,13 +105,24 @@
     <property name="SetEndpoint" type="object" value="49"/>
    </properties>
   </object>
-  <object id="49" gid="82" x="288" y="264" width="8" height="8"/>
+  <object id="49" gid="82" x="240" y="264" width="8" height="8"/>
+  <object id="50" gid="90" x="112" y="184" width="16" height="16"/>
+  <object id="51" gid="90" x="192" y="408" width="16" height="16"/>
+  <object id="52" gid="90" x="424" y="400" width="16" height="16"/>
+  <object id="53" gid="90" x="568" y="224" width="16" height="16"/>
+  <object id="54" gid="90" x="968" y="408" width="16" height="16"/>
+  <object id="55" gid="90" x="1072" y="152" width="16" height="16"/>
+  <object id="56" gid="90" x="1200" y="216" width="16" height="16"/>
+  <object id="57" gid="90" x="1168" y="360" width="16" height="16"/>
+  <object id="58" gid="90" x="1496" y="424" width="16" height="16"/>
+  <object id="59" gid="90" x="1816" y="416" width="16" height="16"/>
+  <object id="60" gid="90" x="1472" y="144" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="6" name="Decoration">
-  <object id="13" gid="89" x="250" y="197" width="16" height="20"/>
-  <object id="14" gid="89" x="314" y="197" width="16" height="20"/>
-  <object id="18" gid="88" x="232" y="200" width="9" height="13"/>
-  <object id="21" gid="88" x="264" y="192" width="9" height="13"/>
+  <object id="13" gid="92" x="250" y="197" width="16" height="20"/>
+  <object id="14" gid="92" x="314" y="197" width="16" height="20"/>
+  <object id="18" gid="91" x="232" y="200" width="9" height="13"/>
+  <object id="21" gid="91" x="264" y="192" width="9" height="13"/>
  </objectgroup>
  <layer id="2" name="Branches" width="256" height="54">
   <data encoding="csv">

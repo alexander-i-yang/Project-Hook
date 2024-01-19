@@ -30,6 +30,7 @@ namespace Mechanics
         void Awake()
         {
             _myPhysObj = GetComponent<PhysObj>();
+            if (anchor == null) anchor = transform;
         }
 
         public (Vector2 curPoint, IGrappleable attachedTo, GrappleapleType grappleType) AttachGrapple(Actor grappler,

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.2" name="Mechanics" tilewidth="48" tileheight="24" tilecount="12" columns="0">
+<tileset version="1.10" tiledversion="1.10.2" name="Mechanics" tilewidth="48" tileheight="24" tilecount="13" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0" type="Blue Crystal">
   <image width="8" height="8" source="../../Sprites/Mechanics/Crystal Blue.png"/>
@@ -43,5 +43,8 @@
  </tile>
  <tile id="14" type="Desk2">
   <image width="48" height="16" source="../../Sprites/Decor/Desk2.png"/>
+ </tile>
+ <tile id="15" type="Crate">
+  <image width="16" height="16" source="../../Sprites/Placeholder/Crate.png"/>
  </tile>
 </tileset>
