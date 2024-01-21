@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.2" name="Decoration" tilewidth="16" tileheight="20" tilecount="5" columns="0">
+<tileset version="1.10" tiledversion="1.10.2" name="Decoration" tilewidth="37" tileheight="72" tilecount="5" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0" type="Potted Mushroom">
   <image width="9" height="13" source="../../Sprites/Decor/Mushroom.png"/>
@@ -14,6 +14,6 @@
   <image width="11" height="14" source="../../Sprites/Decor/Desk Lamp.png"/>
  </tile>
  <tile id="4">
-  <image width="8" height="8" source="../../Sprites/Decor/Window.png"/>
+  <image width="37" height="72" source="../../Sprites/Decor/Window.png"/>
  </tile>
 </tileset>
