@@ -83,3 +83,5 @@ MonoBehaviour:
     m_Prefab: {fileID: 6602010226284401963, guid: a0c091792fac785458bf484e7ff374d5, type: 3}
   - m_TypeName: Crate
     m_Prefab: {fileID: 1785287368530505969, guid: e6925e1d85904384c832bcb3917106cf, type: 3}
+  - m_TypeName: Semisolid
+    m_Prefab: {fileID: 6602010226284401963, guid: 06cb833245e96684b883b63daa50b946, type: 3}

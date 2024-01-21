@@ -184,7 +184,7 @@ namespace TiledUtil {
         
         private void ImportSemisolid(GameObject g, int index) {
             var ret = LIL.TileToPrefab(g, index, _prefabReplacements["Semisolid"]);
-            LIL.SetLayer(ret.gameObject, "Interactable");
+            LIL.SetLayer(ret.gameObject, "Ground");
         }
 
         private void ImportBreakable(GameObject g, int index) {
@@ -263,7 +263,7 @@ namespace TiledUtil {
         
         private void ImportSemisolidTilemap(GameObject g)
         {
-            g.GetRequiredComponent<TilemapRenderer>().SetSortingLayer("Ground");
+            g.GetRequiredComponent<TilemapRenderer>().SetSortingLayer("Main");
         }
 
         private void ImportWaterTilemap(GameObject g)
