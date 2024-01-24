@@ -82,6 +82,8 @@ namespace Mechanics
                 }
                 base.CollideVertical();
             }
+
+            public override Vector2 PhysTick(Vector2 velocity, Vector2 newV, int getMovementInput) => newV;
         }
     }
 }

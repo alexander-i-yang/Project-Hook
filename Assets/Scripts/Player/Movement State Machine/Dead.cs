@@ -15,6 +15,11 @@ namespace Player
             {
                 //MySM._deathAnim.Trigger();
             }
+
+            public override Vector2 PhysTick(Vector2 velocity, Vector2 newV, int direction)
+            {
+                return newV;
+            }
         }
     }
 }

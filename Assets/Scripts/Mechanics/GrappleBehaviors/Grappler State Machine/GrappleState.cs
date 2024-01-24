@@ -42,6 +42,9 @@ namespace Mechanics
             public virtual bool ShouldApplyV() => true;
 
             public virtual void BreakGrapple() => MySM.Transition<Idle>();
+
+            public virtual Vector2 Fall(Vector2 velocity) => velocity;
+            public abstract Vector2 PhysTick(Vector2 velocity, Vector2 newV, int getMovementInput);
         }
     }
 }
