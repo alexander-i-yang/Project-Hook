@@ -19,10 +19,7 @@ namespace Mechanics
 
             public override void FixedUpdate()
             {
-                var oldGpos = Input.CurrentGrapplePos;
                 Input.CurrentGrapplePos = Input.AttachedTo.ContinuousGrapplePos(Input.CurrentGrapplePos, MySM.MyPhysObj);
-                var newGPos = Input.CurrentGrapplePos;
-                MySM.GrappleUpdate(Input.CurrentGrapplePos, 0);
             }
 
             public override void CollideHorizontal() {
@@ -99,6 +96,14 @@ namespace Mechanics
             {
                 return AttachedMovingTowards();
             }
+
+            public override Vector2 Fall(Vector2 velocity)
+            {
+                return MySM.SwingGrappleUpdate(velocity, Input.CurrentGrapplePos);
+            }
+
+            public override Vector2 PhysTick(Vector2 velocity, Vector2 newV, int direction) =>
+                MySM.SwingGrappleUpdate(velocity, Input.CurrentGrapplePos, direction);
         }
     }
 }
