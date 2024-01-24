@@ -95,5 +95,7 @@ MonoBehaviour:
     m_Prefab: {fileID: 6891072197298983639, guid: 99ae28fa38fb0fa468dd418f9fb6c903, type: 3}
   - m_TypeName: Hanging Light Long
     m_Prefab: {fileID: 5104707285206629975, guid: c43bb1e6bfbdcf14f97bf04750c652ef, type: 3}
-  - m_TypeName: Windows
+  - m_TypeName: Window Tall
     m_Prefab: {fileID: 2980672484842408090, guid: da1ab724dd0b07a47a7cc9cf27159d07, type: 3}
+  - m_TypeName: Window Long
+    m_Prefab: {fileID: 2258286071102716967, guid: ccbf8bce20e67fb47a5c78352755b46a, type: 3}

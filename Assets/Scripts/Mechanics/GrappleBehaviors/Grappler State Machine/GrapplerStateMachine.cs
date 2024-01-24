@@ -250,12 +250,9 @@ namespace Mechanics
                         if (newRet.attachedTo != null)
                         {
                             ret = newRet;
-
                             break;
                         }
                     }
-
-                    ;
                 }
             }
             // if (Mathf.Abs(dir.magnitude) <= dist) ret.hit = true;

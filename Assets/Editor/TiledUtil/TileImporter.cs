@@ -11,6 +11,7 @@ using SuperTiled2Unity.Editor;
 
 using Cinemachine;
 using ASK.Helpers;
+using Editor;
 using MyBox;
 using Spawning;
 using UnityEditor;
@@ -27,6 +28,41 @@ namespace TiledUtil {
     [AutoCustomTmxImporter()]
     public class TileImporter : CustomTmxImporter, IFilterLoggerTarget {
         private Dictionary<String, GameObject> _prefabReplacements;
+
+        private void ImportWindows(GameObject g, int index)
+        {
+            var points = g.GetRequiredComponent<EdgeCollider2D>().points;
+            Vector2 scale;
+            String prefabName;
+            Debug.Log(points[0].y - points[1].y);
+            if (Mathf.Abs(points[0].y - points[1].y) < 9)
+            {
+                scale = new Vector2(1, 4);
+                prefabName = "Window Long";
+            }
+            else
+            {
+                scale = new Vector2(4, 1);
+                prefabName = "Window Tall";
+            }
+            
+            var data = LIL.TileToPrefab(g, index, _prefabReplacements[prefabName]);
+            
+            g = data.gameObject;
+            Vector2[] colliderPoints = data.collisionPts;
+            g.GetRequiredComponent<BoxCollider2D>().offset = Vector2.zero;
+            
+            Vector2[] spritePoints = LIL.ColliderPointsToRectanglePoints(g, colliderPoints);
+            
+            Vector2 avgSpritePoint = spritePoints.ComputeAverage();
+            g.transform.localPosition = avgSpritePoint;
+            
+            for (int i = 0; i < spritePoints.Length; ++i) spritePoints[i].Scale(scale);
+            
+            LIL.SetNineSliceSprite(g, spritePoints);
+            LIL.SetLayer(g, "Ground");
+            g.GetRequiredComponent<SpriteRenderer>().SetSortingLayer("Main");
+        }
 
         public override void TmxAssetImported(TmxAssetImportedArgs data)
         {
@@ -88,25 +124,6 @@ namespace TiledUtil {
                     ResolveTileLayerImports(layer.transform, tileLayerImports[layerName]);
                 }
             }
-        }
-
-        private void ImportWindows(GameObject g, int index)
-        {
-            var data = LIL.TileToPrefab(g, index, _prefabReplacements["Windows"]);
-            g = data.gameObject;
-            Vector2[] colliderPoints = data.collisionPts;
-            Vector2[] spritePoints = LIL.ColliderPointsToRectanglePoints(g, colliderPoints); 
-            
-            Vector2 avgSpritePoint = spritePoints.ComputeAverage();
-            colliderPoints = colliderPoints.ComputeNormalized(avgSpritePoint);
-            g.transform.localPosition = avgSpritePoint;
-            
-            // LIL.SetNineSliceSprite(g, spritePoints);
-            // LIL.SetEdgeCollider2DPoints(g, colliderPoints);
-            // LIL.AddShadowCast(g, colliderPoints.ToVector3());
-            LIL.SetLayer(g, "Ground");
-            g.GetRequiredComponent<SpriteRenderer>().SetSortingLayer("Interactable");
-            // AddWaterfalCollision(g, colliderPoints);
         }
 
         private void ImportWindowsTilemap(GameObject g)
