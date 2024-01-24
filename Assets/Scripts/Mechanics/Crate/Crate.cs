@@ -77,6 +77,9 @@ namespace Mechanics {
                     otherSolid.BreakAgainst(this);
                     return false;
                 }
+            } else if (p is Semisolid && _beingGrappled)
+            {
+                return false;
             }
             
             if (col) {
