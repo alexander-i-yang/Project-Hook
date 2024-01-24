@@ -49,7 +49,7 @@ namespace TiledUtil {
             {
                 //{ "Lava", ImportLavaTilemap },
                 { "Ground", ImportGroundTilemap },
-                { "Semisolid", ImportSemisolidTilemap },
+                { "Semisolids", ImportSemisolidsTilemap },
                 //{ "Water", ImportWaterTilemap },
                 { "Dirt", ImportGroundTilemap },
                 //{ "DecorBack", ImportDecorBackTilemap },
@@ -64,7 +64,7 @@ namespace TiledUtil {
             //Applies to children
             Dictionary<String, Action<GameObject, int>> tileLayerImports = new() {
                 { "Ground", ImportGround },
-                { "Semisolid", ImportSemisolid },
+                { "Semisolids", ImportSemisolids },
                 { "Dirt", ImportGround },
                 //{ "Breakable", ImportBreakable },
                 //{ "GlowingMushrooms", ImportGlowingMushroom },
@@ -182,7 +182,7 @@ namespace TiledUtil {
             
         // }
         
-        private void ImportSemisolid(GameObject g, int index) {
+        private void ImportSemisolids(GameObject g, int index) {
             var ret = LIL.TileToPrefab(g, index, _prefabReplacements["Semisolid"]);
             LIL.SetLayer(ret.gameObject, "Ground");
         }
@@ -261,7 +261,7 @@ namespace TiledUtil {
             g.GetRequiredComponent<TilemapRenderer>().SetSortingLayer("Main");
         }
         
-        private void ImportSemisolidTilemap(GameObject g)
+        private void ImportSemisolidsTilemap(GameObject g)
         {
             g.GetRequiredComponent<TilemapRenderer>().SetSortingLayer("Main");
         }

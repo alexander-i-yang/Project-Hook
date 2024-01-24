@@ -33,11 +33,11 @@ namespace Player
                 }
             }
 
-            public override Vector2 MoveX(Vector2 velocity, int direction)
+            public override Vector2 PhysTick(Vector2 velocity, Vector2 newV, int direction)
             {
                 UpdateSpriteFacing(direction);
                 AnimSetRunning(direction != 0);
-                return MySM.MyPhysObj.CalcMovementX(direction, MyCore.MaxAcceleration, MyCore.MaxDeceleration);
+                return MySM.MyPhysObj.CalcMovementX(velocity, direction, MyCore.MaxAcceleration, MyCore.MaxDeceleration);
             }
 
             public override void FixedUpdate() {

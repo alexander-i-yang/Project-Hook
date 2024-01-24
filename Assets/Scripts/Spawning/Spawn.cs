@@ -23,7 +23,7 @@ namespace Spawning
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(transform.position, new Vector3(8, 12, 1));
+            Gizmos.DrawWireCube(transform.position, new Vector3(10, 24, 1));
         }
 #endif
     }

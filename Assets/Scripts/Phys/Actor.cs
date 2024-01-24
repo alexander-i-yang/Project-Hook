@@ -53,6 +53,12 @@ namespace A2DK.Phys {
             velocityY = Math.Max(MaxFall, velocityY + EffectiveGravity() * Game.TimeManager.FixedDeltaTime);
         }
 
+        public Vector2 CalcFall(Vector2 curVelocity)
+        {
+            return new Vector2(curVelocity.x,
+                Mathf.Max(MaxFall, curVelocity.y + EffectiveGravity() * Game.TimeManager.FixedDeltaTime));
+        }
+
         public bool FallVelocityExceedsMax()
         {
             return velocityY < MaxFall;

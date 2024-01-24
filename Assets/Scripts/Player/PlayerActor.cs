@@ -55,16 +55,25 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     {
         ApplyVelocity(ResolveJostle());
 
-        Vector2 newV = Vector2.zero;
-        newV = _movementStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
-        newV = GrapplerStateMachine.ProcessMoveX(newV, _core.Input.GetMovementInput());
-        velocity += newV;
+        // Vector2 newV = Vector2.zero;
+        // newV = _movementStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
+        // newV = GrapplerStateMachine.ProcessMoveX(newV, _core.Input.GetMovementInput());
+        // velocity += newV;
+
+        // Vector2 newV = velocity;
+        // newV = _movementStateMachine.Fall(newV);
+        // newV = GrapplerStateMachine.Fall(newV);
+
+        Vector2 newV = velocity;
+        newV = _movementStateMachine.CurrState.PhysTick(velocity, newV, _core.Input.GetMovementInput());
+        newV = GrapplerStateMachine.CurrState.PhysTick(velocity, newV, _core.Input.GetMovementInput());
+        velocity = newV;
         MoveTick();
     }
 
     #region Movement
-    public Vector2 CalcMovementX(int moveDirection, int acceleration, int resistance) {
-        int vxSign = (int) Mathf.Sign(velocityX);
+    public Vector2 CalcMovementX(Vector2 curV, int moveDirection, int acceleration, int resistance) {
+        int vxSign = (int) Mathf.Sign(curV.x);
         // if (Mathf.Abs(smActor.velocityX))
         // int acceleration = moveDirection == vxSign || moveDirection == 0 ? core.AirResistance : core.MaxAirAcceleration;
         
@@ -76,14 +85,14 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         float accel = 0;
         if (moveDirection == 0) {
             accel = resistance;
-        } else if (moveDirection == vxSign && Mathf.Abs(velocityX) >= Mathf.Abs(targetVelocityX)) {
+        } else if (moveDirection == vxSign && Mathf.Abs(curV.x) >= Mathf.Abs(targetVelocityX)) {
             accel = resistance/2;
         } else {
             accel = acceleration;
         }
 
         accel *= Game.TimeManager.FixedDeltaTime;
-        return new Vector2(Math.Clamp(targetVelocityX - velocityX, -accel, accel), 0);
+        return curV + new Vector2(Math.Clamp(targetVelocityX - curV.x, -accel, accel), 0);
         // return new Vector2(Mathf.MoveTowards(velocityX, targetVelocityX, accel), velocityY);
     }
 
