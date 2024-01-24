@@ -52,6 +52,7 @@ namespace TiledUtil {
                 { "Semisolids", ImportSemisolidsTilemap },
                 //{ "Water", ImportWaterTilemap },
                 { "Dirt", ImportGroundTilemap },
+                { "Windows", ImportWindowsTilemap },
                 //{ "DecorBack", ImportDecorBackTilemap },
                 //{ "GlowingMushrooms", ImportGlowingMushroomTilemap },
                 { "Stalagtites", ImportStalagtitesTilemap },
@@ -66,16 +67,13 @@ namespace TiledUtil {
                 { "Ground", ImportGround },
                 { "Semisolids", ImportSemisolids },
                 { "Dirt", ImportGround },
+                { "Windows", ImportWindows },
                 //{ "Breakable", ImportBreakable },
                 //{ "GlowingMushrooms", ImportGlowingMushroom },
                 // { "Stalagtites", ImportStalagtites },
                 //{ "Lava", ImportLava },
                 //{ "Water", ImportWater },
                 //{ "Doors", ImportDoors },
-            };
-            
-            Dictionary<String, Action<Transform, XElement>> objectLayerImports = new() {
-                // { "Mechanics", ImportMechanics},
             };
             
             foreach (SuperLayer layer in layers) {
@@ -88,10 +86,32 @@ namespace TiledUtil {
                 if (tileLayerImports.ContainsKey(layerName)) {
                   
                     ResolveTileLayerImports(layer.transform, tileLayerImports[layerName]);
-                } else if (objectLayerImports.ContainsKey(layerName)) {
-                    objectLayerImports[layerName](layer.transform, GetLayerXNode(doc, layer));
                 }
             }
+        }
+
+        private void ImportWindows(GameObject g, int index)
+        {
+            var data = LIL.TileToPrefab(g, index, _prefabReplacements["Windows"]);
+            g = data.gameObject;
+            Vector2[] colliderPoints = data.collisionPts;
+            Vector2[] spritePoints = LIL.ColliderPointsToRectanglePoints(g, colliderPoints); 
+            
+            Vector2 avgSpritePoint = spritePoints.ComputeAverage();
+            colliderPoints = colliderPoints.ComputeNormalized(avgSpritePoint);
+            g.transform.localPosition = avgSpritePoint;
+            
+            // LIL.SetNineSliceSprite(g, spritePoints);
+            // LIL.SetEdgeCollider2DPoints(g, colliderPoints);
+            // LIL.AddShadowCast(g, colliderPoints.ToVector3());
+            LIL.SetLayer(g, "Ground");
+            g.GetRequiredComponent<SpriteRenderer>().SetSortingLayer("Interactable");
+            // AddWaterfalCollision(g, colliderPoints);
+        }
+
+        private void ImportWindowsTilemap(GameObject g)
+        {
+            g.GetRequiredComponent<TilemapRenderer>().enabled = false;
         }
 
         private void AddRoomComponents(Transform room)
