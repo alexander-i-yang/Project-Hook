@@ -7,7 +7,8 @@ public class Elevator : MonoBehaviour
     [SerializeField] private Transform destination;
     // Start is called before the first frame update
 
-    public Transform GetDestination(){
+    public Transform GetDestination()
+    {
         return destination;
     }
 }
