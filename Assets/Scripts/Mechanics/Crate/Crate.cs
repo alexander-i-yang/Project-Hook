@@ -27,7 +27,7 @@ namespace Mechanics {
         private GameTimer2 _punchTimer;
         [SerializeField] private float breakTimeWindow = 0.25f;
 
-        void Awake()
+        protected void Awake()
         {
             _stateMachine = GetComponent<CrateStateMachine>();
         }

@@ -34,7 +34,6 @@ namespace TiledUtil {
             var points = g.GetRequiredComponent<EdgeCollider2D>().points;
             Vector2 scale;
             String prefabName;
-            Debug.Log(points[0].y - points[1].y);
             if (Mathf.Abs(points[0].y - points[1].y) < 9)
             {
                 scale = new Vector2(1, 4);
