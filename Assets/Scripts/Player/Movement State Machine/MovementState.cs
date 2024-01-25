@@ -28,7 +28,6 @@ namespace Player
             public virtual void JumpReleased() { }
             public virtual void DivePressed() { }
             public virtual void SetGrounded(bool isGrounded, bool isMovingUp) { }
-            public virtual Vector2 MoveX(Vector2 velocity, int direction) => Vector2.zero;
 
             public void RefreshAbilities()
             {
@@ -70,6 +69,10 @@ namespace Player
                     Input.canJumpCut = false;
                 }
             }
+
+            public virtual Vector2 Fall(Vector2 v) => v;
+
+            public abstract Vector2 PhysTick(Vector2 velocity, Vector2 newV, int direction);
         }
     }
 }

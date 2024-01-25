@@ -46,10 +46,9 @@ namespace Mechanics
                 _grappleDuration += Game.TimeManager.FixedDeltaTime;
                 
                 var updateData = MySM.GrappleExtendUpdate(_grappleDuration, MySM.GetGrappleInputPos());
+                if (updateData.grappleType == GrappleapleType.BREAK) MySM.Transition<Idle>();
+                
                 Input.CurGrappleExtendPos = updateData.curPoint;
-                
-                
-                
                 Input.AttachedTo = updateData.attachedTo;
                 
                 if (Input.AttachedTo != null)
@@ -82,6 +81,8 @@ namespace Mechanics
                 }
                 base.CollideVertical();
             }
+
+            public override Vector2 PhysTick(Vector2 velocity, Vector2 newV, int getMovementInput) => newV;
         }
     }
 }

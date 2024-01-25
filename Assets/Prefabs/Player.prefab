@@ -1572,6 +1572,8 @@ MonoBehaviour:
   GrappleMinBoost: 0
   MaxGrappleBoostSpeed: 32
   MaxGrappleDistance: {x: 248, y: 143}
+  moveSpeed: 200
+  acceleration: 200
 --- !u!61 &5339968494972619774
 BoxCollider2D:
   m_ObjectHideFlags: 0

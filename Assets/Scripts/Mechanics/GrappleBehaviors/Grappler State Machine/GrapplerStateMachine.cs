@@ -10,52 +10,61 @@ using UnityEngine.Serialization;
 
 namespace Mechanics
 {
-    public abstract partial class GrapplerStateMachine : PhysObjStateMachine<GrapplerStateMachine, GrapplerStateMachine.GrappleState, GrappleStateInput, Actor> {
-        [Tooltip("Grapple Stops when you collide with a wall")]
-        [SerializeField] public bool GrappleCollideWallStop;
-        
+    public abstract partial class GrapplerStateMachine : PhysObjStateMachine<GrapplerStateMachine,
+        GrapplerStateMachine.GrappleState, GrappleStateInput, Actor>
+    {
+        [Tooltip("Grapple Stops when you collide with a wall")] [SerializeField]
+        public bool GrappleCollideWallStop;
+
         //Expose to inspector
         public UnityEvent<GrapplerStateMachine> OnAbilityStateChange;
         public UnityEvent OnGrappleAttach;
         public UnityEvent OnGrappleDetach;
-        
-        [Tooltip("Grapple extend units per second")]
-        [SerializeField] public float GrappleExtendSpeed;
-        
+
+        [Tooltip("Grapple extend units per second")] [SerializeField]
+        public float GrappleExtendSpeed;
+
         [SerializeField] public float GrappleBulletTimeScale;
 
-        [Tooltip("Start grapple energy loss")]
-        [SerializeField] public float GrappleStartMult;
+        [Tooltip("Start grapple energy loss")] [SerializeField]
+        public float GrappleStartMult;
 
-        [Tooltip("Multiplier for magnitude of normal component of velocity")]
-        [SerializeField] public float GrappleNormalMult;
+        [Tooltip("Multiplier for magnitude of normal component of velocity")] [SerializeField]
+        public float GrappleNormalMult;
 
-        [Tooltip("Multiplier for magnitude of ortho component of velocity")]
-        [SerializeField] public float GrappleOrthMult;
-        
-        [Tooltip("Angle from the vertical that it takes to slow down a grapple")]
-        [SerializeField] public float SmallAngle;
+        [Tooltip("Multiplier for magnitude of ortho component of velocity")] [SerializeField]
+        public float GrappleOrthMult;
 
-        [Tooltip("Magnitude that u need to slow down a small angle grapple")]
-        [SerializeField] public float SmallAngleMagnitude;
+        [Tooltip("Angle from the vertical that it takes to slow down a grapple")] [SerializeField]
+        public float SmallAngle;
 
-        [Tooltip("Angle that u need to be at to zero out your velocity")]
-        [SerializeField] public float ZeroAngle;
-        
-        [Tooltip("Boost speed multiplier after leaving the grapple")]
-        [SerializeField] public float GrappleBoostSpeed;
-        
-        [Tooltip("Min boost speed")]
-        [SerializeField] public float GrappleMinBoost;
-        
-        [Tooltip("Max boost speed")]
-        [SerializeField] public float MaxGrappleBoostSpeed;
+        [Tooltip("Magnitude that u need to slow down a small angle grapple")] [SerializeField]
+        public float SmallAngleMagnitude;
 
-        [Tooltip("Max grapple distance in the x and y directions.")]
-        [SerializeField] public Vector2 MaxGrappleDistance;
+        [Tooltip("Angle that u need to be at to zero out your velocity")] [SerializeField]
+        public float ZeroAngle;
+
+        [Tooltip("Boost speed multiplier after leaving the grapple")] [SerializeField]
+        public float GrappleBoostSpeed;
+
+        [Tooltip("Min boost speed")] [SerializeField]
+        public float GrappleMinBoost;
+
+        [Tooltip("Max boost speed")] [SerializeField]
+        public float MaxGrappleBoostSpeed;
+
+        [Tooltip("Max grapple distance in the x and y directions.")] [SerializeField]
+        public Vector2 MaxGrappleDistance;
         
+        [Tooltip("Capped speed for swing grappling")]
+        [SerializeField] private float moveSpeed;
+        
+        [Tooltip("How fast you push when holding arrow keys")]
+        [SerializeField] private float acceleration;
+
         #region Overrides
-        protected override void SetInitialState() 
+
+        protected override void SetInitialState()
         {
             SetState<Idle>();
         }
@@ -88,7 +97,7 @@ namespace Mechanics
         protected override void Update()
         {
             base.Update();
-            
+
             if (GrappleStarted())
             {
                 CurrState.GrappleStarted();
@@ -100,19 +109,23 @@ namespace Mechanics
             }
         }
 
-        public void CollideHorizontal() {
+        public void CollideHorizontal()
+        {
             CurrState.CollideHorizontal();
         }
 
-        public void CollideVertical() {
+        public void CollideVertical()
+        {
             CurrState.CollideVertical();
         }
 
-        public Vector2 ProcessMoveX(Vector2 velocity, int direction) {
+        public Vector2 ProcessMoveX(Vector2 velocity, int direction)
+        {
             return CurrState.MoveX(velocity, direction);
         }
 
-        public virtual Vector2 ProcessCollideHorizontal(Vector2 oldV, Vector2 newV) => CurrState.ProcessCollideHorizontal(oldV, newV);
+        public virtual Vector2 ProcessCollideHorizontal(Vector2 oldV, Vector2 newV) =>
+            CurrState.ProcessCollideHorizontal(oldV, newV);
 
         #endregion
 
@@ -122,7 +135,8 @@ namespace Mechanics
 
         public Vector2 CurGrapplePos()
         {
-            if (IsGrappleExtending()) return CurrInput.CurGrappleExtendPos;;
+            if (IsGrappleExtending()) return CurrInput.CurGrappleExtendPos;
+            ;
             if (IsGrappling()) return CurrInput.CurrentGrapplePos;
             return transform.position;
         }
@@ -142,64 +156,81 @@ namespace Mechanics
         protected void StartGrapple(Vector2 gPoint)
         {
             Vector2 velocity = MyPhysObj.velocity;
-            Vector2 rawV = gPoint - (Vector2) transform.position;
+            Vector2 rawV = gPoint - (Vector2)transform.position;
             Vector2 projection = Vector3.Project(velocity, rawV);
             Vector2 ortho = velocity - projection; // Get the component of velocity that's orthogonal to the grapple
-            if (Vector2.Dot(projection, rawV) >= 0) {
+            if (Vector2.Dot(projection, rawV) >= 0)
+            {
                 return;
             }
+
             // velocity = ortho.normalized * velocity.magnitude * _core.GrappleStartMult;
             velocity = ortho.normalized * (Mathf.Lerp(ortho.magnitude, velocity.magnitude, GrappleStartMult));
             MyPhysObj.SetVelocity(velocity);
         }
-        
-        protected void GrappleUpdate(Vector2 gPoint, float warmPercent)
+
+        protected Vector2 SwingGrappleUpdate(Vector2 newV, Vector2 gPoint)
         {
             Vector2 velocity = MyPhysObj.velocity;
-            Vector2 rawV = gPoint - (Vector2) transform.position;
-            Vector2 projection = Vector3.Project(velocity, rawV);
+            Vector2 rawV = gPoint - (Vector2)transform.position;
+            Vector2 projection = Vector3.Project(newV, rawV);
             Vector2 ortho = velocity - projection; // Get the component of velocity that's orthogonal to the grapple
-        
+
             //If ur moving towards the grapple point, just use that velocity
-            if (Vector2.Dot(projection, rawV) >= 0) {
-                return;
-            }
-            velocity = ortho.normalized * (projection.magnitude * GrappleNormalMult + ortho.magnitude * GrappleOrthMult);
+            /*if (Vector2.Dot(projection, rawV) >= 0) {
+                return newV;
+            }*/
+            velocity = ortho.normalized *
+                       (projection.magnitude * GrappleNormalMult + ortho.magnitude * GrappleOrthMult);
 
             float angle = Vector2.Angle(rawV, Vector2.up);
-            if (velocity.magnitude < SmallAngleMagnitude && angle <= SmallAngle && CurrInput.AttachedToPhysObj.velocity.magnitude < 1) {
-                if (Math.Sign(rawV.x) == Math.Sign(velocity.x)) {
-                    float newMag = Helpers.Helpers.ClosestBetween(-SmallAngleMagnitude, SmallAngleMagnitude, (ortho + projection).magnitude);
+            if (velocity.magnitude < SmallAngleMagnitude && angle <= SmallAngle &&
+                CurrInput.AttachedToPhysObj.velocity.magnitude < 1)
+            {
+                if (Math.Sign(rawV.x) == Math.Sign(velocity.x))
+                {
+                    float newMag = Helpers.Helpers.ClosestBetween(-SmallAngleMagnitude, SmallAngleMagnitude,
+                        (ortho + projection).magnitude);
                     velocity = ortho.normalized * newMag;
                 }
-                if (angle < ZeroAngle) {
+
+                if (angle < ZeroAngle)
+                {
                     velocity *= 0.25f;
                 }
             }
-            MyPhysObj.SetVelocity(velocity);
+
+            return velocity;
         }
-        
+
         protected abstract Vector2 CollideHorizontalGrapple();
 
         protected abstract bool GrappleStarted();
         protected abstract bool GrappleFinished();
         protected abstract void CollideVerticalGrapple();
-        public void GrappleBoost() {
-            int vxSign = (int) Mathf.Sign(MyPhysObj.velocityX);
-            Vector2 addV = new Vector2(MyPhysObj.Facing, 1) * Mathf.Max(GrappleBoostSpeed * MyPhysObj.velocity.magnitude, GrappleMinBoost);
+
+        public void GrappleBoost()
+        {
+            int vxSign = (int)Mathf.Sign(MyPhysObj.velocityX);
+            Vector2 addV = new Vector2(MyPhysObj.Facing, 1) *
+                           Mathf.Max(GrappleBoostSpeed * MyPhysObj.velocity.magnitude, GrappleMinBoost);
             addV = addV.normalized * Mathf.Clamp(addV.magnitude, -MaxGrappleBoostSpeed, MaxGrappleBoostSpeed);
             MyPhysObj.ApplyVelocity(addV);
         }
+
         protected abstract Vector2 MoveXGrapple(Vector2 velocity, Vector2 inputCurrentGrapplePos, int direction);
-        protected (Vector2 curPoint, IGrappleable attachedTo, GrappleapleType grappleType) GrappleExtendUpdate(float grappleDuration, Vector2 grapplePoint)
+
+        protected (Vector2 curPoint, IGrappleable attachedTo, GrappleapleType grappleType) GrappleExtendUpdate(
+            float grappleDuration, Vector2 grapplePoint)
         {
-            (Vector2 curPoint, IGrappleable attachedTo, GrappleapleType grappleType) ret = (Vector2.zero, null, GrappleapleType.SWING);
+            (Vector2 curPoint, IGrappleable attachedTo, GrappleapleType grappleType) ret = (Vector2.zero, null,
+                GrappleapleType.SWING);
             Vector2 grappleOrigin = transform.position;
             float dist = GrappleExtendSpeed * grappleDuration;
-            Vector2 curPos = (Vector2) transform.position;
+            Vector2 curPos = (Vector2)transform.position;
             Vector2 dir = (grapplePoint - curPos).normalized;
             RaycastHit2D[] hits = Physics2D.RaycastAll(
-                grappleOrigin, 
+                grappleOrigin,
                 dir,
                 dist,
                 LayerMask.GetMask("Ground", "Interactable")
@@ -208,21 +239,24 @@ namespace Mechanics
             Vector2 newPoint = curPos + dir * dist;
             ret.curPoint = newPoint;
 
-            foreach (var hit in hits) {
-                if (hit.collider != null) {
+            foreach (var hit in hits)
+            {
+                if (hit.collider != null)
+                {
                     IGrappleable p = hit.collider.GetComponent<IGrappleable>();
-                    if (p != null) {
+                    if (p != null)
+                    {
                         var newRet = p.AttachGrapple(MyPhysObj, hit.point);
-                        if (newRet.attachedTo != null) {
+                        if (newRet.attachedTo != null)
+                        {
                             ret = newRet;
-                        
                             break;
                         }
-                    };
+                    }
                 }
             }
             // if (Mathf.Abs(dir.magnitude) <= dist) ret.hit = true;
-        
+
             // ret.hit = _core.MyGrappleHook.SetPos(newPoint);
 
             // _core.MyGrappleHook.Move(dir * _core.GrappleExtendSpeed);
@@ -239,6 +273,50 @@ namespace Mechanics
             Vector2 d = CurrInput.CurGrappleExtendPos - (Vector2)transform.position;
             d = d.Abs();
             return d.x > MaxGrappleDistance.x || d.y > MaxGrappleDistance.y;
+        }
+
+        public Vector2 Fall(Vector2 velocity) => CurrState.Fall(velocity);
+
+        protected Vector2 SwingGrappleUpdate(Vector2 velocity, Vector2 gPoint, int direction)
+        {
+            velocity = MyPhysObj.CalcFall(velocity);
+            Vector2 rawV = gPoint - (Vector2)transform.position;
+            Vector2 projection = Vector3.Project(velocity, rawV);
+            Vector2 ortho = velocity - projection;
+
+            //If ur moving towards the grapple point, just use that velocity
+            if (Vector2.Dot(projection, rawV) >= 0) {
+                return velocity;
+            }
+
+            float mag = projection.magnitude * GrappleNormalMult + ortho.magnitude * GrappleOrthMult;
+            velocity = ortho.normalized * mag;
+
+            float angle = Vector2.Angle(rawV, Vector2.up);
+
+            if (direction != 0 && velocity.magnitude <= moveSpeed)
+            {
+                Vector2 add = Helpers.Helpers.Rotate(projection.normalized, direction * Mathf.PI/2) * acceleration * Game.TimeManager.FixedDeltaTime;
+                velocity += add;
+            }
+            return velocity;
+            /*if (velocity.magnitude < SmallAngleMagnitude && angle <= SmallAngle &&
+                CurrInput.AttachedToPhysObj.velocity.magnitude < 1)
+            {
+                if (Math.Sign(rawV.x) == Math.Sign(velocity.x))
+                {
+                    float newMag = Helpers.Helpers.ClosestBetween(-SmallAngleMagnitude, SmallAngleMagnitude,
+                        (ortho + projection).magnitude);
+                    velocity = ortho.normalized * newMag;
+                }
+
+                if (angle < ZeroAngle)
+                {
+                    velocity *= 0.25f;
+                }
+            }
+
+            return velocity;*/
         }
     }
 }

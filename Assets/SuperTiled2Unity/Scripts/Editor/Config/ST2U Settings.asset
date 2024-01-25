@@ -83,3 +83,19 @@ MonoBehaviour:
     m_Prefab: {fileID: 6602010226284401963, guid: a0c091792fac785458bf484e7ff374d5, type: 3}
   - m_TypeName: Crate
     m_Prefab: {fileID: 1785287368530505969, guid: e6925e1d85904384c832bcb3917106cf, type: 3}
+  - m_TypeName: Semisolid
+    m_Prefab: {fileID: 6602010226284401963, guid: 06cb833245e96684b883b63daa50b946, type: 3}
+  - m_TypeName: Hanging Plant 1
+    m_Prefab: {fileID: 3630927052179048283, guid: acce1f13f0ce83d47978603d85ebe6bb, type: 3}
+  - m_TypeName: Hanging Plant Fixture
+    m_Prefab: {fileID: 6891072197298983639, guid: 7d37f20c4524bfe448b1b1350fc9a3a4, type: 3}
+  - m_TypeName: Hanging Plant 2
+    m_Prefab: {fileID: 1677625038727949640, guid: dcf815cee8f9ce34bbebfab66464621f, type: 3}
+  - m_TypeName: Hanging Light Long Fixture
+    m_Prefab: {fileID: 6891072197298983639, guid: 99ae28fa38fb0fa468dd418f9fb6c903, type: 3}
+  - m_TypeName: Hanging Light Long
+    m_Prefab: {fileID: 5104707285206629975, guid: c43bb1e6bfbdcf14f97bf04750c652ef, type: 3}
+  - m_TypeName: Window Tall
+    m_Prefab: {fileID: 2980672484842408090, guid: da1ab724dd0b07a47a7cc9cf27159d07, type: 3}
+  - m_TypeName: Window Long
+    m_Prefab: {fileID: 2258286071102716967, guid: ccbf8bce20e67fb47a5c78352755b46a, type: 3}

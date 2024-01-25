@@ -6,7 +6,8 @@ namespace Mechanics {
     public enum GrappleapleType
     {
         SWING,
-        PULL
+        PULL,
+        BREAK
     }
     
     public interface IGrappleable
