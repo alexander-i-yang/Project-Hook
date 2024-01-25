@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3474416437345843527}
   - component: {fileID: 3980211577283332174}
   - component: {fileID: 7403648826829560368}
+  - component: {fileID: 4973377018578171037}
   m_Layer: 7
   m_Name: Breakable Solid
   m_TagString: Untagged
@@ -166,3 +167,15 @@ MonoBehaviour:
   useAnchor: 0
   anchor: {fileID: 0}
   anchorOffset: {x: 0, y: 0}
+--- !u!114 &4973377018578171037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974111398760678173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e20cd1427854415c8ed5ba1e0c9506d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

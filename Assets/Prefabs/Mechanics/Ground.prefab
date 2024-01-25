@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -481124193501258021}
   - component: {fileID: 7901747988026388375}
   - component: {fileID: 1334695802816130393}
+  - component: {fileID: 8117796640493087288}
   m_Layer: 3
   m_Name: Ground
   m_TagString: Untagged
@@ -142,3 +143,15 @@ PolygonCollider2D:
       - {x: 0.58778536, y: -0.80901694}
       - {x: 0.9510565, y: 0.30901712}
   m_UseDelaunayMesh: 0
+--- !u!114 &8117796640493087288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6602010226284401963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e20cd1427854415c8ed5ba1e0c9506d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

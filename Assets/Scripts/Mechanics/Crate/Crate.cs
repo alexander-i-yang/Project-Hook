@@ -95,10 +95,6 @@ namespace Mechanics {
                 }
                 
                 if (direction.x != 0) {
-                
-                    // Vector2 newV = Vector2.zero;
-                    // Vector2 oldV = velocity;
-                    // newV = HitWall((int)direction.x);
                     velocityX = 0;
                 } else if (direction.y != 0) {
                     if (direction.y > 0) {
