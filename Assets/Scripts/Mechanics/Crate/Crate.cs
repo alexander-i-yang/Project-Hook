@@ -3,6 +3,7 @@ using A2DK.Phys;
 using ASK.Core;
 using UnityEngine;
 using Combat;
+using Helpers;
 using UnityEngine.Events;
 
 namespace Mechanics {
@@ -22,7 +23,10 @@ namespace Mechanics {
         [SerializeField] private float breakVelocity;
         [SerializeField] private UnityEvent<Vector2, Vector2> onBreak;
         [SerializeField] private UnityEvent<Vector2> onPunch;
-        
+
+        private GameTimer2 _punchTimer;
+        [SerializeField] private float breakTimeWindow = 0.25f;
+
         void Awake()
         {
             _stateMachine = GetComponent<CrateStateMachine>();
@@ -57,8 +61,9 @@ namespace Mechanics {
             MoveTick();
         }
 
-        public bool ShouldBreak(Vector2 direction, PhysObj against)
+        public bool ShouldBreak(Vector2 direction, PhysObj against, bool col)
         {
+            if (GameTimer2.TimerRunning(_punchTimer) && col && breakVelocity < 1000) return true;
             return ((against.velocity - this.velocity) * direction).magnitude >= breakVelocity && !_beingGrappled;
         }
 
@@ -66,7 +71,7 @@ namespace Mechanics {
             bool col = base.OnCollide(p, direction);
             if (p is Crate otherCrate)
             {
-                if (!_beingGrappled && otherCrate.ShouldBreak(direction, this))
+                if (!_beingGrappled && otherCrate.ShouldBreak(direction, this, col))
                 {
                     otherCrate.BreakAgainst(this);
                 }
@@ -83,7 +88,7 @@ namespace Mechanics {
             }
             
             if (col) {
-                if (ShouldBreak(direction, p))
+                if (ShouldBreak(direction, p, col))
                 {
                     BreakAgainst(p);
                     return true;
@@ -132,6 +137,7 @@ namespace Mechanics {
         {
             velocity = v;
             onPunch?.Invoke(v);
+            _punchTimer = GameTimerManager.Instance.StartTimer(breakTimeWindow, () => {}, IncrementType.FIXED_UPDATE);
             return true;
         }
 
