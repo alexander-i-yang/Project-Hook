@@ -1443,6 +1443,7 @@ GameObject:
   - component: {fileID: 634148172463351313}
   - component: {fileID: 7579000643062244329}
   - component: {fileID: 1521698811028767005}
+  - component: {fileID: 120949802280015098}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -1788,6 +1789,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mass: 10
+--- !u!114 &120949802280015098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2872153080213010416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082062a2859a46145980cbb2c617375e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3213260874437790048
 GameObject:
   m_ObjectHideFlags: 0
@@ -12441,8 +12454,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -3.1081505, y: 3.8424, z: 0}
-    m_Extent: {x: 19.42185, y: 10.899401, z: 0}
+    m_Center: {x: -3.1102, y: 3.8392, z: 0}
+    m_Extent: {x: 19.4314, y: 10.9023, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -12693,8 +12706,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -7.675499, y: 4.0187497, z: 0}
-    m_Extent: {x: 30.7067, y: 17.68495, z: 0}
+    m_Center: {x: -7.6680994, y: 4.0151005, z: 0}
+    m_Extent: {x: 30.706501, y: 17.6744, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
