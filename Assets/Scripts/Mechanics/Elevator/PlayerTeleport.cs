@@ -8,7 +8,7 @@ public class PlayerTeleport : MonoBehaviour
     public float teleportCooldown = 2f; // Set the cooldown time in seconds
     private float teleportTimer = 0f;
     private bool canTeleport = true;
-    // Update is called once per frame
+
     void Update()
     {
         // Check if the teleport cooldown has elapsed

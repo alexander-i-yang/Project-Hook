@@ -7,10 +7,10 @@ public class ElevatorEntrance : Elevator
     private GameObject player;
     private GameObject[] elevatorDoors;
 
-    public int openDoorDistance = 25;
+    public int openEnterDoorDistance = 25;
     public void Start(){
         player = GameObject.FindGameObjectWithTag("Player");
-        elevatorDoors = GameObject.FindGameObjectsWithTag("ElevatorDoor");
+        elevatorDoors = GameObject.FindGameObjectsWithTag("EnterElevatorDoor");
     }
 
     /*void CountObjects()
@@ -23,11 +23,11 @@ public class ElevatorEntrance : Elevator
 
     public void Update()
     {
-        //int amount = Invoke("CountObjects");
-        //if (amount == 0){
+        int amt = 6;
+        if (amt == 0){
             foreach (GameObject door in elevatorDoors)
             {
-                if (Vector3.Distance (door.transform.position, player.transform.position) < openDoorDistance)
+                if (Vector3.Distance (door.transform.position, player.transform.position) < openEnterDoorDistance)
                 {
                     door.SetActive(false);
                 }
@@ -36,6 +36,6 @@ public class ElevatorEntrance : Elevator
                     door.SetActive(true);
                 }
             }
-        //}
+        }
     }
 }

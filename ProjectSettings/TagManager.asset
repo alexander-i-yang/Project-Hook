@@ -4,9 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - ElevatorDoor
-  - Elevator
   - Teleport
+  - EnterElevator
+  - ExitElevator
+  - EnterElevatorDoor
+  - ExitElevatorDoor
   layers:
   - Default
   - TransparentFX

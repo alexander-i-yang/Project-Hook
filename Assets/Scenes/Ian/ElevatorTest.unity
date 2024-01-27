@@ -1100,7 +1100,7 @@ GameObject:
   - component: {fileID: 1003363998}
   m_Layer: 7
   m_Name: ElevatorDoor
-  m_TagString: ElevatorDoor
+  m_TagString: EnterElevatorDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1321,6 +1321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1674832257}
+  openExitDoorDistance: 25
 --- !u!61 &1192279770
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1736,6 +1737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: {fileID: 1477911036}
+  openEnterDoorDistance: 25
 --- !u!61 &1422003165
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1846,7 +1848,7 @@ GameObject:
   - component: {fileID: 1477911037}
   m_Layer: 7
   m_Name: ExitElevator
-  m_TagString: Elevator
+  m_TagString: ExitElevator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1962,7 +1964,7 @@ GameObject:
   - component: {fileID: 1674832256}
   m_Layer: 7
   m_Name: EnterElevator
-  m_TagString: Elevator
+  m_TagString: EnterElevator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2059,7 +2061,7 @@ GameObject:
   - component: {fileID: 1725124037}
   m_Layer: 7
   m_Name: ElevatorDoor
-  m_TagString: ElevatorDoor
+  m_TagString: ExitElevatorDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
