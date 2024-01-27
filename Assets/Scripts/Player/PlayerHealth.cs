@@ -8,7 +8,7 @@ using Player;
 public class PlayerHealth : MonoBehaviour
 {
     private PlayerCore _core;
-    private PlayerDeathManager _pDM;
+    private PlayerActor _pActor;
     private UnitHealth _playerHealth = new UnitHealth(100,100);
     
     int _currentHealth;
@@ -16,7 +16,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Awake() {
         _core = GetComponent<PlayerCore>();
-        _pDM = _core.DeathManager;
+        _pActor = _core.Actor;
     }
     // Start is called before the first frame update
     void Start()
@@ -29,7 +29,7 @@ public class PlayerHealth : MonoBehaviour
     void Update()
     {
         if (_currentHealth < 0) {
-            _pDM.Die();
+            _pActor.Die();
         }
     }
 
