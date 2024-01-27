@@ -142,14 +142,14 @@ ScriptedImporter:
   spriteSheetImportData:
   - name: Demi Rigger_0
     originalName: 
-    pivot: {x: 0, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 19
-      width: 9
+      width: 10
       height: 24
     spriteID: 47519f1ed79f0324e85fe11dcbf5478d
     spriteBone: []
@@ -167,8 +167,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 19
-      y: 37
+      x: 35
+      y: 63
       width: 34
       height: 14
     spriteID: 7254051077162ea498ae006e40728cc0
@@ -182,15 +182,15 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Demi Rigger_2
     originalName: 
-    pivot: {x: 0, y: 0}
-    alignment: 0
+    pivot: {x: 0.7352941, y: 0.5}
+    alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 60
-      y: 26
-      width: 14
-      height: 34
+      x: 36
+      y: 39
+      width: 34
+      height: 14
     spriteID: eaf9907ed9e6d9e43adb701fa18e0ba4
     spriteBone: []
     spriteOutline: []
@@ -202,7 +202,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Demi Rigger_3
     originalName: 
-    pivot: {x: 0, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -222,7 +222,7 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Demi Rigger_4
     originalName: 
-    pivot: {x: 0, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -253,8 +253,8 @@ ScriptedImporter:
       cellRect:
         x: 48
         y: 37
-        width: 70
-        height: 56
+        width: 66
+        height: 73
       spriteId: 972ad36c3de83184f9b736e687d465d2
     linkedCells: []
     parentIndex: -1

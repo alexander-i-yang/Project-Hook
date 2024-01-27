@@ -19,7 +19,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     private MovementStateMachine _movementStateMachine => _core.MovementStateMachine;
     private GrapplerStateMachine GrapplerStateMachine => _core.GrapplerStateMachine;
     [SerializeField, AutoProperty(AutoPropertyMode.Parent)] private BoxCollider2D _collider;
-    [SerializeField] private SpriteRenderer sprite;
+    // [SerializeField] private SpriteRenderer sprite;
 
     private bool _hitWallCoroutineRunning;
     private float _hitWallPrevSpeed;
@@ -27,8 +27,6 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     [Foldout("Movement Events", true)]
     public ActorEvent OnJumpFromGround;
     public ActorEvent OnDoubleJump;
-    public UnityEvent OnDiveStart;
-    public ActorEvent OnDogo;
     
     private Func<Vector2, Vector2> _deathRecoilFunc;
 
@@ -36,38 +34,30 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
     private PlayerCore _core;
 
-    public override int Facing => sprite.flipX ? -1 : 1;
+    // public override int Facing => sprite.flipX ? -1 : 1;
 
     private void OnEnable()
     {
         Room.RoomTransitionEvent += OnRoomTransition;
-        // EndCutsceneManager.EndCutsceneEvent += OnEndCutscene;
         _core = GetComponent<PlayerCore>();
     }
 
     private void OnDisable()
     {
         Room.RoomTransitionEvent -= OnRoomTransition;
-        // EndCutsceneManager.EndCutsceneEvent -= OnEndCutscene;
     }
 
     private void FixedUpdate()
     {
         ApplyVelocity(ResolveJostle());
 
-        // Vector2 newV = Vector2.zero;
-        // newV = _movementStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
-        // newV = GrapplerStateMachine.ProcessMoveX(newV, _core.Input.GetMovementInput());
-        // velocity += newV;
-
-        // Vector2 newV = velocity;
-        // newV = _movementStateMachine.Fall(newV);
-        // newV = GrapplerStateMachine.Fall(newV);
-
+        int inputX = _core.Input.GetMovementInput();
+        
         Vector2 newV = velocity;
-        newV = _movementStateMachine.CurrState.PhysTick(velocity, newV, _core.Input.GetMovementInput());
-        newV = GrapplerStateMachine.CurrState.PhysTick(velocity, newV, _core.Input.GetMovementInput());
+        newV = _movementStateMachine.CurrState.PhysTick(velocity, newV, inputX);
+        newV = GrapplerStateMachine.CurrState.PhysTick(velocity, newV, inputX);
         velocity = newV;
+        
         MoveTick();
     }
 
@@ -115,17 +105,11 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         velocityY = Math.Max(applyV, velocityY + applyV);
     }
 
-    public void DoubleJump(int moveDirection = 0)
+    public void DoubleJump()
     {
         float doubleJumpVelocity = GetJumpSpeedFromHeight(_core.DoubleJumpHeight);
         float addDoubleJumpVelocity = GetJumpSpeedFromHeight(_core.AddDoubleJumpHeight);
         velocityY = Math.Max(doubleJumpVelocity, velocityY + addDoubleJumpVelocity);
-
-        // If the player is trying to go in the opposite direction of their x velocity, instantly switch direction.
-        if (moveDirection != 0 && moveDirection != Math.Sign(velocityX))
-        {
-            velocityX = 0;
-        }
 
         OnDoubleJump?.Invoke(transform.position);
     }
