@@ -6,6 +6,8 @@ public class ElevatorEntrance : Elevator
 {
     private GameObject player;
     private GameObject[] elevatorDoors;
+
+    public int openDoorDistance = 25;
     public void Start(){
         player = GameObject.FindGameObjectWithTag("Player");
         elevatorDoors = GameObject.FindGameObjectsWithTag("ElevatorDoor");
@@ -25,7 +27,7 @@ public class ElevatorEntrance : Elevator
         //if (amount == 0){
             foreach (GameObject door in elevatorDoors)
             {
-                if (Vector3.Distance (door.transform.position, player.transform.position) < 20)
+                if (Vector3.Distance (door.transform.position, player.transform.position) < openDoorDistance)
                 {
                     door.SetActive(false);
                 }
