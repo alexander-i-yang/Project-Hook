@@ -16,6 +16,7 @@ namespace Player
     [RequireComponent(typeof(ParryStateMachine))]
     [RequireComponent(typeof(PlayerInputController))]
     [RequireComponent(typeof(PlayerDeathManager))]
+    [RequireComponent(typeof(PlayerHealth))]
     public class PlayerCore : MonoBehaviour
     {
         // public GrappleHook MyGrappleHook;
@@ -108,6 +109,14 @@ namespace Player
             {
                 if (_pDM == null) _pDM = GetComponent<PlayerDeathManager>();
                 return _pDM;
+            }
+        }
+
+        private PlayerHealth _playerHealth;
+        public PlayerHealth Health {
+            get {
+                if (_playerHealth == null) _playerHealth = GetComponent<PlayerHealth>();
+                return _playerHealth;
             }
         }
 
