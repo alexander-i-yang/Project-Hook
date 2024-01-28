@@ -34,17 +34,17 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
     private PlayerCore _core;
 
-    // public override int Facing => sprite.flipX ? -1 : 1;
-
     private void OnEnable()
     {
         Room.RoomTransitionEvent += OnRoomTransition;
         _core = GetComponent<PlayerCore>();
+        _core.PlayerDamageable.OnDamaged += TakeDamage;
     }
 
     private void OnDisable()
     {
         Room.RoomTransitionEvent -= OnRoomTransition;
+        _core.PlayerDamageable.OnDamaged -= TakeDamage;
     }
 
     private void FixedUpdate()
@@ -195,27 +195,6 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         return col;
     }
 
-    public void ParryBounce(Vector2 punchDir)
-    {
-        punchDir = punchDir.normalized * _core.PunchBounceBoost;
-        Vector2 v0 = velocity;
-        
-        //Split v0 into ortho + normal components
-        Vector2 v0n = Vector3.Project(v0, punchDir);
-        Vector2 v0o = v0 - v0n;
-        velocity = v0o + (Vector2.Dot(punchDir, v0n) <= 0 ? v0n - punchDir : -punchDir);
-
-        // velocity = Helpers.Helpers.CombineVectorsWithReset(velocity, -punchDir.normalized * _core.PunchBounceBoost);
-        // velocity += -punchDir.normalized * _core.PunchBounceBoost;
-        
-        _movementStateMachine.RefreshAbilities();
-    }
-
-    /*public override bool PlayerCollide(Actor p, Vector2 direction)
-    {
-        return false;     
-    }*/
-
     public override bool IsGround(PhysObj whosAsking)
     {
         return false;
@@ -333,6 +312,32 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     {
         return Mathf.Sqrt(-2f * GravityUp * jumpHeight);
     }
+
+    #region Combat
+
+    public void ParryBounce(Vector2 punchDir)
+    {
+        punchDir = punchDir.normalized * _core.PunchBounceBoost;
+        Vector2 v0 = velocity;
+        
+        //Split v0 into ortho + normal components
+        Vector2 v0n = Vector3.Project(v0, punchDir);
+        Vector2 v0o = v0 - v0n;
+        velocity = v0o + (Vector2.Dot(punchDir, v0n) <= 0 ? v0n - punchDir : -punchDir);
+
+        _movementStateMachine.RefreshAbilities();
+    }
+
+    void TakeDamage(Vector2 enemyPos)
+    {
+        _movementStateMachine.RefreshAbilities();
+        var newV = (Vector2)transform.position - enemyPos;
+        velocity = newV.normalized * _core.TakeDamageSpeed;
+        GrapplerStateMachine.BreakGrapple();
+        _core.Health.PlayerTakeDmg(1);
+    }
+
+    #endregion
 
     public LogLevel GetLogLevel()
     {
