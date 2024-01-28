@@ -33,11 +33,11 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    void PlayerTakeDmg(int dmg) {
+    public void PlayerTakeDmg(int dmg) {
         _playerHealth.DmgUnit(dmg);
     }
 
-    void PlayerHeal(int healing) {
+    public void PlayerHeal(int healing) {
         _playerHealth.HealUnit(healing);
     }
 }
