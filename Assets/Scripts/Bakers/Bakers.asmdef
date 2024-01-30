@@ -1,0 +1,20 @@
+{
+    "name": "Bakers",
+    "rootNamespace": "",
+    "references": [
+        "GUID:48c9f6afdac61634db0e0f241c7d4d51",
+        "GUID:ab66e7c0555e82545947bb6a564081ed",
+        "GUID:bf229f43997cb0c42a0b49d4d67fc0b1",
+        "GUID:4a8db0bf249bac8498203804367bd998",
+        "GUID:1d617a15e82d27c4bbba803f37ac80ac"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
