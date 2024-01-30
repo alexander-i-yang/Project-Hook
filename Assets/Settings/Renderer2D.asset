@@ -1,5 +1,55 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9107939525754233512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14425bd540fc6774981eb582b63f2aec, type: 3}
+  m_Name: Water Stencil Pass
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 16
+  trigger: 250
+  overrideTexture: {fileID: 8400000, guid: b052120b34006954e99852b557e43a28, type: 2}
+  clearOverrideTextureBefore: 1
+  useURPLit: 0
+  overrideMaterial: {fileID: 2100000, guid: 7833dc4d8f954324f93d3bdcbbb0e259, type: 2}
+  useSortingLayer: 0
+  sortingLayer: 
+  lightBlendMode: 0
+  overrideMaterialPassIndex: 0
+--- !u!114 &-5218891571503774756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14425bd540fc6774981eb582b63f2aec, type: 3}
+  m_Name: Water Mask Pass
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  trigger: 250
+  overrideTexture: {fileID: 8400000, guid: da3d68022ace0fa45994b6ee4d0bd41c, type: 2}
+  clearOverrideTextureBefore: 1
+  useURPLit: 0
+  overrideMaterial: {fileID: -876546973899608171, guid: 9f58cdc90bf4c3441bb1174929c0e837, type: 3}
+  useSortingLayer: 1
+  sortingLayer: Ground
+  lightBlendMode: 0
+  overrideMaterialPassIndex: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,8 +65,13 @@ MonoBehaviour:
   debugShaders:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7, type: 3}
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
-  m_RendererFeatures: []
-  m_RendererFeatureMap: 
+  m_RendererFeatures:
+  - {fileID: 6297861857780123058}
+  - {fileID: 313943386807316607}
+  - {fileID: 2102321650163636981}
+  - {fileID: -9107939525754233512}
+  - {fileID: -5218891571503774756}
+  m_RendererFeatureMap: b24577fdfd7f66577fb03bd2d8595b04f5da9df966f22c1d58ddaddb41199a81dcc33c3fc4c592b7
   m_UseNativeRenderPass: 0
   m_TransparencySortMode: 0
   m_TransparencySortAxis: {x: 0, y: 1, z: 0}
@@ -61,3 +116,68 @@ MonoBehaviour:
   m_DefaultLitMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_DefaultUnlitMaterial: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_DefaultMaskMaterial: {fileID: 2100000, guid: 15d0c3709176029428a0da2f8cecf0b5, type: 2}
+--- !u!114 &313943386807316607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14425bd540fc6774981eb582b63f2aec, type: 3}
+  m_Name: Water Fill Pass
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 16
+  trigger: 450
+  overrideTexture: {fileID: 0}
+  clearOverrideTextureBefore: 0
+  useURPLit: 1
+  overrideMaterial: {fileID: 2100000, guid: 7d94521bf40455f44be58581c570f16a, type: 2}
+  useSortingLayer: 0
+  sortingLayer: 
+  lightBlendMode: 0
+  overrideMaterialPassIndex: 0
+--- !u!114 &2102321650163636981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14425bd540fc6774981eb582b63f2aec, type: 3}
+  m_Name: Water Fill Tex Pass
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 16
+  trigger: 450
+  overrideTexture: {fileID: 8400000, guid: cd63669631ddabd48ab88be7e2f89639, type: 2}
+  clearOverrideTextureBefore: 1
+  useURPLit: 1
+  overrideMaterial: {fileID: 2100000, guid: 7d94521bf40455f44be58581c570f16a, type: 2}
+  useSortingLayer: 0
+  sortingLayer: 
+  lightBlendMode: 0
+  overrideMaterialPassIndex: 0
+--- !u!114 &6297861857780123058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f605a7c2dad06dd4eb2a1ec0a15e0630, type: 3}
+  m_Name: EarlyOut
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  rt: {fileID: 8400000, guid: 6a97591154f2fc9459fa04d62dbc260d, type: 2}
+  trigger: 350
