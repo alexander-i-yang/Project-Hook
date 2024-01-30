@@ -24,6 +24,8 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     private bool _hitWallCoroutineRunning;
     private float _hitWallPrevSpeed;
 
+    public ParticleSystem Dust;
+
     [Foldout("Movement Events", true)]
     public ActorEvent OnJumpFromGround;
     public ActorEvent OnDoubleJump;
@@ -100,6 +102,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     {
         _movementStateMachine.SetGrounded(true, IsMovingUp);
         base.Land();
+        CreateDust();
     }
     #endregion
 
@@ -353,6 +356,24 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     public LogLevel GetLogLevel()
     {
         return LogLevel.Error;
+    }
+
+    void CreateDust() {
+        var dustMain = Dust.main;
+        var dustEmission = Dust.emission;
+
+        dustMain.startColor = new Color(150.0f,150.0f,150.0f);
+        dustMain.startSpeed = 5.0f;
+        dustMain.startSize = 1.0f;
+        dustEmission.rateOverTime = 25.0f;
+        if (velocityX >= 85.0f || velocityX <= -85.0f) {
+            dustMain.startColor = Color.white;
+            dustMain.startSpeed = 10.0f;
+            dustMain.startSize = 2.0f;
+            dustEmission.rateOverTime = 50.0f;
+        }
+        
+        Dust.Play();
     }
     
     #if UNITY_EDITOR
