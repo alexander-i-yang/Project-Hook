@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Xml.Linq;
 
-using Mechanics;
+using Clipper2Lib;
 
 using SuperTiled2Unity;
 using SuperTiled2Unity.Editor;
@@ -110,6 +110,11 @@ namespace TiledUtil {
                 //{ "Water", ImportWater },
                 //{ "Doors", ImportDoors },
             };
+
+            Dictionary<String, Action<GameObject>> tilemapLayerImportsLate = new()
+            {
+                { "Ground", ImportGroundLayerLate }
+            };
             
             foreach (SuperLayer layer in layers) {
                 string layerName = layer.name;
@@ -122,6 +127,9 @@ namespace TiledUtil {
                   
                     ResolveTileLayerImports(layer.transform, tileLayerImports[layerName]);
                 }
+
+                if (tilemapLayerImportsLate.ContainsKey(layerName))
+                    tilemapLayerImportsLate[layerName](layer.gameObject);
             }
         }
 
@@ -295,6 +303,27 @@ namespace TiledUtil {
         private void ImportGroundTilemap(GameObject g)
         {
             g.GetRequiredComponent<TilemapRenderer>().SetSortingLayer("Main");
+        }
+        
+        void ImportGroundLayerLate(GameObject g)
+        {
+            Debug.Log(g.transform.childCount);
+            Transform main = g.transform.GetChild(0);
+            var pCollider0 = main.GetChild(0).GetComponent<PolygonCollider2D>();
+            var pCollider1 = main.GetChild(1).GetComponent<PolygonCollider2D>();
+            var p0 = Clipper.PointsToPath(pCollider0.points, pCollider0.transform.position);
+            var p1 = Clipper.PointsToPath(pCollider1.points, pCollider1.transform.position);
+            
+            var paths = new Paths64();
+            paths.Add(p0);
+            paths.Add(p1);
+
+            if (Clipper.Contains(p0, p1))
+            {
+                pCollider0.pathCount++;
+                pCollider0.SetPath(1, pCollider1.points);
+                GameObject.DestroyImmediate(pCollider1.gameObject);
+            }
         }
         
         private void ImportSemisolidsTilemap(GameObject g)
