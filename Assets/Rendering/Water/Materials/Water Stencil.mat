@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlaneMain
-  m_Shader: {fileID: -6465566751694194690, guid: 9072fb6c45f04504b8b16bf487f7df23, type: 3}
+  m_Name: Water Stencil
+  m_Shader: {fileID: -6465566751694194690, guid: aedf886cea08e0b4295fc158eb9379e8, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -23,28 +23,8 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _AlphaTex:
+    - _SimulationTex:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Layers:
-        m_Texture: {fileID: 8400000, guid: 059e25bc5628b554f88854365143af57, type: 2}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MaskTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _NormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _RenderTex:
-        m_Texture: {fileID: 8400000, guid: aa8acfee22e2c2a46a17c67230d94a15, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -61,21 +41,19 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - PixelSnap: 0
-    - _EnableExternalAlpha: 0
+    - _Frequency: 46.62
+    - _NoiseBlend: 1
+    - _NoiseScale: 0.1
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _SimulationStrength: 0.1
+    - _Speed: 0.67
+    - _WaveHeight: 0.71
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Coord: {r: 0, g: 0, b: 0, a: 0}
-    - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ScreenRez: {r: 480, g: 270, b: 0, a: 0}
-    - _ScreenSize: {r: 0, g: 0, b: 0, a: 0}
-    - _cells: {r: 4, g: 1, b: 0, a: 0}
-    - _coord: {r: 0, g: 0, b: 0, a: 0}
+    - _RoomPos: {r: 0, g: 0, b: 0, a: 0}
+    - _RoomSize: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &1822901238887896976
+--- !u!114 &4312840938522910784
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
