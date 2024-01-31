@@ -361,16 +361,18 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     void CreateDust() {
         var dustMain = Dust.main;
         var dustEmission = Dust.emission;
+        var dustVelOverLifetime = Dust.velocityOverLifetime;
 
-        dustMain.startColor = new Color(150.0f,150.0f,150.0f);
-        dustMain.startSpeed = 5.0f;
+        dustMain.startColor = new Color(0.85f,0.85f,0.85f);
+        dustMain.startSpeed = 15.0f;
         dustMain.startSize = 1.0f;
         dustEmission.rateOverTime = 25.0f;
+        dustVelOverLifetime.y = 20.0f;
         if (velocityX >= 85.0f || velocityX <= -85.0f) {
             dustMain.startColor = Color.white;
-            dustMain.startSpeed = 10.0f;
-            dustMain.startSize = 2.0f;
+            dustMain.startSpeed = 45.0f;
             dustEmission.rateOverTime = 50.0f;
+            dustVelOverLifetime.y = 40f;
         }
         
         Dust.Play();
