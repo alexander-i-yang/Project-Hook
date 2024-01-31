@@ -167,6 +167,9 @@ public class DFRenderObject : ScriptableRendererFeature
 
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
-        renderer.EnqueuePass(pass);
+        if ((renderingData.cameraData.camera.cullingMask & layerMask) != 0) // only add pass to cameras showing any of the selected layers
+        {
+            renderer.EnqueuePass(pass);
+        }
     }
 }

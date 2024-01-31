@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14425bd540fc6774981eb582b63f2aec, type: 3}
   m_Name: Water Stencil Pass
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   layerMask:
     serializedVersion: 2
     m_Bits: 16
@@ -37,7 +37,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14425bd540fc6774981eb582b63f2aec, type: 3}
   m_Name: Water Mask Pass
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   layerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -47,7 +47,7 @@ MonoBehaviour:
   useURPLit: 0
   overrideMaterial: {fileID: -876546973899608171, guid: 9f58cdc90bf4c3441bb1174929c0e837, type: 3}
   useSortingLayer: 1
-  sortingLayer: Ground
+  sortingLayer: Main
   lightBlendMode: 0
   overrideMaterialPassIndex: 0
 --- !u!114 &11400000
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14425bd540fc6774981eb582b63f2aec, type: 3}
   m_Name: Water Fill Tex Pass
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   layerMask:
     serializedVersion: 2
     m_Bits: 16
@@ -181,3 +181,4 @@ MonoBehaviour:
   m_Active: 1
   rt: {fileID: 8400000, guid: 6a97591154f2fc9459fa04d62dbc260d, type: 2}
   trigger: 350
+  cameraType: 16

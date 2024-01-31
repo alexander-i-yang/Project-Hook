@@ -76,12 +76,12 @@ Material:
     - _NoiseScale: 10
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _ReflectionOverlay: 0
+    - _ReflectionOverlay: 0.576
     - _SimulationStrength: 5.02
     - _Speed: 1.35
     - _WaveHeight: 0.16
-    - _WobbleExtent: 2
-    - _WobbleSpeed: 4
+    - _WobbleExtent: 1
+    - _WobbleSpeed: 2
     - _hit: 0.841
     - _reflectionHeight: 16
     - _reflectionStepCount: 4
