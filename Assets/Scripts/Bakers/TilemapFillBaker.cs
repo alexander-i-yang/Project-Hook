@@ -75,9 +75,18 @@ namespace Bakers
             innerPoints = PathToPoints(ret[0]);
             outerPoints = PathToPoints(offsetRet[0]);
             
-#if UNITY_EDITOR
-            EditorUtility.SetDirty(fillMap);
-#endif
+            #if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+            #endif
+        }
+
+        public void ClearPoints()
+        {
+            innerPoints = null;
+            outerPoints = null;
+            #if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+            #endif
         }
 
         public void DrawLines()

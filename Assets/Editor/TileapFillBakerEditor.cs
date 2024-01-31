@@ -15,6 +15,10 @@ namespace Editor
             {
                 s.ClearTiles();
             }
+            if(GUILayout.Button("Clear Points"))
+            {
+                s.ClearPoints();
+            }
             if(GUILayout.Button("Calculate Points"))
             {
                 s.CalculatePoints();
