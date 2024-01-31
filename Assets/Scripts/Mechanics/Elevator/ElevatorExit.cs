@@ -5,27 +5,23 @@ using UnityEngine;
 public class ElevatorExit : Elevator
 {
     private GameObject player;
-    private GameObject[] elevatorDoors;
-
-    public int openExitDoorDistance = 25;
+    [SerializeField] private GameObject elevatorDoors;
 
     public void Start(){
         player = GameObject.FindGameObjectWithTag("Player");
-        elevatorDoors = GameObject.FindGameObjectsWithTag("ExitElevatorDoor");
     }
 
-    public void Update()
-    {
-        foreach (GameObject door in elevatorDoors)
-        {
-            if (Vector3.Distance (door.transform.position, player.transform.position) < openExitDoorDistance)
-            {
-                door.SetActive(false);
-            }
-            else
-            {
-                door.SetActive(true);
-            }
+    private void OnTriggerEnter2D(Collider2D other) {
+        // Add logic here to check if the player has eliminated all entities!!!!!!!!!!!!!!
+        if (other.gameObject == player){
+            elevatorDoors.SetActive(false);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other) {
+        // Add logic here to check if the player has eliminated all entities!!!!!!!!!!!!!!
+        if (other.gameObject == player){
+            elevatorDoors.SetActive(true);
         }
     }
 }

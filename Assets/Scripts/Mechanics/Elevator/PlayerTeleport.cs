@@ -4,53 +4,41 @@ using UnityEngine;
 
 public class PlayerTeleport : MonoBehaviour
 {
+    private GameObject player;
     private GameObject currentElevator;
-    public float teleportCooldown = 2f; // Set the cooldown time in seconds
-    private float teleportTimer = 0f;
-    private bool canTeleport = true;
+    private Elevator elevator;
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
 
     void Update()
     {
-        // Check if the teleport cooldown has elapsed
-        if (teleportTimer <= 0f && canTeleport && currentElevator != null)
+        // Add logic here to check if the player has eliminated all entities!!!!!!!!!!!!!!
+        if (currentElevator != null)
         {
-            transform.position = currentElevator.GetComponent<Elevator>().GetDestination().position;
-            canTeleport = false;
-            teleportTimer = teleportCooldown; // Reset the cooldown timer
+            elevator = currentElevator.GetComponent<Elevator>();
+
+            // Teleport the player to the elevator's destination
+            player.transform.position = elevator.GetDestination();
         }
-
-        // Update the teleport timer
-        teleportTimer -= Time.deltaTime;
-
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag("EnterElevator")){
-            // add logic here stop if the quota is not complete
-
-            if (other.CompareTag("Teleport")){
-                currentElevator = other.gameObject;
-                if (teleportTimer <= 0f)
-                {
-                    canTeleport = true;
-                }
-            }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.name == "TeleportHitbox")
+        {
+            currentElevator = other.gameObject;
         }
-        else{
-            if (other.CompareTag("Teleport")){
-                currentElevator = other.gameObject;
-                if (teleportTimer <= 0f)
-                {
-                    canTeleport = true;
-                }
-            }
-        }
-        
     }
 
-    private void OnTriggerExit2D(Collider2D other) {
-        if (other.CompareTag("Teleport")){
-            if (other.gameObject == currentElevator){
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.name == "TeleportHitbox")
+        {
+            if (other.gameObject == currentElevator)
+            {
                 currentElevator = null;
             }
         }
