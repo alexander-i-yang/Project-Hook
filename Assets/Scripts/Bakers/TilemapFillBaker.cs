@@ -17,8 +17,19 @@ namespace Bakers
         [SerializeField] private Tilemap fillMap;
         [Tooltip("Which tile to use")]
         [SerializeField] private TileBase fillTile;
-        [SerializeField] private Vector2Int topLeftCorner;
-        [SerializeField] private Vector2Int bottomRightCorner;
+        // [SerializeField] private Vector2Int topLeftCorner;
+        // [SerializeField] private Vector2Int bottomRightCorner;
+
+        private BoxCollider2D _mainCollider;
+
+        private BoxCollider2D MainCollider
+        {
+            get
+            {
+                if (_mainCollider == null) _mainCollider = GetComponent<BoxCollider2D>();
+                return _mainCollider;
+            }
+        } 
         
         [SerializeField] private bool shouldFill = true;
         [SerializeField] private Vector2 pointsOffset;
@@ -88,12 +99,21 @@ namespace Bakers
                 fillMap.SetTiles(line.tilePts, line.tileObjs);
             }
 
-            SetTileSquare(topLeftCorner, bottomRightCorner);
-            if (shouldFill) fillMap.FloodFill((Vector3Int)(topLeftCorner + new Vector2Int(2, -2)), fillTile);
+            Vector2Int topLeft = ((Vector2)(transform.position + MainCollider.bounds.min)).ToVector2Int();
+            SetTileSquare();
+            // if (shouldFill) fillMap.FloodFill((Vector3Int)(topLeft + new Vector2Int(16, -16)), fillTile);
+            if (shouldFill) fillMap.FloodFill(new Vector3Int(0, 0, 0), fillTile);
             
             #if UNITY_EDITOR
             EditorUtility.SetDirty(fillMap);
             #endif
+        }
+
+        public void SetTileSquare()
+        {
+            Vector2Int topLeft = ((Vector2)(transform.position + MainCollider.bounds.min)).ToVector2Int();
+            Vector2Int bottomRight = ((Vector2)(transform.position + MainCollider.bounds.max)).ToVector2Int();
+            SetTileSquare(topLeft, bottomRight);
         }
 
         private void SetTileSquare(Vector2Int corner0, Vector2Int corner2)

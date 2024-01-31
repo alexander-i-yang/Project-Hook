@@ -15,6 +15,10 @@ namespace Editor
             {
                 s.ClearTiles();
             }
+            if(GUILayout.Button("SetTileSquare"))
+            {
+                s.SetTileSquare();
+            }
             if(GUILayout.Button("Calculate Points"))
             {
                 s.CalculatePoints();
