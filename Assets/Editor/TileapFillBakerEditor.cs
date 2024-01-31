@@ -15,17 +15,17 @@ namespace Editor
             {
                 s.ClearTiles();
             }
-            if(GUILayout.Button("SetTileSquare"))
-            {
-                s.SetTileSquare();
-            }
             if(GUILayout.Button("Calculate Points"))
             {
                 s.CalculatePoints();
             }
+            if(GUILayout.Button("Draw Lines"))
+            {
+                s.DrawLines();
+            }
             if(GUILayout.Button("Fill Tiles"))
             {
-                s.SetTiles();
+                s.Fill();
             }
             if(GUILayout.Button("Bake Tilemaps"))
             {

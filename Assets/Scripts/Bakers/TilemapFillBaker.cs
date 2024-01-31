@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using Clipper2Lib;
 using ASK.Helpers;
 using MyBox;
@@ -8,6 +9,8 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 using World;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Bakers
 {
@@ -17,24 +20,18 @@ namespace Bakers
         [SerializeField] private Tilemap fillMap;
         [Tooltip("Which tile to use")]
         [SerializeField] private TileBase fillTile;
-        // [SerializeField] private Vector2Int topLeftCorner;
-        // [SerializeField] private Vector2Int bottomRightCorner;
 
-        private BoxCollider2D _mainCollider;
+        [Tooltip("Position to start floodfilling")]
+        [SerializeField] private Vector2 fillPoint;
 
-        private BoxCollider2D MainCollider
-        {
-            get
-            {
-                if (_mainCollider == null) _mainCollider = GetComponent<BoxCollider2D>();
-                return _mainCollider;
-            }
-        } 
+        [SerializeField] private int offset;
         
-        [SerializeField] private bool shouldFill = true;
         [SerializeField] private Vector2 pointsOffset;
         [SerializeField] private Vector2Int pointsMargin;
 
+        [SerializeField] private Vector2[] innerPoints;
+        [SerializeField] private Vector2[] outerPoints;
+        
         public void ClearTiles()
         {
             fillMap.ClearAllTiles();
@@ -43,7 +40,8 @@ namespace Bakers
         public void Bake()
         {
             CalculatePoints();
-            SetTiles();
+            DrawLines();
+            Fill();
             /*foreach (var p in OffsetPath(ret))
             {
                 var col = transform.GetChild(0).gameObject.AddComponent<EdgeCollider2D>();
@@ -59,32 +57,62 @@ namespace Bakers
                 rooms[0].GetComponent<PolygonCollider2D>().points,
                 rooms[0].transform.position
             );
+            
             ret.Add(Clipper.MakePath(initPaths));
 
             foreach (var room in rooms)
             {
-                print(room);
                 var roomPts = room.GetComponent<PolygonCollider2D>().points;
                 ret = CombinePoints(ret, PointsToPath(roomPts, room.transform.position));
             }
+            ret[0].Add(ret[0][0]);
 
             Paths64 translatedPath = Clipper.TranslatePaths(ret, pointsMargin.x, pointsMargin.y);
             ret = Clipper.Union(ret, translatedPath, FillRule.NonZero);
 
-            var col = gameObject.GetOrAddComponent<EdgeCollider2D>();
-            col.points = PathToPoints(ret[0]);
+            var offsetRet = OffsetPath(ret);
+
+            innerPoints = PathToPoints(ret[0]);
+            outerPoints = PathToPoints(offsetRet[0]);
+            
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(fillMap);
+#endif
         }
 
-        public void SetTiles()
+        public void DrawLines()
         {
             ClearTiles();
-            var col = GetComponent<EdgeCollider2D>();
-            if (col == null)
+            DrawTilePoints(innerPoints);
+            DrawTilePoints(outerPoints);
+            #if UNITY_EDITOR
+            EditorUtility.SetDirty(fillMap);
+            #endif
+        }
+
+        public void Fill()
+        {
+            if (innerPoints == null || outerPoints == null) return;
+            
+            Path64 innerPath = Clipper.MakePath(PointsToPath(innerPoints, Vector2.zero));
+            Path64 outerPath = Clipper.MakePath(PointsToPath(outerPoints, Vector2.zero));
+            Point64 fillStartPos = new Point64(fillPoint.x, fillPoint.y);
+            bool fillOutsideInner = Clipper.PointInPolygon(fillStartPos, innerPath) == PointInPolygonResult.IsOutside;
+            bool fillInsideOuter = Clipper.PointInPolygon(fillStartPos, outerPath) == PointInPolygonResult.IsInside;
+            if (fillInsideOuter && fillOutsideInner)
             {
-                CalculatePoints();
-                col = GetComponent<EdgeCollider2D>();
+                Vector3Int fillStartPosV = new Vector3Int((int)fillStartPos.X, (int)fillStartPos.Y);
+                Vector3Int tilePos = fillMap.WorldToCell(fillStartPosV);
+                fillMap.FloodFill(tilePos, fillTile);
             }
-            var points = col.points;
+            else
+            {
+                Debug.LogError("Tilemap fill point must be between inner path and outer path");
+            }
+        }
+
+        private void DrawTilePoints(Vector2[] points)
+        {
             for(int i = 0; i < points.Length; ++i)
             {
                 Vector2 p0 = points[i];
@@ -96,41 +124,6 @@ namespace Bakers
                     new Vector2Int(tilep0.x, tilep0.y),
                     new Vector2Int(tilep1.x, tilep1.y)
                 );
-                fillMap.SetTiles(line.tilePts, line.tileObjs);
-            }
-
-            Vector2Int topLeft = ((Vector2)(transform.position + MainCollider.bounds.min)).ToVector2Int();
-            SetTileSquare();
-            // if (shouldFill) fillMap.FloodFill((Vector3Int)(topLeft + new Vector2Int(16, -16)), fillTile);
-            if (shouldFill) fillMap.FloodFill(new Vector3Int(0, 0, 0), fillTile);
-            
-            #if UNITY_EDITOR
-            EditorUtility.SetDirty(fillMap);
-            #endif
-        }
-
-        public void SetTileSquare()
-        {
-            Vector2Int topLeft = ((Vector2)(transform.position + MainCollider.bounds.min)).ToVector2Int();
-            Vector2Int bottomRight = ((Vector2)(transform.position + MainCollider.bounds.max)).ToVector2Int();
-            SetTileSquare(topLeft, bottomRight);
-        }
-
-        private void SetTileSquare(Vector2Int corner0, Vector2Int corner2)
-        {
-            Vector2Int corner1 = new Vector2Int(corner0.x, corner2.y);
-            Vector2Int corner3 = new Vector2Int(corner2.x, corner0.y);
-
-            var lines = new[]
-            {
-                LineGenerator(corner0, corner1),
-                LineGenerator(corner1, corner2),
-                LineGenerator(corner2, corner3),
-                LineGenerator(corner3, corner0),
-            };
-            
-            foreach (var line in lines)
-            {
                 fillMap.SetTiles(line.tilePts, line.tileObjs);
             }
         }
@@ -170,7 +163,7 @@ namespace Bakers
 
         private Paths64 OffsetPath(Paths64 subj)
         {
-            return Clipper.InflatePaths(subj, 8, JoinType.Square, EndType.Square, 0);
+            return Clipper.InflatePaths(subj, offset, JoinType.Miter, EndType.Polygon, 100);
         }
 
         private Paths64 CombinePoints(Paths64 subj, int[] p1)
@@ -200,5 +193,15 @@ namespace Bakers
             }
             return ret.ToArray();
         }
+        
+        #if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            Handles.color = Color.red;
+            if (innerPoints != null) Handles.DrawPolyLine(innerPoints.ToVector3());
+            if (outerPoints != null) Handles.DrawPolyLine(outerPoints.ToVector3());
+            Gizmos.DrawSphere(fillPoint, 16);
+        }
+        #endif
     }
 }
