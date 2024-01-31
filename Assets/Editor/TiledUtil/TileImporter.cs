@@ -85,7 +85,7 @@ namespace TiledUtil {
                 //{ "Lava", ImportLavaTilemap },
                 { "Ground", ImportGroundTilemap },
                 { "Semisolids", ImportSemisolidsTilemap },
-                //{ "Water", ImportWaterTilemap },
+                { "Water", ImportWaterTilemap },
                 { "Dirt", ImportGroundTilemap },
                 { "Windows", ImportWindowsTilemap },
                 //{ "DecorBack", ImportDecorBackTilemap },
@@ -333,7 +333,7 @@ namespace TiledUtil {
         private void ImportWaterTilemap(GameObject g)
         {
             g.SetLayerRecursively("Water");
-            g.GetRequiredComponent<TilemapRenderer>().SetSortingLayer("Lava");
+            g.GetRequiredComponent<TilemapRenderer>().SetSortingLayer("Water");
             LIL.SetMaterial(g, "Mask_Graph");
         }
 
