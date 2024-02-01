@@ -11,7 +11,7 @@ namespace Player
                 //PlayerAnim.ChangeState(PlayerAnimations.IDLE);
                 Input.jumpedFromGround = false;
                 RefreshAbilities();
-                // smActor.Land();
+                MySM.MyPhysObj.Land();
                 if (GameTimer.GetTimerState(Input.jumpBufferTimer) == TimerState.Running)
                 {
                     JumpFromGround();

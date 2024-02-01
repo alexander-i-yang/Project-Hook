@@ -357,6 +357,10 @@ PrefabInstance:
       propertyPath: m_LocalBounds.m_Extent.y
       value: 10.90055
       objectReference: {fileID: 0}
+    - target: {fileID: 5996711802412139029, guid: 10510caee64778c409c18f681562daeb, type: 3}
+      propertyPath: influenceWeight
+      value: -0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 6559044703032948075, guid: 10510caee64778c409c18f681562daeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 262

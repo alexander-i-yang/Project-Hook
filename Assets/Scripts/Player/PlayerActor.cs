@@ -91,6 +91,7 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         _movementStateMachine.SetGrounded(true, IsMovingUp);
         base.Land();
     }
+
     #endregion
 
     #region Jumping
@@ -187,7 +188,8 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
                     BonkHead();
                 }
                 if (direction.y < 0) {
-                    Land();
+                    _movementStateMachine.SetGrounded(true, IsMovingUp);
+                    velocityY = 0;
                 }
             }
         }

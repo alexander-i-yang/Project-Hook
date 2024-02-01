@@ -143,7 +143,7 @@ namespace A2DK.Phys {
         
         public virtual void Land()
         {
-            OnLand?.Invoke(transform.position + Vector3.down * 5.5f);
+            OnLand.Invoke(velocity);
             velocityY = 0;
         }
         
