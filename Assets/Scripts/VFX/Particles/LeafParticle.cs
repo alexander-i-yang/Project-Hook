@@ -62,10 +62,10 @@ namespace VFX
 
         void FlyUpdate()
         {
-            transform.position += (Vector3) _velocity * Game.TimeManager.TimeScale;
+            transform.position += (Vector3) _velocity * Game.TimeManager.GetTimeScale();
             var vSigns = new Vector2(Mathf.Sign(_velocity.x), Mathf.Sign(_velocity.y));
-            _velocity -= vSigns * (_drag / Game.TimeManager.TimeScale);
-            _velocity += Vector2.down * (_gravityFly * Game.TimeManager.TimeScale);
+            _velocity -= vSigns * (_drag / Game.TimeManager.GetTimeScale());
+            _velocity += Vector2.down * (_gravityFly * Game.TimeManager.GetTimeScale());
         }
         
         void FloatUpdate()
@@ -73,7 +73,7 @@ namespace VFX
             float angle = Mathf.Sin(Game.TimeManager.Time * _waveSpeed)*(_arcAngle) - Mathf.PI/2;
 
             transform.position = _anchor + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle)) * _arcDistance;
-            _anchor += Vector3.down * (_gravity * Game.TimeManager.TimeScale);
+            _anchor += Vector3.down * (_gravity * Game.TimeManager.GetTimeScale());
         }
 
         public override void Launch(Vector2 v, float rotationV)

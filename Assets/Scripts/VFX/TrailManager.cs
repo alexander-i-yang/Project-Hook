@@ -31,7 +31,7 @@ namespace VFX
 
         private void ChangeTimeScale()
         {
-            _tr.time = _rawTime / Game.TimeManager.TimeScale;
+            _tr.time = _rawTime / Game.TimeManager.GetTimeScale();
         }
     }
 }

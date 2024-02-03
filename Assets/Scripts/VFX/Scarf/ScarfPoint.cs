@@ -34,7 +34,7 @@ namespace VFX
         public void CalcPos(float minSpacing, float maxSpacing)
         {
             Vector2 g = new Vector2(gravity.x * FlipGravityX, gravity.y);
-            transform.position += (Vector3)g * Game.TimeManager.TimeScale;
+            transform.position += (Vector3)g * Game.TimeManager.GetTimeScale();
             
             Vector2 targetPos = attachedTo.position;
             Vector2 curPos = transform.position;
