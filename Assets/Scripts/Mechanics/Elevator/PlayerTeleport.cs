@@ -7,10 +7,12 @@ public class PlayerTeleport : MonoBehaviour
     private GameObject player;
     private GameObject currentElevator;
     private Elevator elevator;
+    private BoostOut boostOutScript;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        boostOutScript = gameObject.AddComponent<BoostOut>();
     }
 
     void Update()
@@ -22,6 +24,9 @@ public class PlayerTeleport : MonoBehaviour
 
             // Teleport the player to the elevator's destination
             player.transform.position = elevator.GetDestination();
+
+            // Use boost mechanic as soon as you teleport to the other elevator
+            boostOutScript.StartBoostOut();
         }
     }
 

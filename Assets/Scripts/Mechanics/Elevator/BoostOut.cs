@@ -1,25 +1,34 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BoostOut : MonoBehaviour
 {
     private float launchForce = 5f;
-    // Start is called before the first frame update
+    private bool hasPlayerInput = false;
+    private GameObject player;
+    private Rigidbody2D playerRigidbody;
+
     void Start()
     {
-        Time.timeScale = 0f;
+        // You may want to get the Rigidbody2D component in Start if it's used later
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerRigidbody = player.GetComponent<Rigidbody2D>();
+    }
+
+    public void StartBoostOut()
+    {
         StartCoroutine(WaitForPlayerInput());
-        Time.timeScale = 1f;
-        MovePlayerToMousePosition();
     }
 
     IEnumerator WaitForPlayerInput()
     {
+        // Pause the game
+        Time.timeScale = 0f;
+
         // Continue looping until player input is received
         while (!hasPlayerInput)
         {
-            // Check for player input (for example, pressing the space key)
+            // Check for player input (for example, pressing the mouse button)
             if (Input.GetMouseButtonDown(0))
             {
                 // Player has inputted the action
@@ -29,6 +38,12 @@ public class BoostOut : MonoBehaviour
             // Yield execution until the next frame
             yield return null;
         }
+
+        // Unpause the game
+        Time.timeScale = 1f;
+
+        // Launch the player to the mouse position
+        LaunchPlayerToMousePosition();
     }
 
     void LaunchPlayerToMousePosition()
