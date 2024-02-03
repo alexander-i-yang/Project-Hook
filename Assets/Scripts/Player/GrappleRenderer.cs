@@ -7,9 +7,11 @@ using VFX;
 public class GrappleRenderer : MonoBehaviour {
     private LineRenderer _lr;
     private PlayerGrapplerStateMachine _parent;
+    [SerializeField] private Transform anchor;
     [SerializeField] private GameObject leafPrefab;
     [SerializeField] private GameObject curvePointPrefab;
     [SerializeField] private float leafSpacing;
+    [SerializeField] private float minLeafDistance;
     private List<Leaf> _leaves = new();
     private List<GrappleCurvePoint> _curvePoints = new();
     [SerializeField] private float curveSpeed;
@@ -17,7 +19,6 @@ public class GrappleRenderer : MonoBehaviour {
     private void Awake() {
         _lr = GetComponent<LineRenderer>();
         _parent = transform.parent.GetComponent<PlayerGrapplerStateMachine>();
-        // print(transform.parent);
     }
 
 
@@ -44,28 +45,15 @@ public class GrappleRenderer : MonoBehaviour {
     }
 
     private void UpdatePoints(Vector2 p1) {
-        Vector2 p0 = _parent.transform.position;
+        Vector2 p0 = anchor.position;
         _lr.SetPosition(0, p0);
         _lr.SetPosition(1, p1);
 
         Vector2 vineVector = p1 - p0;
         
         
-        int numLeaves = (int)(vineVector.magnitude / leafSpacing);
+        int numLeaves = (int)Mathf.Max(0, (vineVector.magnitude-minLeafDistance)/ leafSpacing);
         float vectorAngle = Vector2.SignedAngle(Vector2.right, vineVector);
-        /*_lr.positionCount = numLeaves;
-        for (int i = 0; i < numLeaves; ++i)
-        {
-            if (i >= _curvePoints.Count)
-            {
-                var newP = Instantiate(curvePointPrefab, transform).GetComponent<GrappleCurvePoint>();
-                _curvePoints.Add(newP);
-            }
-
-            float prevAngle = i == 0 ? vectorAngle : _curvePoints[i - 1].Angle;
-            _curvePoints[i].CalcPos(curveSpeed, prevAngle, p0, i*leafSpacing);
-            _lr.SetPosition(i, _curvePoints[i].transform.position);
-        }*/
         
         for (int l = 0; l < numLeaves; ++l)
         {
@@ -77,7 +65,7 @@ public class GrappleRenderer : MonoBehaviour {
 
             var curLeaf = _leaves[l];
             curLeaf.SetEnabled(true);
-            curLeaf.transform.position = p0 + vineVector.normalized * (l * leafSpacing);
+            curLeaf.transform.position = p0 + vineVector.normalized * (minLeafDistance + l * leafSpacing);
             curLeaf.SetRotation(vectorAngle + (l % 2 == 0 ? -90 : 90));
         }
         

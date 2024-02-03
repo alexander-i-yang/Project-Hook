@@ -52,16 +52,15 @@ namespace Player
                 }
             }
 
-            public override Vector2 MoveX(Vector2 velocity, int direction)
-            {
-                UpdateSpriteFacing(direction);
-                return MySM.MyPhysObj.CalcMovementX(direction, MyCore.MaxAirAcceleration, MyCore.AirResistance);
-            }
-
             public override void FixedUpdate()
             {
-                MySM.MyPhysObj.Fall();
                 GameTimer.FixedUpdate(_jumpCoyoteTimer);
+            }
+
+            public override Vector2 PhysTick(Vector2 velocity, Vector2 newV, int direction)
+            {
+                newV = MySM.MyPhysObj.CalcFall(newV);
+                return MySM.MyPhysObj.CalcMovementX(newV, direction, MyCore.MaxAirAcceleration, MyCore.AirResistance);
             }
         }
     }

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1498530064132386922}
   - component: {fileID: 4326875230245140194}
   - component: {fileID: 6068717180363471379}
+  - component: {fileID: 5085651321375090479}
   m_Layer: 7
   m_Name: ZiplineActor
   m_TagString: Untagged
@@ -219,6 +220,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5085651321375090479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270312286556952433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e20cd1427854415c8ed5ba1e0c9506d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3786360777245694845
 GameObject:
   m_ObjectHideFlags: 0

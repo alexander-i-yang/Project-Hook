@@ -13,7 +13,9 @@
         "Mechanics",
         "World",
         "Spawning",
-        "VFX"
+        "VFX",
+        "ClipperLib",
+        "Bakers"
     ],
     "includePlatforms": [
         "Editor"

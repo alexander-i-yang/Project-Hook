@@ -101,9 +101,5 @@ namespace Player
         {
             Transition<Airborne>();
         }
-
-        public Vector2 ProcessMoveX(PlayerActor p, Vector2 velocity, int direction) {
-            return CurrState.MoveX(velocity, direction);
-        }
     }
 }

@@ -7,10 +7,6 @@ using UnityEngine;
 namespace Player
 {
     public class MovementStateInput : PlayerStateInput {
-        //Movement
-        public int moveDirection;
-        public int facing;
-
         //Jump
         public GameTimer jumpBufferTimer;
         public bool jumpedFromGround;

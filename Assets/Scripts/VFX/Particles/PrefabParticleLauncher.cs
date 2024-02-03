@@ -27,6 +27,7 @@ namespace VFX
             newPart.transform.position = position;
             newPart.gameObject.SetActive(true);
             newPart.Launch(v + actorV * inheritVWeight, rotationalV);
+            newPart.GetComponent<SpriteRenderer>().enabled = true;
             Game.ParticlePool.ReceiveParticle(newPart.transform);
         }
 

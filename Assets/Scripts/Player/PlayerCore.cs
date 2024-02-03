@@ -16,6 +16,7 @@ namespace Player
     [RequireComponent(typeof(ParryStateMachine))]
     [RequireComponent(typeof(PlayerInputController))]
     [RequireComponent(typeof(PlayerDeathManager))]
+    [RequireComponent(typeof(PlayerHealth))]
     public class PlayerCore : MonoBehaviour
     {
         // public GrappleHook MyGrappleHook;
@@ -71,19 +72,17 @@ namespace Player
         [Tooltip("Velocity multiplier for when you move left/right while grappling")]
         [SerializeField] public float MoveXGrappleMult;
 
-        [Foldout("Parry", true)]
-        [Tooltip("Velocity mult after parrying a wall")]
-        [SerializeField] public float ParryVMult;
+        [FormerlySerializedAs("ParryPreCollisionWindow")]
+        [Foldout("Combat", true)]
 
         [Tooltip("Time window before hitting a wall")]
-        [SerializeField] public float ParryPreCollisionWindow;
+        [SerializeField] public float PunchPreCollisionWindow;
 
-        [Tooltip("Time window after hitting a wall")]
-        [SerializeField] public float ParryPostCollisionWindow;
-        
         [Tooltip("Velocity to add after punch bouncing")]
         [SerializeField] public float PunchBounceBoost;
 
+        [Tooltip("After taking damage set speed to this")]
+        [SerializeField] public float TakeDamageSpeed;
         
         [Foldout("RoomTransitions", true)]
         [SerializeField, Range(0f, 1f)] public float RoomTransitionVCutX = 0.5f;
@@ -108,6 +107,22 @@ namespace Player
             {
                 if (_pDM == null) _pDM = GetComponent<PlayerDeathManager>();
                 return _pDM;
+            }
+        }
+
+        private PlayerHealth _playerHealth;
+        public PlayerHealth Health {
+            get {
+                if (_playerHealth == null) _playerHealth = GetComponent<PlayerHealth>();
+                return _playerHealth;
+            }
+        }
+        
+        private Damageable _playerDamageable;
+        public Damageable PlayerDamageable {
+            get {
+                if (_playerDamageable == null) _playerDamageable = GetComponentInChildren<Damageable>();
+                return _playerDamageable;
             }
         }
 

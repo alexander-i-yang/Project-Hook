@@ -36,6 +36,8 @@ namespace Mechanics
                 MySM.OnGrappleDetach?.Invoke();
                 // MyCore.MovementStateMachine.RefreshAbilities();
             }
+
+            public override Vector2 PhysTick(Vector2 velocity, Vector2 newV, int getMovementInput) => newV;
         }
     }
 }

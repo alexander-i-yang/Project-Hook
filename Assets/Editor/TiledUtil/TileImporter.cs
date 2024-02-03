@@ -4,13 +4,14 @@ using System.Data;
 using System.Linq;
 using System.Xml.Linq;
 
-using Mechanics;
+using Clipper2Lib;
 
 using SuperTiled2Unity;
 using SuperTiled2Unity.Editor;
 
 using Cinemachine;
 using ASK.Helpers;
+using Editor;
 using MyBox;
 using Spawning;
 using UnityEditor;
@@ -27,6 +28,40 @@ namespace TiledUtil {
     [AutoCustomTmxImporter()]
     public class TileImporter : CustomTmxImporter, IFilterLoggerTarget {
         private Dictionary<String, GameObject> _prefabReplacements;
+
+        private void ImportWindows(GameObject g, int index)
+        {
+            var points = g.GetRequiredComponent<EdgeCollider2D>().points;
+            Vector2 scale;
+            String prefabName;
+            if (Mathf.Abs(points[0].y - points[1].y) < 9)
+            {
+                scale = new Vector2(1, 4);
+                prefabName = "Window Long";
+            }
+            else
+            {
+                scale = new Vector2(4, 1);
+                prefabName = "Window Tall";
+            }
+            
+            var data = LIL.TileToPrefab(g, index, _prefabReplacements[prefabName]);
+            
+            g = data.gameObject;
+            Vector2[] colliderPoints = data.collisionPts;
+            g.GetRequiredComponent<BoxCollider2D>().offset = Vector2.zero;
+            
+            Vector2[] spritePoints = LIL.ColliderPointsToRectanglePoints(g, colliderPoints);
+            
+            Vector2 avgSpritePoint = spritePoints.ComputeAverage();
+            g.transform.localPosition = avgSpritePoint;
+            
+            for (int i = 0; i < spritePoints.Length; ++i) spritePoints[i].Scale(scale);
+            
+            LIL.SetNineSliceSprite(g, spritePoints);
+            LIL.SetLayer(g, "Ground");
+            g.GetRequiredComponent<SpriteRenderer>().SetSortingLayer("Main");
+        }
 
         public override void TmxAssetImported(TmxAssetImportedArgs data)
         {
@@ -49,9 +84,10 @@ namespace TiledUtil {
             {
                 //{ "Lava", ImportLavaTilemap },
                 { "Ground", ImportGroundTilemap },
-                { "Semisolid", ImportSemisolidTilemap },
-                //{ "Water", ImportWaterTilemap },
+                { "Semisolids", ImportSemisolidsTilemap },
+                { "Water", ImportWaterTilemap },
                 { "Dirt", ImportGroundTilemap },
+                { "Windows", ImportWindowsTilemap },
                 //{ "DecorBack", ImportDecorBackTilemap },
                 //{ "GlowingMushrooms", ImportGlowingMushroomTilemap },
                 { "Stalagtites", ImportStalagtitesTilemap },
@@ -64,8 +100,9 @@ namespace TiledUtil {
             //Applies to children
             Dictionary<String, Action<GameObject, int>> tileLayerImports = new() {
                 { "Ground", ImportGround },
-                { "Semisolid", ImportSemisolid },
+                { "Semisolids", ImportSemisolids },
                 { "Dirt", ImportGround },
+                { "Windows", ImportWindows },
                 //{ "Breakable", ImportBreakable },
                 //{ "GlowingMushrooms", ImportGlowingMushroom },
                 // { "Stalagtites", ImportStalagtites },
@@ -73,9 +110,10 @@ namespace TiledUtil {
                 //{ "Water", ImportWater },
                 //{ "Doors", ImportDoors },
             };
-            
-            Dictionary<String, Action<Transform, XElement>> objectLayerImports = new() {
-                // { "Mechanics", ImportMechanics},
+
+            Dictionary<String, Action<GameObject>> tilemapLayerImportsLate = new()
+            {
+                { "Ground", ImportGroundLayerLate }
             };
             
             foreach (SuperLayer layer in layers) {
@@ -88,10 +126,16 @@ namespace TiledUtil {
                 if (tileLayerImports.ContainsKey(layerName)) {
                   
                     ResolveTileLayerImports(layer.transform, tileLayerImports[layerName]);
-                } else if (objectLayerImports.ContainsKey(layerName)) {
-                    objectLayerImports[layerName](layer.transform, GetLayerXNode(doc, layer));
                 }
+
+                if (tilemapLayerImportsLate.ContainsKey(layerName))
+                    tilemapLayerImportsLate[layerName](layer.gameObject);
             }
+        }
+
+        private void ImportWindowsTilemap(GameObject g)
+        {
+            g.GetRequiredComponent<TilemapRenderer>().enabled = false;
         }
 
         private void AddRoomComponents(Transform room)
@@ -182,9 +226,9 @@ namespace TiledUtil {
             
         // }
         
-        private void ImportSemisolid(GameObject g, int index) {
+        private void ImportSemisolids(GameObject g, int index) {
             var ret = LIL.TileToPrefab(g, index, _prefabReplacements["Semisolid"]);
-            LIL.SetLayer(ret.gameObject, "Interactable");
+            LIL.SetLayer(ret.gameObject, "Ground");
         }
 
         private void ImportBreakable(GameObject g, int index) {
@@ -261,15 +305,35 @@ namespace TiledUtil {
             g.GetRequiredComponent<TilemapRenderer>().SetSortingLayer("Main");
         }
         
-        private void ImportSemisolidTilemap(GameObject g)
+        void ImportGroundLayerLate(GameObject g)
         {
-            g.GetRequiredComponent<TilemapRenderer>().SetSortingLayer("Ground");
+            Transform main = g.transform.GetChild(0);
+            var pCollider0 = main.GetChild(0).GetComponent<PolygonCollider2D>();
+            var pCollider1 = main.GetChild(1).GetComponent<PolygonCollider2D>();
+            var p0 = Clipper.PointsToPath(pCollider0.points, pCollider0.transform.position);
+            var p1 = Clipper.PointsToPath(pCollider1.points, pCollider1.transform.position);
+            
+            var paths = new Paths64();
+            paths.Add(p0);
+            paths.Add(p1);
+
+            if (Clipper.Contains(p0, p1))
+            {
+                pCollider0.pathCount++;
+                pCollider0.SetPath(1, pCollider1.points);
+                GameObject.DestroyImmediate(pCollider1.gameObject);
+            }
+        }
+        
+        private void ImportSemisolidsTilemap(GameObject g)
+        {
+            g.GetRequiredComponent<TilemapRenderer>().SetSortingLayer("Main");
         }
 
         private void ImportWaterTilemap(GameObject g)
         {
             g.SetLayerRecursively("Water");
-            g.GetRequiredComponent<TilemapRenderer>().SetSortingLayer("Lava");
+            g.GetRequiredComponent<TilemapRenderer>().SetSortingLayer("Water");
             LIL.SetMaterial(g, "Mask_Graph");
         }
 
