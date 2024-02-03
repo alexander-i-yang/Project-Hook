@@ -1,4 +1,5 @@
 using A2DK.Phys;
+using Mechanics.GrappleBehaviors.PullBehavior;
 using UnityEngine;
 using UnityEngine.Events;
 using static Helpers.Helpers;
@@ -25,6 +26,8 @@ namespace Mechanics
 
         [SerializeField] private UnityEvent _onAttachGrapple;
         [SerializeField] private UnityEvent _onDetachGrapple;
+
+        public bool IsInSticky => _sm.IsOnState<Sticky>();
         
         private void Awake()
         {

@@ -27,7 +27,7 @@ namespace Mechanics {
         private GameTimer2 _punchTimer;
         [SerializeField] private float breakTimeWindow = 0.25f;
 
-        void Awake()
+        protected void Awake()
         {
             _stateMachine = GetComponent<CrateStateMachine>();
         }
@@ -95,10 +95,6 @@ namespace Mechanics {
                 }
                 
                 if (direction.x != 0) {
-                
-                    // Vector2 newV = Vector2.zero;
-                    // Vector2 oldV = velocity;
-                    // newV = HitWall((int)direction.x);
                     velocityX = 0;
                 } else if (direction.y != 0) {
                     if (direction.y > 0) {

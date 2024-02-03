@@ -19,16 +19,14 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     private MovementStateMachine _movementStateMachine => _core.MovementStateMachine;
     private GrapplerStateMachine GrapplerStateMachine => _core.GrapplerStateMachine;
     [SerializeField, AutoProperty(AutoPropertyMode.Parent)] private BoxCollider2D _collider;
-    [SerializeField] private SpriteRenderer sprite;
+    // [SerializeField] private SpriteRenderer sprite;
 
     private bool _hitWallCoroutineRunning;
     private float _hitWallPrevSpeed;
-
+    
     [Foldout("Movement Events", true)]
     public ActorEvent OnJumpFromGround;
     public ActorEvent OnDoubleJump;
-    public UnityEvent OnDiveStart;
-    public ActorEvent OnDogo;
     
     private Func<Vector2, Vector2> _deathRecoilFunc;
 
@@ -36,38 +34,30 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
 
     private PlayerCore _core;
 
-    public override int Facing => sprite.flipX ? -1 : 1;
-
     private void OnEnable()
     {
         Room.RoomTransitionEvent += OnRoomTransition;
-        // EndCutsceneManager.EndCutsceneEvent += OnEndCutscene;
         _core = GetComponent<PlayerCore>();
+        _core.PlayerDamageable.OnDamaged += TakeDamage;
     }
 
     private void OnDisable()
     {
         Room.RoomTransitionEvent -= OnRoomTransition;
-        // EndCutsceneManager.EndCutsceneEvent -= OnEndCutscene;
+        _core.PlayerDamageable.OnDamaged -= TakeDamage;
     }
 
     private void FixedUpdate()
     {
         ApplyVelocity(ResolveJostle());
 
-        // Vector2 newV = Vector2.zero;
-        // newV = _movementStateMachine.ProcessMoveX(this, newV, _core.Input.GetMovementInput());
-        // newV = GrapplerStateMachine.ProcessMoveX(newV, _core.Input.GetMovementInput());
-        // velocity += newV;
-
-        // Vector2 newV = velocity;
-        // newV = _movementStateMachine.Fall(newV);
-        // newV = GrapplerStateMachine.Fall(newV);
-
+        int inputX = _core.Input.GetMovementInput();
+        
         Vector2 newV = velocity;
-        newV = _movementStateMachine.CurrState.PhysTick(velocity, newV, _core.Input.GetMovementInput());
-        newV = GrapplerStateMachine.CurrState.PhysTick(velocity, newV, _core.Input.GetMovementInput());
+        newV = _movementStateMachine.CurrState.PhysTick(velocity, newV, inputX);
+        newV = GrapplerStateMachine.CurrState.PhysTick(velocity, newV, inputX);
         velocity = newV;
+        
         MoveTick();
     }
 
@@ -96,11 +86,6 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         // return new Vector2(Mathf.MoveTowards(velocityX, targetVelocityX, accel), velocityY);
     }
 
-    public override void Land()
-    {
-        _movementStateMachine.SetGrounded(true, IsMovingUp);
-        base.Land();
-    }
     #endregion
 
     #region Jumping
@@ -115,17 +100,11 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         velocityY = Math.Max(applyV, velocityY + applyV);
     }
 
-    public void DoubleJump(int moveDirection = 0)
+    public void DoubleJump()
     {
         float doubleJumpVelocity = GetJumpSpeedFromHeight(_core.DoubleJumpHeight);
         float addDoubleJumpVelocity = GetJumpSpeedFromHeight(_core.AddDoubleJumpHeight);
         velocityY = Math.Max(doubleJumpVelocity, velocityY + addDoubleJumpVelocity);
-
-        // If the player is trying to go in the opposite direction of their x velocity, instantly switch direction.
-        if (moveDirection != 0 && moveDirection != Math.Sign(velocityX))
-        {
-            velocityX = 0;
-        }
 
         OnDoubleJump?.Invoke(transform.position);
     }
@@ -203,34 +182,14 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
                     BonkHead();
                 }
                 if (direction.y < 0) {
-                    Land();
+                    _movementStateMachine.SetGrounded(true, IsMovingUp);
+                    velocityY = 0;
                 }
             }
         }
 
         return col;
     }
-
-    public void ParryBounce(Vector2 punchDir)
-    {
-        punchDir = punchDir.normalized * _core.PunchBounceBoost;
-        Vector2 v0 = velocity;
-        
-        //Split v0 into ortho + normal components
-        Vector2 v0n = Vector3.Project(v0, punchDir);
-        Vector2 v0o = v0 - v0n;
-        velocity = v0o + (Vector2.Dot(punchDir, v0n) <= 0 ? v0n - punchDir : -punchDir);
-
-        // velocity = Helpers.Helpers.CombineVectorsWithReset(velocity, -punchDir.normalized * _core.PunchBounceBoost);
-        // velocity += -punchDir.normalized * _core.PunchBounceBoost;
-        
-        _movementStateMachine.RefreshAbilities();
-    }
-
-    /*public override bool PlayerCollide(Actor p, Vector2 direction)
-    {
-        return false;     
-    }*/
 
     public override bool IsGround(PhysObj whosAsking)
     {
@@ -349,6 +308,32 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     {
         return Mathf.Sqrt(-2f * GravityUp * jumpHeight);
     }
+
+    #region Combat
+
+    public void ParryBounce(Vector2 punchDir)
+    {
+        punchDir = punchDir.normalized * _core.PunchBounceBoost;
+        Vector2 v0 = velocity;
+        
+        //Split v0 into ortho + normal components
+        Vector2 v0n = Vector3.Project(v0, punchDir);
+        Vector2 v0o = v0 - v0n;
+        velocity = v0o + (Vector2.Dot(punchDir, v0n) <= 0 ? v0n - punchDir : -punchDir);
+
+        _movementStateMachine.RefreshAbilities();
+    }
+
+    void TakeDamage(Vector2 enemyPos)
+    {
+        _movementStateMachine.RefreshAbilities();
+        var newV = (Vector2)transform.position - enemyPos;
+        velocity = newV.normalized * _core.TakeDamageSpeed;
+        GrapplerStateMachine.BreakGrapple();
+        _core.Health.PlayerTakeDmg(1);
+    }
+
+    #endregion
 
     public LogLevel GetLogLevel()
     {

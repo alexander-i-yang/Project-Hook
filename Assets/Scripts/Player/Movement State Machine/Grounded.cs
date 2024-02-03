@@ -11,7 +11,7 @@ namespace Player
                 //PlayerAnim.ChangeState(PlayerAnimations.IDLE);
                 Input.jumpedFromGround = false;
                 RefreshAbilities();
-                // smActor.Land();
+                MySM.MyPhysObj.Land();
                 if (GameTimer.GetTimerState(Input.jumpBufferTimer) == TimerState.Running)
                 {
                     JumpFromGround();
@@ -35,7 +35,6 @@ namespace Player
 
             public override Vector2 PhysTick(Vector2 velocity, Vector2 newV, int direction)
             {
-                UpdateSpriteFacing(direction);
                 AnimSetRunning(direction != 0);
                 return MySM.MyPhysObj.CalcMovementX(velocity, direction, MyCore.MaxAcceleration, MyCore.MaxDeceleration);
             }

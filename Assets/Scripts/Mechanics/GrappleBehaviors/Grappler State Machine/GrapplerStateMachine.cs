@@ -119,11 +119,6 @@ namespace Mechanics
             CurrState.CollideVertical();
         }
 
-        public Vector2 ProcessMoveX(Vector2 velocity, int direction)
-        {
-            return CurrState.MoveX(velocity, direction);
-        }
-
         public virtual Vector2 ProcessCollideHorizontal(Vector2 oldV, Vector2 newV) =>
             CurrState.ProcessCollideHorizontal(oldV, newV);
 
@@ -211,7 +206,6 @@ namespace Mechanics
 
         public void GrappleBoost()
         {
-            int vxSign = (int)Mathf.Sign(MyPhysObj.velocityX);
             Vector2 addV = new Vector2(MyPhysObj.Facing, 1) *
                            Mathf.Max(GrappleBoostSpeed * MyPhysObj.velocity.magnitude, GrappleMinBoost);
             addV = addV.normalized * Mathf.Clamp(addV.magnitude, -MaxGrappleBoostSpeed, MaxGrappleBoostSpeed);

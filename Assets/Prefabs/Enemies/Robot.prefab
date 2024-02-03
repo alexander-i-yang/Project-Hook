@@ -860,6 +860,62 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 3446617746041711944, guid: 536d669874c3ff04b94717ab6dea5174, type: 3}
+    - target: {fileID: 2847284013365877219, guid: 58a9efcfb2ab27e4e9ef2fb733c597da, type: 3}
+      propertyPath: _onAttachGrapple.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2847284013365877219, guid: 58a9efcfb2ab27e4e9ef2fb733c597da, type: 3}
+      propertyPath: _onDetachGrapple.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2847284013365877219, guid: 58a9efcfb2ab27e4e9ef2fb733c597da, type: 3}
+      propertyPath: _onAttachGrapple.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2847284013365877219, guid: 58a9efcfb2ab27e4e9ef2fb733c597da, type: 3}
+      propertyPath: _onDetachGrapple.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2847284013365877219, guid: 58a9efcfb2ab27e4e9ef2fb733c597da, type: 3}
+      propertyPath: _onAttachGrapple.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2847284013365877219, guid: 58a9efcfb2ab27e4e9ef2fb733c597da, type: 3}
+      propertyPath: _onDetachGrapple.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2847284013365877219, guid: 58a9efcfb2ab27e4e9ef2fb733c597da, type: 3}
+      propertyPath: _onAttachGrapple.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetCollideable
+      objectReference: {fileID: 0}
+    - target: {fileID: 2847284013365877219, guid: 58a9efcfb2ab27e4e9ef2fb733c597da, type: 3}
+      propertyPath: _onDetachGrapple.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetCollideable
+      objectReference: {fileID: 0}
+    - target: {fileID: 2847284013365877219, guid: 58a9efcfb2ab27e4e9ef2fb733c597da, type: 3}
+      propertyPath: _onAttachGrapple.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Enemy, Combat
+      objectReference: {fileID: 0}
+    - target: {fileID: 2847284013365877219, guid: 58a9efcfb2ab27e4e9ef2fb733c597da, type: 3}
+      propertyPath: _onDetachGrapple.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: Enemy, Combat
+      objectReference: {fileID: 0}
+    - target: {fileID: 2847284013365877219, guid: 58a9efcfb2ab27e4e9ef2fb733c597da, type: 3}
+      propertyPath: _onAttachGrapple.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2847284013365877219, guid: 58a9efcfb2ab27e4e9ef2fb733c597da, type: 3}
+      propertyPath: _onDetachGrapple.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2847284013365877219, guid: 58a9efcfb2ab27e4e9ef2fb733c597da, type: 3}
+      propertyPath: _onAttachGrapple.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2847284013365877219, guid: 58a9efcfb2ab27e4e9ef2fb733c597da, type: 3}
+      propertyPath: _onDetachGrapple.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3287301058911351267, guid: 58a9efcfb2ab27e4e9ef2fb733c597da, type: 3}
       propertyPath: m_Name
       value: Robot Particle 1

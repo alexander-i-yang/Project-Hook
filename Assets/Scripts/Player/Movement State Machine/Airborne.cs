@@ -57,12 +57,9 @@ namespace Player
                 GameTimer.FixedUpdate(_jumpCoyoteTimer);
             }
 
-            public override Vector2 Fall(Vector2 v) => MySM.MyPhysObj.CalcFall(v);
-
             public override Vector2 PhysTick(Vector2 velocity, Vector2 newV, int direction)
             {
                 newV = MySM.MyPhysObj.CalcFall(newV);
-                UpdateSpriteFacing(direction);
                 return MySM.MyPhysObj.CalcMovementX(newV, direction, MyCore.MaxAirAcceleration, MyCore.AirResistance);
             }
         }
