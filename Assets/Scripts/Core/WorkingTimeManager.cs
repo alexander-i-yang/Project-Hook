@@ -8,16 +8,16 @@ namespace Core
     public class WorkingTimeManager : TimeManager
     {
         private float _currentTimeScale = 1;
-        [SerializeField] private float timeAcceleration = 5;
+        [SerializeField] private float timeAcceleration = 0.45f;
 
         /*
 		 * Smooths timescale transition between different states.
 		 *
 		 * @return currentTimeScale
 		 */
-        public virtual float GetTimeScale()
+        public override float GetTimeScale()
         {
-            targetTimeScale = base.GetTimeScale();
+            float targetTimeScale = base.GetTimeScale();
             float scaleFactor = timeAcceleration * UnityEngine.Time.deltaTime;
 
             _currentTimeScale = Mathf.MoveTowards(_currentTimeScale, targetTimeScale, _currentTimeScale * scaleFactor);
