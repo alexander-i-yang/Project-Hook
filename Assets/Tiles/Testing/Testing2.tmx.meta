@@ -13,11 +13,11 @@ ScriptedImporter:
   - "Custom importer 'TileImporter' threw an exception. Message = 'Transform child
     out of bounds', Stack:\n  at (wrapper managed-to-native) UnityEngine.Transform.GetChild(UnityEngine.Transform,int)\r\n 
     at TiledUtil.TileImporter.ImportGroundLayerLate (UnityEngine.GameObject g) [0x0001b]
-    in C:\\Users\\uncle\\Unity\\Project-Hook\\Assets\\Editor\\TiledUtil\\TileImporter.cs:314
+    in C:\\Users\\uncle\\Unity\\Project-Hook\\Assets\\Editor\\TiledUtil\\TileImporter.cs:360
     \r\n  at TiledUtil.TileImporter.TmxAssetImported (SuperTiled2Unity.Editor.TmxAssetImportedArgs
-    data) [0x00280] in C:\\Users\\uncle\\Unity\\Project-Hook\\Assets\\Editor\\TiledUtil\\TileImporter.cs:100
+    data) [0x0023d] in C:\\Users\\uncle\\Unity\\Project-Hook\\Assets\\Editor\\TiledUtil\\TileImporter.cs:99
     \r\n  at SuperTiled2Unity.Editor.TmxAssetImporter.RunCustomImporterType (System.Type
-    type) [0x00050] in C:\\Users\\uncle\\Unity\\Project-Hook\\Assets\\SuperTiled2Unity\\Scripts\\Editor\\Importers\\TmxAssetImporter.cs:493 "
+    type) [0x00050] in C:\\Users\\uncle\\Unity\\Project-Hook\\Assets\\SuperTiled2Unity\\Scripts\\Editor\\Importers\\TmxAssetImporter.cs:500 "
   warnings: []
   missingSortingLayers: []
   missingLayers: []
