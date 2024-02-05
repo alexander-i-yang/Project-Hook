@@ -9,6 +9,7 @@ using SuperTiled2Unity;
 using SuperTiled2Unity.Editor;
 
 using ASK.Helpers;
+using Helpers;
 using MyBox;
 using Spawning;
 using UnityEditor;
@@ -95,25 +96,6 @@ namespace TiledUtil {
                 if (tilemapLayerImportsLate.ContainsKey(layerName))
                     tilemapLayerImportsLate[layerName](layer.gameObject);
             }
-            
-            ImportSuperObjects(superObjects);
-        }
-
-        private void ImportSuperObjects(IEnumerable<SuperObject> superObjects)
-        {
-            List<SuperObject> listSuperObjects = superObjects.ToList();
-            foreach (var kv in _prefabReplacements.custom)
-            {
-                for (int i = listSuperObjects.Count - 1; i >= 0; --i)
-                {
-                    SuperObject superObj = listSuperObjects[i];
-                    if (CUSTOM_PREFIX + superObj.m_Type == kv.Key)
-                    {
-                        Debug.Log("WHOO");
-                        listSuperObjects.Remove(superObj);
-                    }
-                }
-            }
         }
         
         private struct PrefabReplacementsData
@@ -133,8 +115,8 @@ namespace TiledUtil {
         {
             var data = dict.GroupBy(kv => kv.Key.StartsWith(CUSTOM_PREFIX)).ToList();
             PrefabReplacementsData ret = new PrefabReplacementsData();
-            ret.standard = data[0].ToDictionary(kv => kv.Key, kv => kv.Value);
-            ret.custom = data[1].ToDictionary(kv => kv.Key, kv => kv.Value);
+            ret.standard = data[0].CollapseToDictionary();
+            if (data.Count > 0) ret.custom = data[1].CollapseToDictionary();
             return ret;
         }
 
@@ -347,6 +329,8 @@ namespace TiledUtil {
         void ImportGroundLayerLate(GameObject g)
         {
             Transform main = g.transform.GetChild(0);
+            if (main.childCount < 1) return;
+            
             var pCollider0 = main.GetChild(0).GetComponent<PolygonCollider2D>();
             var pCollider1 = main.GetChild(1).GetComponent<PolygonCollider2D>();
             var p0 = Clipper.PointsToPath(pCollider0.points, pCollider0.transform.position);
