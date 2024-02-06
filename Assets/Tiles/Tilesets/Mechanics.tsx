@@ -31,7 +31,7 @@
  <tile id="11" type="Robot Lame">
   <image width="13" height="15" source="../../Sprites/Enemies/Robot.png"/>
  </tile>
- <tile id="12" type="Zipline">
+ <tile id="12" type="C_Zipline">
   <properties>
    <property name="SetEndpoint" type="object" value="0"/>
    <property name="Speed" type="int" value="100"/>
