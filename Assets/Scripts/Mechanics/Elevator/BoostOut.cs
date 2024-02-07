@@ -17,11 +17,13 @@ public class BoostOut : MonoBehaviour
 
     public void StartBoostOut()
     {
+
         StartCoroutine(WaitForPlayerInput());
     }
 
     IEnumerator WaitForPlayerInput()
     {
+        yield return new WaitForSeconds(1f);
         // Pause the game
         Time.timeScale = 0f;
 
