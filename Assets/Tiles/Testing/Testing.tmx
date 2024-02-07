@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="256" height="54" tilewidth="8" tileheight="8" infinite="0" nextlayerid="11" nextobjectid="73">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="256" height="54" tilewidth="8" tileheight="8" infinite="0" nextlayerid="11" nextobjectid="80">
  <tileset firstgid="1" source="../Tilesets/Rocks.tsx"/>
  <tileset firstgid="37" source="../Tilesets/Branches.tsx"/>
  <tileset firstgid="67" source="../Tilesets/Stalagtite.tsx"/>
@@ -297,6 +297,13 @@
   <object id="64" gid="86" x="416" y="144" width="13" height="15"/>
   <object id="65" gid="86" x="464" y="144" width="13" height="15"/>
   <object id="66" gid="86" x="440" y="144" width="13" height="15"/>
+  <object id="74" gid="86" x="328" y="416" width="13" height="15"/>
+  <object id="75" gid="82" x="376" y="392" width="8" height="8"/>
+  <object id="78" gid="87" x="280" y="416" width="24" height="56">
+   <properties>
+    <property name="SetEndpoint" type="object" value="75"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="6" name="Decoration">
   <object id="13" gid="94" x="250" y="197" width="16" height="20"/>

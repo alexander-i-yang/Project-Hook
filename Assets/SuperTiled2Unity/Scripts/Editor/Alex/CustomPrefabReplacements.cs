@@ -11,6 +11,7 @@ namespace SuperTiled2Unity.Editor.Alex
             Vector2 size = new Vector2(superObj.m_Width, superObj.m_Height);
             newPrefab.GetComponentInChildren<BoxCollider2D>().size = size;
             newPrefab.GetComponentInChildren<SpriteRenderer>().size = size;
+            newPrefab.transform.position += (Vector3)size/2;
         }
     }
 }

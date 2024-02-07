@@ -546,13 +546,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: GrapplePoint
       objectReference: {fileID: 0}
-    - target: {fileID: 5643374729468623732, guid: e633866161cb22e4196fce4365240b0a, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2
+    - target: {fileID: 4369408172191011530, guid: e633866161cb22e4196fce4365240b0a, type: 3}
+      propertyPath: m_Intensity
+      value: 0.15
       objectReference: {fileID: 0}
-    - target: {fileID: 5643374729468623732, guid: e633866161cb22e4196fce4365240b0a, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
+    - target: {fileID: 4369408172191011530, guid: e633866161cb22e4196fce4365240b0a, type: 3}
+      propertyPath: m_LightVolumeIntensity
+      value: 1.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4369408172191011530, guid: e633866161cb22e4196fce4365240b0a, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 35.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 4369408172191011530, guid: e633866161cb22e4196fce4365240b0a, type: 3}
+      propertyPath: m_LightVolumeIntensityEnabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5643374729468623732, guid: e633866161cb22e4196fce4365240b0a, type: 3}
       propertyPath: m_LocalPosition.x
