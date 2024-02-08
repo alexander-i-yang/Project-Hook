@@ -1,34 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mechanics;
 using UnityEngine;
 
 namespace Mechanics
 {
     public class ElevatorIn : Elevator
     {
-        private GameObject player;
-        [SerializeField] private GameObject elevatorDoors;
+        [SerializeField] private GameObject walls;
+        private Animator _animator;
+        private SpriteRenderer _sr;
 
-        public void Start()
+        private void Awake()
         {
-            player = GameObject.FindGameObjectWithTag("Player");
+            _animator = GetComponent<Animator>();
+            _sr = GetComponent<SpriteRenderer>();
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        void Start()
         {
-            // Add logic here to check if the player has eliminated all entities!!!!!!!!!!!!!!
-            if (other.gameObject == player)
-            {
-                elevatorDoors.SetActive(false);
-            }
+            walls.SetActive(true);
         }
-
-        private void OnTriggerExit2D(Collider2D other)
-        {
+        
+        private void OnTriggerEnter2D(Collider2D other) {
             // Add logic here to check if the player has eliminated all entities!!!!!!!!!!!!!!
-            if (other.gameObject == player)
+            print(other);
+            if (other.GetComponent<OnElevatorEnter>() is { } e)
             {
-                elevatorDoors.SetActive(true);
+                //_animator.Play("Close", -1, -1f);
+                e.OnEnter(this);
+                //_sr.sortingLayerName = "VFX";
+                walls.SetActive(false);
             }
         }
     }
