@@ -99,3 +99,5 @@ MonoBehaviour:
     m_Prefab: {fileID: 2980672484842408090, guid: da1ab724dd0b07a47a7cc9cf27159d07, type: 3}
   - m_TypeName: Window Long
     m_Prefab: {fileID: 2258286071102716967, guid: ccbf8bce20e67fb47a5c78352755b46a, type: 3}
+  - m_TypeName: Grapple Point
+    m_Prefab: {fileID: 450426827649827939, guid: e633866161cb22e4196fce4365240b0a, type: 3}
