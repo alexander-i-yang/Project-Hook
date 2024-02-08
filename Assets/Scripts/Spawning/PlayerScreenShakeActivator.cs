@@ -18,11 +18,7 @@ namespace Spawning
         
         public ScreenShakeDataBurst DeathData;
         public ScreenShakeDataBurst PunchData;
-        public ScreenShakeDataContinuous DiveData;
-
         public ScreenShakeDataContinuous CurShake;
-
-        [SerializeField] private CinemachineVirtualCamera _mainCam;
 
         private void Awake()
         {

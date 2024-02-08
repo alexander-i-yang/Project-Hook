@@ -25,7 +25,6 @@ namespace Mechanics
         
         private void OnTriggerEnter2D(Collider2D other) {
             // Add logic here to check if the player has eliminated all entities!!!!!!!!!!!!!!
-            print(other);
             if (other.GetComponent<OnElevatorEnter>() is { } e)
             {
                 _animator.Play("Close");

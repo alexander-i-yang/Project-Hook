@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.2" name="Mechanics" tilewidth="48" tileheight="48" tilecount="15" columns="0">
+<tileset version="1.10" tiledversion="1.10.2" name="Mechanics" tilewidth="48" tileheight="48" tilecount="16" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0" type="Blue Crystal">
   <image width="8" height="8" source="../../Sprites/Mechanics/Crystal Blue.png"/>
@@ -52,5 +52,8 @@
  </tile>
  <tile id="17" type="Elevator Out">
   <image width="40" height="48" source="../../Sprites/Placeholder/Elevator Out.png"/>
+ </tile>
+ <tile id="18" type="Grapple Point">
+  <image width="24" height="24" source="../../Sprites/Mechanics/lamp.png"/>
  </tile>
 </tileset>

@@ -6842,15 +6842,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DeathData:
     NoiseProfile: {fileID: 11400000, guid: ef7316f6091ca6f4f84f9223e2b248a8, type: 2}
-    Time: 0.25
+    Time: 0.05
   PunchData:
     NoiseProfile: {fileID: 11400000, guid: ef7316f6091ca6f4f84f9223e2b248a8, type: 2}
-    Time: 0.25
-  DiveData:
-    NoiseProfile: {fileID: 0}
+    Time: 0.05
   CurShake:
     NoiseProfile: {fileID: 0}
-  _mainCam: {fileID: 0}
 --- !u!114 &1521698811028767005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6888,6 +6885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bad44696e5d4699a57e2e4283facdb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delay: 0.5
 --- !u!1 &3213260874437790048
 GameObject:
   m_ObjectHideFlags: 0
