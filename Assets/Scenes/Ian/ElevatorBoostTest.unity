@@ -167,6 +167,10 @@ PrefabInstance:
       propertyPath: m_LocalBounds.m_Extent.y
       value: 10.90755
       objectReference: {fileID: 0}
+    - target: {fileID: 6289014754836188788, guid: 10510caee64778c409c18f681562daeb, type: 3}
+      propertyPath: delay
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6559044703032948075, guid: 10510caee64778c409c18f681562daeb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 202

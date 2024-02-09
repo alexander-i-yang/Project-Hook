@@ -1,12 +1,18 @@
 using System.Collections;
 using UnityEngine;
+using ASK.Core;
+using Helpers;
+using Mechanics;
+using A2DK.Phys;
+
 
 public class BoostOut : MonoBehaviour
 {
-    private float launchForce = 5f;
     private bool hasPlayerInput = false;
     private GameObject player;
     private Rigidbody2D playerRigidbody;
+    private Timescaler.TimeScale ts;
+
 
     void Start()
     {
@@ -17,15 +23,13 @@ public class BoostOut : MonoBehaviour
 
     public void StartBoostOut()
     {
-
         StartCoroutine(WaitForPlayerInput());
     }
 
     IEnumerator WaitForPlayerInput()
     {
-        yield return new WaitForSeconds(1f);
         // Pause the game
-        Time.timeScale = 0f;
+        ts = Game.TimeManager.ApplyTimescale(0,3);
 
         // Continue looping until player input is received
         while (!hasPlayerInput)
@@ -42,13 +46,13 @@ public class BoostOut : MonoBehaviour
         }
 
         // Unpause the game
-        Time.timeScale = 1f;
+        Game.TimeManager.RemoveTimescale(ts);
 
         // Launch the player to the mouse position
-        LaunchPlayerToMousePosition();
+        // boost goes HERE
     }
 
-    void LaunchPlayerToMousePosition()
+    /*void LaunchPlayerToMousePosition()
     {
         // Get the mouse position in world space
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -59,5 +63,5 @@ public class BoostOut : MonoBehaviour
 
         // Apply a force to launch the player
         playerRigidbody.AddForce(launchDirection * launchForce, ForceMode2D.Impulse);
-    }
+    }*/
 }

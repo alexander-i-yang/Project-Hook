@@ -123,6 +123,41 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
             velocityY *= _core.JumpCutMultiplier;
         }
     }
+
+    public void Boost()
+    {
+        Timescaler.TimeScale ts = Game.TimeManager.ApplyTimescale(0,3);
+
+        // Continue looping until player input is received
+        bool hasPlayerInput = false;
+        while (!hasPlayerInput)
+        {
+            // Check for player input (for example, pressing the mouse button)
+            if (Input.GetMouseButtonDown(0))
+            {
+                // Player has inputted the action
+                hasPlayerInput = true;
+            }
+        }
+
+        // Unpause the game
+        Game.TimeManager.RemoveTimescale(ts);
+        
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // Calculate the direction to the mouse position
+        Vector2 launchDirection = (mousePosition - transform.position).normalized;
+
+        //float angle = Mathf.Atan2(launchDirection.y, launchDirection.x) * Mathf.Rad2Deg;
+
+        float distance = launchDirection.magnitude;
+
+        float applyV = GetJumpSpeedFromHeight(distance);
+
+        velocityY = Math.Max(applyV, velocityY + applyV);
+
+        OnJumpFromGround?.Invoke(transform.position);
+    }
     #endregion
 
     #region  Death
