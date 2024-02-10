@@ -8,16 +8,10 @@ namespace Core
     public class WorkingTimeManager : TimeManager
     {
         private float _currentTimeScale = 1;
-        [SerializeField] private float timeAcceleration = 0.45f;
-        private Animator _animator;
-        private float _previousTime;
+        [SerializeField] private float timeAcceleration = 4f;
+        private float _previousTime = 0;
 
-
-        //private void Awake()
-        //{
-        //    _animator = GetComponent<Animator>();
-        //    _previousTime = UnityEngine.Time.time;
-        //}
+        public event Action<float> OnGetTimeScale;
 
         /*
 		 * Smooths timescale transition between different states.
@@ -27,7 +21,7 @@ namespace Core
         public override float GetTimeScale()
         {
             updateTimeScale();
-
+            OnGetTimeScale?.Invoke(_currentTimeScale);
             return _currentTimeScale;
         }
 
@@ -43,7 +37,6 @@ namespace Core
             float targetTimeScale = base.GetTimeScale();
             float scaleFactor = timeAcceleration * timeDifference;
             _currentTimeScale = Mathf.MoveTowards(_currentTimeScale, targetTimeScale, _currentTimeScale * scaleFactor);
-            _animator.speed = _currentTimeScale;
         }
     }
 }
