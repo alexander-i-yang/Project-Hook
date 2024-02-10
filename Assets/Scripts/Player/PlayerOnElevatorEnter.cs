@@ -2,6 +2,8 @@
 using Mechanics;
 using UnityEngine;
 using ASK.Helpers;
+using A2DK.Phys;
+using ASK.Core;
 
 namespace Player
 {
@@ -9,6 +11,9 @@ namespace Player
     {
         [SerializeField] private float delay;
         private PlayerActor playerActor; // Reference to PlayerActor component
+        private bool hasPlayerInput = false;
+        private Timescaler.TimeScale ts;
+        public float timeScaleAmount = 0.1f;
 
         private void Start()
         {
@@ -24,12 +29,30 @@ namespace Player
         private void Teleport(Elevator elevator)
         {
             transform.position = elevator.GetDestination().transform.position;
-            StartCoroutine(BoostMechanic());
+            ts = Game.TimeManager.ApplyTimescale(timeScaleAmount, 3);
+            
+            // Start a coroutine to wait for player input
+            StartCoroutine(WaitForPlayerInput());
         }
-        IEnumerator BoostMechanic()
+
+        private IEnumerator WaitForPlayerInput()
         {
-            yield return new WaitForSeconds(7);
-            playerActor.Boost();
+            // Continue looping until player input is received
+            while (!Input.GetMouseButtonDown(0))
+            {
+                yield return null; // Yield execution until the next frame
+            }
+
+            // Player input received
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Game.TimeManager.RemoveTimescale(ts);
+            Debug.Log("Got mouse position");
+
+            // Calculate the direction to the mouse position
+            Vector2 launchDirection = (mousePosition - transform.position);
+
+            // Call the Boost method on playerActor with launchDirection as parameter
+            playerActor.Boost(launchDirection);
         }
     }
 }
