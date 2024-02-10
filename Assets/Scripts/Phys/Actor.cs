@@ -53,6 +53,12 @@ namespace A2DK.Phys {
             velocityY = Math.Max(MaxFall, velocityY + EffectiveGravity() * Game.TimeManager.FixedDeltaTime);
         }
 
+        public Vector2 CalcFall(Vector2 curVelocity)
+        {
+            return new Vector2(curVelocity.x,
+                Mathf.Max(MaxFall, curVelocity.y + EffectiveGravity() * Game.TimeManager.FixedDeltaTime));
+        }
+
         public bool FallVelocityExceedsMax()
         {
             return velocityY < MaxFall;
@@ -126,7 +132,7 @@ namespace A2DK.Phys {
         public virtual bool Push(Vector2 direction, Solid pusher)
         {
             return MoveGeneral(direction, 1, (ps, ds) => {
-                if (ps != pusher) return Squish(ps, ds);
+                if (ps != pusher && OnCollide(ps, ds)) return Squish(ps, ds);
                 return false;
             });
         }
@@ -137,7 +143,7 @@ namespace A2DK.Phys {
         
         public virtual void Land()
         {
-            OnLand?.Invoke(transform.position + Vector3.down * 5.5f);
+            OnLand.Invoke(velocity);
             velocityY = 0;
         }
         

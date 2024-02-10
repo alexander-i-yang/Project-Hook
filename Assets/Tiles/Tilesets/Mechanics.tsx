@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.2" name="Mechanics" tilewidth="48" tileheight="24" tilecount="13" columns="0">
+<tileset version="1.10" tiledversion="1.10.2" name="Mechanics" tilewidth="48" tileheight="48" tilecount="16" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0" type="Blue Crystal">
   <image width="8" height="8" source="../../Sprites/Mechanics/Crystal Blue.png"/>
@@ -8,7 +8,7 @@
   <image width="24" height="24" source="../../Sprites/Mechanics/Moving Box.png"/>
  </tile>
  <tile id="3" type="Spawn">
-  <image width="8" height="12" source="../../Sprites/Mechanics/Spawn.png"/>
+  <image width="10" height="24" source="../../Sprites/Mechanics/Spawn.png"/>
  </tile>
  <tile id="5" type="Gate">
   <image width="24" height="8" source="../../Sprites/Mechanics/Temp_Gate.png"/>
@@ -31,7 +31,7 @@
  <tile id="11" type="Robot Lame">
   <image width="13" height="15" source="../../Sprites/Enemies/Robot.png"/>
  </tile>
- <tile id="12" type="Zipline">
+ <tile id="12" type="C_Zipline">
   <properties>
    <property name="SetEndpoint" type="object" value="0"/>
    <property name="Speed" type="int" value="100"/>
@@ -46,5 +46,14 @@
  </tile>
  <tile id="15" type="Crate">
   <image width="16" height="16" source="../../Sprites/Placeholder/Crate.png"/>
+ </tile>
+ <tile id="16" type="Elevator In">
+  <image width="40" height="48" source="../../Sprites/Placeholder/Elevator.png"/>
+ </tile>
+ <tile id="17" type="Elevator Out">
+  <image width="40" height="48" source="../../Sprites/Placeholder/Elevator Out.png"/>
+ </tile>
+ <tile id="18" type="Grapple Point">
+  <image width="24" height="24" source="../../Sprites/Mechanics/lamp.png"/>
  </tile>
 </tileset>

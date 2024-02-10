@@ -1,4 +1,6 @@
-﻿using Cinemachine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Cinemachine;
 using UnityEngine;
 
 namespace Helpers
@@ -18,6 +20,18 @@ namespace Helpers
         public static float ClosestBetween(float a, float b, float x) {
             if (x <= a || x >= b) return x;
             return x < (b-a)/2 + a ? a : b;
+        }
+        
+        public static Vector2 Rotate(Vector2 v, float delta) {
+            return new Vector2(
+                v.x * Mathf.Cos(delta) - v.y * Mathf.Sin(delta),
+                v.x * Mathf.Sin(delta) + v.y * Mathf.Cos(delta)
+            );
+        }
+        
+        public static Dictionary<K, E> CollapseToDictionary<K, E>(this IGrouping<bool, KeyValuePair<K, E>> grouping)
+        {
+            return grouping.ToDictionary(kv => kv.Key, kv => kv.Value);
         }
     }
 }

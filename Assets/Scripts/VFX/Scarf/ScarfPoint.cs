@@ -27,6 +27,7 @@ namespace VFX
 
         private void Update()
         {
+            if (attachedTo == null) Destroy(this);
             _lr.SetPosition(0, transform.position);
             _lr.SetPosition(1, attachedTo.position);
         }
@@ -34,7 +35,7 @@ namespace VFX
         public void CalcPos(float minSpacing, float maxSpacing)
         {
             Vector2 g = new Vector2(gravity.x * FlipGravityX, gravity.y);
-            transform.position += (Vector3)g * Game.TimeManager.TimeScale;
+            transform.position += (Vector3)g * Game.TimeManager.GetTimeScale();
             
             Vector2 targetPos = attachedTo.position;
             Vector2 curPos = transform.position;

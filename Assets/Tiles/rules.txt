@@ -6,4 +6,6 @@
 ./Automap/automapSemisolids.tmx
 ./Automap/automapSpikes.tmx
 ./Automap/automapBranches.tmx
+./Automap/automapWindows.tmx
+./Automap/automapDecor.tmx
 #./Automap/automapStalagtites.tmx

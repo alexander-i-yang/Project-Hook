@@ -5,12 +5,12 @@ using UnityEngine.Events;
 namespace A2DK.Phys
 {
     [Serializable]
-    public class ActorEvent : UnityEvent<Vector3>
+    public class ActorEvent : UnityEvent<Vector2>
     {
         [SerializeField]
         ActorEvent pEvent;
 
-        public void OnEventRaised(Vector3 pos)
+        public void OnEventRaised(Vector2 pos)
         {
             pEvent.Invoke(pos);
         }

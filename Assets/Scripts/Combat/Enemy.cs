@@ -1,18 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Combat;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private bool _collidable = true;
+    
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        if (!_collidable) return;
+        var d = other.GetComponent<Damageable>();
+        if(d) d.TakeDamage(transform.position);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public void SetCollideable(bool b) => _collidable = b;
 }

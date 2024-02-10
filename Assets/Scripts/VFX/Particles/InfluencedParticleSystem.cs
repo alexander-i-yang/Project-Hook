@@ -25,7 +25,9 @@ namespace VFX
             }
             _psystem.SetParticles(particles, particles.Length);
         }
-
+        
+        public void Launch(Vector2 v) => Launch(v, transform.position);
+        
         public override void Launch(Vector2 v, Vector2 position)
         {
             if (_psystem == null) Awake();
