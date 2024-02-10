@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 853272005465685}
   - component: {fileID: 4367630907082431098}
   m_Layer: 7
-  m_Name: ExitElevator
+  m_Name: ElevatorIn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
