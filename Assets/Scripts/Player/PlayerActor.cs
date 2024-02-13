@@ -129,9 +129,11 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
     {
         float distance = launchInfo.magnitude;
 
+        velocity
+
         ApplyVelocity(launchInfo);
 
-        OnJumpFromGround?.Invoke(transform.position);
+        //OnJumpFromGround?.Invoke(transform.position);
         Debug.Log("Boost Happened");
         //OnElevator?.Invoke(transform.position);
     }
