@@ -27,6 +27,7 @@ namespace Editor
             {
                 s.Clear();
             }
+            
             if(GUILayout.Button("Toggle Isolate Rooms"))
             {
                 ToggleIsolate();

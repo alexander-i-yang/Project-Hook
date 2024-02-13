@@ -13,17 +13,19 @@ namespace Bakers
     public class RoomOrderBaker : MonoBehaviour, IBaker
     {
         [SerializeField] private List<Room> rooms = new();
-        
-        [Foldout("Settings")]
+        [SerializeField] private Gradient colors;
+
         [SerializeField] private bool showArrowsElevators;
         [SerializeField] private bool showArrowsRooms;
         [SerializeField] private bool showLabels;
-        [SerializeField] private Gradient colors;
+
         
         public void PopulateRooms()
         {
             rooms = new List<Room>(FindObjectsOfType<Room>());
+            #if UNITY_EDITOR
             EditorUtility.SetDirty(this);
+            #endif
         }
 
         public void SetDoors()
@@ -35,7 +37,9 @@ namespace Bakers
                 
                 if (i != rooms.Count - 1) curRoom.SetNextRoom(rooms[i + 1]);
                 
+                #if UNITY_EDITOR
                 EditorUtility.SetDirty(curRoom);
+                #endif
             }
         }
 
@@ -45,7 +49,9 @@ namespace Bakers
             {
                 var e = r.GetComponentInChildren<ElevatorOut>();
                 e.Destination = null;
+                #if UNITY_EDITOR
                 EditorUtility.SetDirty(e);
+                #endif
             }
         }
 
@@ -53,7 +59,9 @@ namespace Bakers
         {
             rooms = new ();
             ClearDoors();
+            #if UNITY_EDITOR
             EditorUtility.SetDirty(this);
+            #endif
         }
 
         public void Bake()

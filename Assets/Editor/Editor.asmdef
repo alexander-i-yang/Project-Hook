@@ -16,7 +16,8 @@
         "VFX",
         "ClipperLib",
         "Bakers",
-        "Helpers"
+        "Helpers",
+        "Cameras"
     ],
     "includePlatforms": [
         "Editor"
