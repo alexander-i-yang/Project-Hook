@@ -280,10 +280,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8516689044785509718}
-  - component: {fileID: 3705214426120403016}
   - component: {fileID: 5304704565566724306}
   - component: {fileID: 2514963553289730449}
   - component: {fileID: 7431297059542017055}
+  - component: {fileID: 2123003653818402596}
   m_Layer: 7
   m_Name: Elevator
   m_TagString: Untagged
@@ -306,20 +306,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6064490071732697796}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3705214426120403016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3558768022087175322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb7fe6db681512542bf99b075f018dee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destination: {fileID: 0}
-  walls: {fileID: 1694123091166695447}
 --- !u!61 &5304704565566724306
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -438,6 +424,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2123003653818402596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3558768022087175322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05b733a488aa4cb1853346c65f574618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walls: {fileID: 1694123091166695447}
 --- !u!1 &3643544991038742737
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,8 +621,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.49449992, y: -1.7563001, z: 0}
-    m_Extent: {x: 7.4990997, y: 5.2494, z: 0}
+    m_Center: {x: 0.49979997, y: -1.74755, z: 0}
+    m_Extent: {x: 7.4903, y: 5.24655, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0

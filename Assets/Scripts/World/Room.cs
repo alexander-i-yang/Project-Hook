@@ -5,10 +5,19 @@ using UnityEngine;
 using Cinemachine;
 
 using ASK.Helpers;
+using UnityEditor;
 
 namespace World {
     public class Room : MonoBehaviour {
         private Collider2D _roomCollider;
+        private Collider2D roomCollider
+        {
+            get
+            {
+                if (_roomCollider == null) _roomCollider = GetComponentInChildren<Collider2D>();
+                return _roomCollider;
+            }
+        }
         // public CinemachineVirtualCamera VCam { get; private set; }
         private VCamManager _vcam;
 
@@ -18,6 +27,28 @@ namespace World {
             {
                 if (_vcam == null) _vcam = GetComponentInChildren<VCamManager>();
                 return _vcam;
+            }
+        }
+
+        private ElevatorIn _elevatorIn;
+
+        public ElevatorIn ElevatorIn
+        {
+            get
+            {
+                if (_elevatorIn == null) _elevatorIn = GetComponentInChildren<ElevatorIn>();
+                return _elevatorIn;
+            }
+        }
+        
+        private ElevatorOut _elevatorOut;
+
+        public ElevatorOut ElevatorOut
+        {
+            get
+            {
+                if (_elevatorOut == null) _elevatorOut = GetComponentInChildren<ElevatorOut>();
+                return _elevatorOut;
             }
         }
 
@@ -42,7 +73,6 @@ namespace World {
 
         private void Awake()
         {
-            _roomCollider = GetComponent<Collider2D>();
             _cmBrain = FindObjectOfType<CinemachineBrain>(true);
 
             // _endCutsceneManager = FindObjectOfType<EndCutsceneManager>();
@@ -91,13 +121,15 @@ namespace World {
         /**
          * Does this room fully contain the bounds of other?
          */
-        public bool ContainsCollider(Collider2D other) => _roomCollider.bounds.Contains(other.bounds.min) && _roomCollider.bounds.Contains(other.bounds.max);
+        public bool ContainsCollider(Collider2D other) => roomCollider.bounds.Contains(other.bounds.min) && roomCollider.bounds.Contains(other.bounds.max);
 
-        public float GetRoomSize()
+        public float GetRoomArea()
         {
-            Vector3 dims = _roomCollider.bounds.size;
+            Vector3 dims = roomCollider.bounds.size;
             return dims.x * dims.y;
         }
+
+        public Vector2 GetExtents() => roomCollider.bounds.extents;
 
         public virtual void TransitionToThisRoom()
         {
@@ -213,8 +245,7 @@ namespace World {
 
         public Room[] CalcAdjacentRooms(Vector2 roomAdjacencyTolerance, LayerMask roomLayerMask)
         {
-            if (_roomCollider == null) _roomCollider = GetComponent<Collider2D>();
-            var bounds = _roomCollider.bounds;
+            var bounds = roomCollider.bounds;
             Vector2 pointB = (Vector2)bounds.max + roomAdjacencyTolerance;
             Vector2 pointA = (Vector2)bounds.min - roomAdjacencyTolerance;
 
@@ -231,5 +262,14 @@ namespace World {
 
             return ret.ToArray();
         }
+
+        public void SetNextRoom(Room nextRoom)
+        {
+            // ElevatorIn elevatorIn = curRoom.GetComponentInChildren<ElevatorIn>();
+            ElevatorOut.SetDestination(nextRoom);
+            EditorUtility.SetDirty(ElevatorOut);
+        }
+
+        public Vector3 GetCenter() => transform.position + new Vector3(GetExtents().x, -GetExtents().y);
     }
 }

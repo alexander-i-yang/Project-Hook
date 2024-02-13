@@ -94,7 +94,7 @@ namespace Spawning
             _currentSpawnPoint = FindClosestSpawnPoint();
 
             //Set Global Reverb Amount for FMOD Events.
-            float roomSize = _currentRoom.GetRoomSize();
+            float roomSize = _currentRoom.GetRoomArea();
             float clampedReverb = Mathf.Clamp01(roomSize / roomSizeMaxReverb);
 
             FilterLogger.Log(this, $"New Room Size is {roomSize}");
