@@ -73,22 +73,14 @@ public class Bullet : MonoBehaviour
     
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<target>() != null)
+        targetable temp = other.GetComponent<targetable>();
+        if (temp != null)
         {
-            if (other.CompareTag("Player"))
-            {
-                // player collision
-                Debug.Log("Player collide");
-            }
-            else if (other.CompareTag("Ground"))
-            {
-                // ground collision
-                Debug.Log("Ground collide");
-            }
             // debugging
-            Debug.Log("Bullet collided with " + other.tag);
+            Debug.Log("Bullet collided with " + temp.GetType());
             gameObject.SetActive(false);
         }
+        
     }
     
 
