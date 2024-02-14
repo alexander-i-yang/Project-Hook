@@ -125,15 +125,11 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         }
     }
 
-    public void Boost(Vector2 launchInfo)
+    public void Boost(Vector2 launchInfo, float launchMultiplier)
     {
-        float distance = launchInfo.magnitude;
+        //ApplyVelocity(launchInfo*launchMultiplier);
 
-        velocity
-
-        ApplyVelocity(launchInfo);
-
-        //OnJumpFromGround?.Invoke(transform.position);
+        velocity = velocity+(launchInfo*launchMultiplier);
         Debug.Log("Boost Happened");
         //OnElevator?.Invoke(transform.position);
     }

@@ -16,6 +16,7 @@ namespace Mechanics
         {
             _animator = GetComponent<Animator>();
             _sr = GetComponent<SpriteRenderer>();
+            _sr.sortingLayerName = "VFX";
         }
 
         void Start()
@@ -23,7 +24,8 @@ namespace Mechanics
             walls.SetActive(true);
         }
         
-        private void OnTriggerEnter2D(Collider2D other) {
+        private void OnTriggerEnter2D(Collider2D other) 
+        {
             // Add logic here to check if the player has eliminated all entities!!!!!!!!!!!!!!
             print(other);
             if (other.GetComponent<OnElevatorEnter>() is { } e)
