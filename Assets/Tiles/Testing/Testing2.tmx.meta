@@ -9,7 +9,15 @@ ScriptedImporter:
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 1fa25d03934ea624a82bf2fcee6f0873, type: 3}
   missingFiles: []
-  errors: []
+  errors:
+  - "Custom importer 'TileImporter' threw an exception. Message = 'Transform child
+    out of bounds', Stack:\n  at (wrapper managed-to-native) UnityEngine.Transform.GetChild(UnityEngine.Transform,int)\n 
+    at TiledUtil.TileImporter.ImportGroundLayerLate (UnityEngine.GameObject g) [0x00019]
+    in /Users/vihaannagarkar/Documents/VG Dev/Project-Hook/Assets/Editor/TiledUtil/TileImporter.cs:312
+    \n  at TiledUtil.TileImporter.TmxAssetImported (SuperTiled2Unity.Editor.TmxAssetImportedArgs
+    data) [0x0024b] in /Users/vihaannagarkar/Documents/VG Dev/Project-Hook/Assets/Editor/TiledUtil/TileImporter.cs:132
+    \n  at SuperTiled2Unity.Editor.TmxAssetImporter.RunCustomImporterType (System.Type
+    type) [0x00048] in /Users/vihaannagarkar/Documents/VG Dev/Project-Hook/Assets/SuperTiled2Unity/Scripts/Editor/Importers/TmxAssetImporter.cs:493 "
   warnings: []
   missingSortingLayers: []
   missingLayers: []
