@@ -8,7 +8,7 @@ namespace Core
     public class WorkingTimeManager : TimeManager
     {
         private float _currentTimeScale = 1;
-        [SerializeField] private float timeAcceleration = 4f;
+        [SerializeField] private float timeAcceleration = 16f;
         private float _previousTime = 0;
 
         public event Action<float> OnGetTimeScale;
@@ -35,7 +35,7 @@ namespace Core
             _previousTime = UnityEngine.Time.time;
 
             float targetTimeScale = base.GetTimeScale();
-            float scaleFactor = timeAcceleration * timeDifference;
+            float scaleFactor = (float) Math.Pow(timeAcceleration, timeDifference) - 1;
             _currentTimeScale = Mathf.MoveTowards(_currentTimeScale, targetTimeScale, _currentTimeScale * scaleFactor);
         }
     }
