@@ -45,10 +45,10 @@ public class ParallaxManager : MonoBehaviour
         if (camera == cam)
         {
             float quadOldZ = quad.localPosition.z;
-            Vector3 quadPos = -_mainVCam.GetCinemachineComponent<CinemachinePixelTransposer>().Offset;
+            // Vector3 quadPos = -_mainVCam.GetCinemachineComponent<CinemachinePixelTransposer>().Offset;
             
-            quadPos.z = quadOldZ;
-            quad.localPosition = quadPos;
+            // quadPos.z = quadOldZ;
+            // quad.localPosition = quadPos;
         }
     }
     
