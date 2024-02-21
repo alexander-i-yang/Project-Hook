@@ -22,6 +22,13 @@ namespace Spawning
         private Room _prevRoom;
         private Spawn _currentSpawnPoint;
         public Room CurrentRoom => _currentRoom;
+        public VCamManager CurrentVCamManager
+        {
+            get
+            {
+                return _currentRoom.VCamManager;
+            }
+        }
 
         private SpriteRenderer _spriteR;
         [SerializeField] private float spawnAnimationTime = .5f;
@@ -83,10 +90,11 @@ namespace Spawning
             }
 
             _currentRoom = roomEntering;
+            _currentRoom.VCamManager.SetFollow(transform);
             _currentSpawnPoint = FindClosestSpawnPoint();
 
             //Set Global Reverb Amount for FMOD Events.
-            float roomSize = _currentRoom.GetRoomArea();
+            float roomSize = _currentRoom.GetRoomSize();
             float clampedReverb = Mathf.Clamp01(roomSize / roomSizeMaxReverb);
 
             FilterLogger.Log(this, $"New Room Size is {roomSize}");

@@ -8,6 +8,8 @@ namespace Combat
 {
     public class Puncher : MonoBehaviour
     {
+        private Collider2D _myCollider;
+
         private HashSet<IPunchable> _curPunchables = new();
 
         [SerializeField] private float _punchV;
@@ -16,6 +18,11 @@ namespace Combat
         [SerializeField] private UnityEvent<Vector2> OnPunch;
         [SerializeField] private UnityEvent<Vector2, Vector2> OnPunchConnect;
         [SerializeField] private UnityEvent OnIdle;
+
+        private void Awake()
+        {
+            _myCollider = GetComponentInChildren<Collider2D>();
+        }
 
         public void SetAim(Vector2 aimPos)
         {

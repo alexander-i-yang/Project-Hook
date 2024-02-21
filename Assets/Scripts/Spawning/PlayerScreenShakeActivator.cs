@@ -1,7 +1,5 @@
-﻿using ASK.Core;
-using ASK.Helpers;
+﻿using ASK.Helpers;
 using ASK.ScreenShake;
-using Cameras;
 using Cinemachine;
 using Helpers;
 using Player;
@@ -15,14 +13,20 @@ namespace Spawning
     [RequireComponent(typeof(PlayerCore))]
     public class PlayerScreenShakeActivator : ScreenShakeActivator
     {
+        private PlayerSpawnManager _spawnManager;
         private PlayerDeathManager _deathManager;
         
         public ScreenShakeDataBurst DeathData;
         public ScreenShakeDataBurst PunchData;
+        public ScreenShakeDataContinuous DiveData;
+
         public ScreenShakeDataContinuous CurShake;
+
+        [SerializeField] private CinemachineVirtualCamera _mainCam;
 
         private void Awake()
         {
+            _spawnManager = GetComponent<PlayerSpawnManager>();
             _deathManager = GetComponent<PlayerDeathManager>();
         }
 
@@ -41,7 +45,7 @@ namespace Spawning
         private Coroutine _shakeRoutine;
         public void ScreenShakeBurst(ScreenShakeDataBurst d)
         {
-            GetCamera().SetNoise(d.NoiseProfile);
+            _spawnManager.CurrentVCamManager.SetNoise(d.NoiseProfile);
             if (_shakeRoutine != null)
             {
                 StopCoroutine(_shakeRoutine);
@@ -49,7 +53,7 @@ namespace Spawning
         
             _shakeRoutine = StartCoroutine(Helper.DelayAction(d.Time, () =>
             {
-                GetCamera().SetNoise(null);
+                _spawnManager.CurrentVCamManager.SetNoise(null);
             }));
         }
 
@@ -57,18 +61,39 @@ namespace Spawning
         
         public void ScreenShakeContinuousOn(ScreenShakeDataContinuous d)
         {
-            GetCamera().SetNoise(d.NoiseProfile);
+            _spawnManager.CurrentVCamManager.SetNoise(d.NoiseProfile);
             CurShake = d;
         }
         
         public void ScreenShakeContinuousOff(ScreenShakeDataContinuous d)
         {
-            GetCamera().SetNoise(null);
+            _spawnManager.CurrentVCamManager.SetNoise(null);
             CurShake = null;
         }
 
         private void DeathScreenShake() => ScreenShakeBurst(DeathData);
 
-        public override CinemachineVirtualCamera GetCamera() => CameraProvider.Instance.MainVCamManager.VCams[0];
+        /*public void SwitchRooms(Room r)
+        {
+            //Note: since CurShake doesn't get set to null from a burst shake,
+            //there may be a bug caused by diving into lava
+            //But it works just fine
+            if (CurShake != null)
+            {
+                if (_spawnManager.CurrentRoom != null)
+                {
+                    // print("SC off");
+                    base.ScreenShakeContinuousOff(
+                        _spawnManager.CurrentRoom.VCam,
+                        CurShake
+                    );
+                }
+                // print("SC on");
+                /*base.ScreenShakeContinuousOn(
+                    r.VCam,
+                    CurShake
+                )#1#;
+            }
+        }*/
     }
 }

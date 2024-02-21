@@ -16,7 +16,6 @@ public class GrappleRenderer : MonoBehaviour {
     private List<Leaf> _leaves = new();
     private List<GrappleCurvePoint> _curvePoints = new();
     [SerializeField] private float curveSpeed;
-
     
     private void Awake() {
         _lr = GetComponent<LineRenderer>();
@@ -63,18 +62,14 @@ public class GrappleRenderer : MonoBehaviour {
             {
                 var newLeaf = Instantiate(leafPrefab, transform).GetComponent<Leaf>();
                 _leaves.Add(newLeaf);
-
             }
 
             var curLeaf = _leaves[l];
             curLeaf.SetEnabled(true);
             curLeaf.transform.position = p0 + vineVector.normalized * (minLeafDistance + l * leafSpacing);
             curLeaf.SetRotation(vectorAngle + (l % 2 == 0 ? -90 : 90));
-            //curLeaf.ScaleSize();
         }
         
         for (int l = numLeaves; l < _leaves.Count; ++l) _leaves[l].SetEnabled(false);
     }
-
-
 }
