@@ -173,7 +173,7 @@ namespace TiledUtil {
             }
             mainTilemap.CompressBounds();
             PolygonCollider2D bounds = AddPolygonColliderToRoom(room, mainTilemap);
-            AddVCamManagerToRoom(room, bounds);
+            // AddVCamManagerToRoom(room, bounds);
         }
 
         private Tilemap FindGroundLayerTilemap(Transform parent)
