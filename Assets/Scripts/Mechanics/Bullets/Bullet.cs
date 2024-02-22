@@ -48,29 +48,6 @@ public class Bullet : MonoBehaviour
     }
 
 
-    // TODO: Does not seem to work properly. No collision is logged, but the bullet is still deactivated?
-    /*
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            // player collision
-            Debug.Log("Player collide");
-        }
-        else if (other.CompareTag("Ground"))
-        {
-            // ground collision
-            Debug.Log("Ground collide");
-        }
-
-        // debugging
-        Debug.Log("Bullet collided with " + other.tag);
-
-        // deactivate after a collision
-        gameObject.SetActive(false);
-    }
-    */
-    
     void OnTriggerEnter2D(Collider2D other)
     {
         targetable temp = other.GetComponent<targetable>();
@@ -78,6 +55,11 @@ public class Bullet : MonoBehaviour
         {
             // debugging
             Debug.Log("Bullet collided with " + temp.GetType());
+            if (temp.GetType() == objectType.Player)
+            {
+                print("Player collide");
+            }
+
             gameObject.SetActive(false);
         }
         
