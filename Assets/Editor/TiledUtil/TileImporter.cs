@@ -329,7 +329,7 @@ namespace TiledUtil {
         void ImportGroundLayerLate(GameObject g)
         {
             Transform main = g.transform.GetChild(0);
-            if (main.childCount < 1) return;
+            if (main.childCount < 2) return;
             
             var pCollider0 = main.GetChild(0).GetComponent<PolygonCollider2D>();
             var pCollider1 = main.GetChild(1).GetComponent<PolygonCollider2D>();
