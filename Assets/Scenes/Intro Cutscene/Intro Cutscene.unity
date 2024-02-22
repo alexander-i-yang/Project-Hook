@@ -419,7 +419,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2261841e02770cf44880d4014bdd6184, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.422
   m_Pitch: 1
   Loop: 0
@@ -778,7 +778,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 563589653
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 6798653446232011614, guid: 63529385c5a5e364a8576b2f12f3d0d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
@@ -849,7 +849,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 563589653
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 6138044019466292339, guid: 63529385c5a5e364a8576b2f12f3d0d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
@@ -4167,7 +4167,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 563589653
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 298720970115414838, guid: 63529385c5a5e364a8576b2f12f3d0d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
@@ -4512,6 +4512,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f13d59a0723e35448b2b917d2fd3932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onlyTriggerOnce: 0
+  onEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &1377221649
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6885,7 +6892,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 563589653
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: -4487720619771047568, guid: 63529385c5a5e364a8576b2f12f3d0d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
@@ -6946,6 +6953,33 @@ Transform:
   - {fileID: 1399105601}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1952165994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6421067979213814013, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
+  m_PrefabInstance: {fileID: 298752244154078114}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1952165996 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 3694164345673048867, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
+  m_PrefabInstance: {fileID: 298752244154078114}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1952165997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1952165994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9bb66d4b36d9b942bf563d84a9735ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music: {fileID: 1952165996}
+  tracks:
+  - {fileID: 8300000, guid: 7fdc4256dceb51748860fd59f9ea9e03, type: 3}
+  - {fileID: 8300000, guid: 8c3cbbae0b93919489fdec294870d243, type: 3}
+  - {fileID: 8300000, guid: d3e163a09dfe879458cedbac55dd600a, type: 3}
 --- !u!1 &2044461006
 GameObject:
   m_ObjectHideFlags: 0
@@ -7073,7 +7107,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2553251586780180651, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 64
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2694011325273268135, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7081,16 +7115,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2694011325273268135, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 64
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3147442504198690082, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1688.7844
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3147442504198690082, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 68.25049
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3218080566214381061, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3218080566214381061, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3694164345673048867, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7fdc4256dceb51748860fd59f9ea9e03, type: 3}
+    - target: {fileID: 3694164345673048867, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -2273146209696275378, guid: 7e984f512e89b60468e829489e8883e3, type: 2}
     - target: {fileID: 4674599469190334978, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
       propertyPath: m_Name
       value: SceneEssentials
@@ -7109,7 +7159,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6210898610700749970, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 64
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6709646991214559153, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
       propertyPath: grappleEndpoint
@@ -7124,7 +7174,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3147442504198690082, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
       insertIndex: -1
       addedObject: {fileID: 43761873}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6421067979213814013, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1952165997}
   m_SourcePrefab: {fileID: 100100000, guid: 707ca8a92e7b054438296b07675aa173, type: 3}
 --- !u!1001 &3983238151443428014
 PrefabInstance:
