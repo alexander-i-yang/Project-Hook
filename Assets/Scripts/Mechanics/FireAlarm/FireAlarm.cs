@@ -6,20 +6,24 @@ namespace Mechanics
 {
     public class FireAlarm : MonoBehaviour, IPunchable
     {
-        [SerializeField] private GameObject waterContainerDoor;
-        private bool usedOnce = false;
-        private GameObject bucket;
+        [SerializeField] private GameObject waterContainer;
+        private bool _usedOnce = false;
+        private GameObject _waterContainerDoor;
 
         void Start()
         {
-
+            Transform childTransform = waterContainer.transform.Find("ContainerDoor");
+            if (childTransform != null)
+            {
+                _waterContainerDoor = childTransform.gameObject;
+            }
         }
         public bool ReceivePunch(Vector2 v)
         {
-            if (!usedOnce) {
+            if (!_usedOnce) {
                 Debug.Log("Alarm Used");
-                waterContainerDoor.SetActive(false);
-                usedOnce = true;
+                _waterContainerDoor.SetActive(false);
+                _usedOnce = true;
             }
             return false;
         }
