@@ -31,6 +31,12 @@ namespace Core
 		 */
         private void updateTimeScale()
         {
+            if (_currentTimeScale < 0)
+            {
+                _currentTimeScale = 1;
+                return;
+            }
+
             float timeDifference = UnityEngine.Time.time - _previousTime;
             _previousTime = UnityEngine.Time.time;
 
