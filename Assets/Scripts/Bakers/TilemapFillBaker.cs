@@ -24,8 +24,11 @@ namespace Bakers
         [Tooltip("Position to start floodfilling")]
         [SerializeField] private Vector2 fillPoint;
 
-        [SerializeField] private int offset;
+        [FormerlySerializedAs("offset")]
+        [Tooltip("How much space between rooms and tiles. Should be 0.5*camera size")]
+        [SerializeField] private int padding;
         
+        [Tooltip("Add this offset to every point")]
         [SerializeField] private Vector2 pointsOffset;
         [SerializeField] private Vector2Int pointsMargin;
 
@@ -172,7 +175,7 @@ namespace Bakers
 
         private Paths64 OffsetPath(Paths64 subj)
         {
-            return Clipper.InflatePaths(subj, offset, JoinType.Miter, EndType.Polygon, 100);
+            return Clipper.InflatePaths(subj, padding, JoinType.Miter, EndType.Polygon, 100);
         }
 
         private Paths64 CombinePoints(Paths64 subj, int[] p1)
