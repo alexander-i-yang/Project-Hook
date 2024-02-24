@@ -1,27 +1,31 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using ASK.Core;
 using Mechanics;
 using UnityEngine;
 using ASK.Helpers;
+using Cameras;
+using UnityEngine.InputSystem;
 using World;
 
 namespace Player
 {
+    [RequireComponent(typeof(PlayerCore))]
     public class PlayerOnElevatorEnter : OnElevatorEnter
     {
         [SerializeField] private float delay;
         
-        private PlayerActor playerActor; // Reference to PlayerActor component
         private bool hasPlayerInput = false;
         private Timescaler.TimeScale ts;
         public float timeScaleAmount = 0.1f;
         public float launchMultiplier = 3f; // 3 seems to work very well in general but could be messed with
         public float timeToClick = 6f;
 
-        private void Start()
+        private PlayerCore _core;
+
+        private void Awake()
         {
-            // Get reference to PlayerActor component
-            playerActor = GetComponent<PlayerActor>();
+            _core = GetComponent<PlayerCore>();
         }
 
         public override void OnEnter(ElevatorOut elevator)
@@ -46,7 +50,7 @@ namespace Player
             ts = Game.TimeManager.ApplyTimescale(timeScaleAmount, 2);
 
             // Continue looping until player input is received or the timer reaches 10 seconds
-            while (!Input.GetMouseButtonDown(0) && timer < timeToClick)
+            while (!_core.Input.GetParryInput() && timer < timeToClick)
             {
                 // Increment the timer
                 timer += Time.unscaledDeltaTime;
@@ -54,15 +58,8 @@ namespace Player
                 yield return null; // Yield execution until the next frame
             }
 
-            // If the timer reaches 10 seconds, skip the rest of the coroutine
-            if (timer >= timeToClick)
-            {
-                Game.TimeManager.RemoveTimescale(ts);
-                yield break;
-            }
-
             // Player input received
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 mousePosition = _core.Input.GetAimPos(_core.Actor.transform.position);
             //Cursor.lockState = CursorLockMode.None;
             Game.TimeManager.RemoveTimescale(ts);
 
@@ -70,7 +67,7 @@ namespace Player
             Vector2 launchDirection = (mousePosition - transform.position);
 
             // Call the Boost method on playerActor with launchDirection as parameter
-            playerActor.Boost(launchDirection, launchMultiplier);
+            _core.Actor.Boost(launchDirection, launchMultiplier);
         }
     }
 }
