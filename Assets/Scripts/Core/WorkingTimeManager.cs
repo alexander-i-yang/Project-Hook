@@ -33,6 +33,7 @@ namespace Core
         {
             if (_currentTimeScale < 0)
             {
+                Debug.Log("Negative timescale; this shouldn't happen. The TimeScale was reset to 1 to prevent further erroring. Please let Carter/PieBob know any details to potentially fix!")
                 _currentTimeScale = 1;
                 return;
             }
