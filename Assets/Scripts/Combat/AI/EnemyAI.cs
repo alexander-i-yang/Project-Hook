@@ -43,7 +43,7 @@ public class EnemyAI : MonoBehaviour
             Debug.DrawLine(transform.position, fallPointLeft, Color.blue);
 
             Vector2 closestFallPoint = GetClosestFallPoint(fallPointRight, fallPointLeft);
-            Debug.Log("Closest fall point: " + closestFallPoint);
+            // Debug.Log("Closest fall point: " + closestFallPoint);
 
 
 
@@ -99,7 +99,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    public bool getGroundedStatus() {
+    public bool GetGroundedStatus() {
         return _grounded;
     }
 

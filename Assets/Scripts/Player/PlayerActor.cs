@@ -129,7 +129,6 @@ public class PlayerActor : Actor, IFilterLoggerTarget {
         //ApplyVelocity(launchInfo*launchMultiplier);
 
         velocity = velocity+(launchInfo*launchMultiplier);
-        Debug.Log("Boost Happened");
         //OnElevator?.Invoke(transform.position);
     }
     #endregion

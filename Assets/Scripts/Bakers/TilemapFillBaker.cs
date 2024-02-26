@@ -22,7 +22,7 @@ namespace Bakers
         [SerializeField] private TileBase fillTile;
 
         [Tooltip("Position to start floodfilling")]
-        [SerializeField] private Vector2 fillPoint;
+        [SerializeField] private Vector2Int fillPoint;
 
         [FormerlySerializedAs("offset")]
         [Tooltip("How much space between rooms and tiles. Should be 0.5*camera size")]
@@ -210,9 +210,17 @@ namespace Bakers
         private void OnDrawGizmosSelected()
         {
             Handles.color = Color.red;
-            if (innerPoints != null) Handles.DrawPolyLine(innerPoints.ToVector3());
-            if (outerPoints != null) Handles.DrawPolyLine(outerPoints.ToVector3());
-            Gizmos.DrawSphere(fillPoint, 16);
+            DrawPoints(innerPoints);
+            DrawPoints(outerPoints);
+            Gizmos.DrawSphere(fillPoint.ToVector2(), 16);
+        }
+
+        private static void DrawPoints(Vector2[] pts)
+        {
+            if (pts == null) return;
+            Vector3[] pts3 = pts.ToVector3();
+            Handles.DrawPolyLine(pts3);
+            Handles.DrawLine(pts3[^1], pts3[0]);
         }
         #endif
     }

@@ -21,7 +21,11 @@ namespace Player
         public float launchMultiplier = 3f; // 3 seems to work very well in general but could be messed with
         public float timeToClick = 6f;
 
+        [SerializeField] private float minBoost = 50;
+
         private PlayerCore _core;
+
+        private Vector2 _prevV;
 
         private void Awake()
         {
@@ -31,6 +35,7 @@ namespace Player
         public override void OnEnter(ElevatorOut elevator)
         {
             StartCoroutine(Helper.DelayAction(delay, () => Teleport(elevator)));
+            _prevV = _core.Actor.velocity;
         }
 
         private void Teleport(ElevatorOut elevator)
@@ -64,10 +69,12 @@ namespace Player
             Game.TimeManager.RemoveTimescale(ts);
 
             // Calculate the direction to the mouse position
-            Vector2 launchDirection = (mousePosition - transform.position);
+            Vector2 launchDirection = (mousePosition - transform.position).normalized;
 
+            float magnitude = Mathf.Max(_prevV.magnitude * launchMultiplier, minBoost);
+            
             // Call the Boost method on playerActor with launchDirection as parameter
-            _core.Actor.Boost(launchDirection, launchMultiplier);
+            _core.Actor.SetVelocity(launchDirection * magnitude);
         }
     }
 }
