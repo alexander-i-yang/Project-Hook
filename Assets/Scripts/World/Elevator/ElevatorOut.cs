@@ -7,7 +7,6 @@ namespace World
         [SerializeField] private GameObject walls;
         private Animator _animator;
         private SpriteRenderer _sr;
-
         public Elevator Destination;
 
         private void Awake()
