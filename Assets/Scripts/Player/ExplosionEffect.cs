@@ -1,42 +1,46 @@
-using System.Collections.Generic;
-using UnityEngine;
 using System;
-using System.Collections;
+using A2DK.Phys;
 using ASK.Core;
-using Mechanics;
 using UnityEngine;
-using ASK.Helpers;
+using Combat;
+using Helpers;
+using UnityEngine.Events;
 
-namespace Player
+namespace Mechanics
 {
     public class ExplosionEffect : MonoBehaviour
     {
-        public float ExplosionRadius = 5f;
-        public float KnockbackForce = 10f;
-        private PlayerCore _core;
-
-        private void Awake()
-        {
-            _core = GetComponent<PlayerCore>();
-        }
+        public float ExplosionRadius = 25f;
+        public float KnockbackForce = 100f;
 
         public void Explode()
         {
-            // Get all colliders within the explosion radius
-            Collider[] colliders = Physics.OverlapSphere(transform.position, ExplosionRadius);
+            Actor[] actors = FindObjectsOfType<Actor>();
+            Crate[] crates = FindObjectsOfType<Crate>();
 
-            foreach (Collider collider in colliders)
+            foreach (Actor actor in actors)
             {
-                // Check if the collider has a Rigidbody component
-                Rigidbody rb = collider.GetComponent<Rigidbody>();
-                if (rb != null)
+                Vector3 direction = actor.transform.position - transform.position;
+                // Check if the actor is within the explosion radius
+                if (direction.magnitude <= ExplosionRadius)
                 {
-                    // Calculate the direction from the explosion center to the collider
-                    Vector2 direction = (collider.transform.position - transform.position).normalized;
+                    // Normalize the direction vector to get a unit vector
+                    direction.Normalize();
+                    // Apply knockback force to the actor
+                    actor.SetVelocity(direction * KnockbackForce);
+                }
+            }
 
-                    // Apply knockback force to the collider
-                    _core.Actor.ApplyVelocity(direction * KnockbackForce);
-                    Debug.Log("EXPLOSION");
+            foreach (Crate crate in crates)
+            {
+                Vector3 direction = crate.transform.position - transform.position;
+                // Check if the crate is within the explosion radius
+                if (direction.magnitude <= ExplosionRadius)
+                {
+                    // Normalize the direction vector to get a unit vector
+                    direction.Normalize();
+                    // Apply knockback force to the crate
+                    crate.ReceivePunch(direction * KnockbackForce);
                 }
             }
         }

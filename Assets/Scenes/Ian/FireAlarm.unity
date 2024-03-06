@@ -266,7 +266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8266562469811367957, guid: e6925e1d85904384c832bcb3917106cf, type: 3}
       propertyPath: OnLand.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8266562469811367957, guid: e6925e1d85904384c832bcb3917106cf, type: 3}
       propertyPath: onBreak.m_PersistentCalls.m_Calls.Array.size
@@ -287,7 +287,7 @@ PrefabInstance:
     - target: {fileID: 8266562469811367957, guid: e6925e1d85904384c832bcb3917106cf, type: 3}
       propertyPath: OnLand.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11500000, guid: 775561c55b444804ab0bc5dc0678c805, type: 3}
     - target: {fileID: 8266562469811367957, guid: e6925e1d85904384c832bcb3917106cf, type: 3}
       propertyPath: onBreak.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -422,8 +422,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44efeed6fa717bb40bc7e746e7aa078e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ExplosionRadius: 5
-  KnockbackForce: 10
+  ExplosionRadius: 50
+  KnockbackForce: 1000
 --- !u!1001 &1091848404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -686,6 +686,10 @@ PrefabInstance:
     - target: {fileID: 7053581467854657339, guid: 6e7692349bca98d43b94acd88b6154f4, type: 3}
       propertyPath: m_Mass
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8213315520639881698, guid: 6e7692349bca98d43b94acd88b6154f4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 127.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
