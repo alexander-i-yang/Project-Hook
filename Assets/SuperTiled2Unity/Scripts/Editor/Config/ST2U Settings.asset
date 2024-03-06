@@ -101,3 +101,7 @@ MonoBehaviour:
     m_Prefab: {fileID: 2258286071102716967, guid: ccbf8bce20e67fb47a5c78352755b46a, type: 3}
   - m_TypeName: Grapple Point
     m_Prefab: {fileID: 450426827649827939, guid: e633866161cb22e4196fce4365240b0a, type: 3}
+  - m_TypeName: Elevator Out
+    m_Prefab: {fileID: 6526835098151173831, guid: 02c5705d85a9efb41bebdede51930867, type: 3}
+  - m_TypeName: Elevator In
+    m_Prefab: {fileID: 3829905991207089029, guid: d991e18fae3b1f6479f0164c2fb23d66, type: 3}
