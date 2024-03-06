@@ -151,6 +151,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3419472186513759166, guid: 10510caee64778c409c18f681562daeb, type: 3}
+      propertyPath: GrappleExtendSpeed
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 3759397250249317796, guid: 10510caee64778c409c18f681562daeb, type: 3}
       propertyPath: m_LocalBounds.m_Center.x
       value: -3.1140003
