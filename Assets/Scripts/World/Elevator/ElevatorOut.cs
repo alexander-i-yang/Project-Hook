@@ -30,6 +30,30 @@ namespace World
         {
             walls.SetActive(false);
         }
+
+        private void Update()
+        {
+            CheckPlayerInside();
+        }
+
+        private void CheckPlayerInside()
+        {
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, transform.localScale, 0);
+            foreach (Collider2D collider in colliders)
+            {
+                if (collider.GetComponent<OnElevatorEnter>() is { } e)
+                {
+                    // Trigger logic for player inside the elevator boundaries
+                    if (_unlocked)
+                    {
+                        _animator.Play("Close");
+                        e.OnEnter(this);
+                        _sr.sortingLayerName = "VFX";
+                        walls.SetActive(true);
+                    }
+                }
+            }
+        }
         
         private void OnTriggerEnter2D(Collider2D other) 
         {
