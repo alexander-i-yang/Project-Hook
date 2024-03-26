@@ -7,8 +7,6 @@ using ASK.Helpers;
 using World;
 using System;
 using System.Linq;
-using Cinemachine;
-using MyBox;
 using Player;
 using UnityEngine.Events;
 
@@ -63,6 +61,30 @@ namespace Spawning
         {
             Room.RoomTransitionEvent -= OnRoomTransition;
             _core.DeathManager.OnPlayerRespawn -= Respawn;
+        }
+
+        private void FixedUpdate()
+        {
+            if (_currentRoom != null && _currentRoom.GetComponentInChildren<UnlockEnemy>() == null)
+            {
+                _currentRoom.ElevatorOut.Unlock();
+            }
+            #if UNITY_EDITOR
+            
+            if (Input.GetKey(KeyCode.RightBracket))
+            {
+                foreach (var e in _currentRoom.GetComponentsInChildren<UnlockEnemy>())
+                {
+                    e?.Kill();
+                }
+            }
+            
+            if (Input.GetKeyDown(KeyCode.LeftBracket))
+            {
+                _currentRoom.GetComponentInChildren<UnlockEnemy>()?.Kill();
+            }
+            
+            #endif
         }
 
         public void Respawn()
