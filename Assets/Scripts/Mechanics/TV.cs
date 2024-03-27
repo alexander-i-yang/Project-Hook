@@ -1,4 +1,6 @@
-﻿using Combat;
+﻿using System.Collections;
+using ASK.Helpers;
+using Combat;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,7 +18,13 @@ namespace Mechanics
             _broken = true;
             GetComponent<SpriteRenderer>().enabled = false;
             onPunch.Invoke(v);
-            return false;
+            return true;
+        }
+
+        void Start()
+        {
+            // Vector2 v = new Vector2(10000, 10000);
+            // StartCoroutine(Helper.DelayAction(2, () => ReceivePunch(v)));
         }
     }
 }
