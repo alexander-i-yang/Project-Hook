@@ -15,13 +15,5 @@ namespace VFX
             _myRB.AddForce(v, ForceMode2D.Impulse);
             _myRB.AddTorque(rotationV, ForceMode2D.Impulse);
         }
-
-        void Update()
-        {
-            if (_myRB.velocity.magnitude > 0.1)
-            {
-                print(_myRB.velocity);
-            }
-        }
     }
 }

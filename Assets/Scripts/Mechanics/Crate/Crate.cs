@@ -5,10 +5,11 @@ using UnityEngine;
 using Combat;
 using Helpers;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Mechanics {
     [RequireComponent(typeof(CrateStateMachine))]
-    public class Crate : Actor, IPunchable
+    public class Crate : Actor, IPunchable, IControllable
     {
 
         [SerializeField] private float _groundedFrictionAccel;
@@ -18,7 +19,7 @@ namespace Mechanics {
         
         private CrateStateMachine _stateMachine;
 
-        private bool _beingGrappled = false;
+        public bool BeingGrappled { get; private set; }
 
         [SerializeField] private float breakVelocity;
         [SerializeField] private UnityEvent<Vector2, Vector2> onBreak;
@@ -64,14 +65,14 @@ namespace Mechanics {
         public bool ShouldBreak(Vector2 direction, PhysObj against, bool col)
         {
             if (GameTimer2.TimerRunning(_punchTimer) && col && breakVelocity < 1000) return true;
-            return ((against.velocity - this.velocity) * direction).magnitude >= breakVelocity && !_beingGrappled;
+            return ((against.velocity - this.velocity) * direction).magnitude >= breakVelocity && !BeingGrappled;
         }
 
         public override bool OnCollide(PhysObj p, Vector2 direction) {
             bool col = base.OnCollide(p, direction);
             if (p is Crate otherCrate)
             {
-                if (!_beingGrappled && otherCrate.ShouldBreak(direction, this, col))
+                if (!BeingGrappled && otherCrate.ShouldBreak(direction, this, col))
                 {
                     otherCrate.BreakAgainst(this);
                 }
@@ -82,7 +83,7 @@ namespace Mechanics {
                     otherSolid.BreakAgainst(this);
                     return false;
                 }
-            } else if (p is Semisolid && _beingGrappled)
+            } else if (p is Semisolid && BeingGrappled)
             {
                 return false;
             }
@@ -122,7 +123,7 @@ namespace Mechanics {
 
         public float ApplyXFriction(float prevXVelocity, float frictionAccel)
         {
-            if (_beingGrappled) return prevXVelocity;
+            if (BeingGrappled) return prevXVelocity;
             
             float accel = frictionAccel;
             accel *= Game.TimeManager.FixedDeltaTime;
@@ -131,7 +132,12 @@ namespace Mechanics {
 
         public override void Fall()
         {
-            if (!_beingGrappled) base.Fall();
+            if (!BeingGrappled) base.Fall();
+        }
+
+        public void Walk(int direction)
+        {
+            velocityX = 50 * direction;
         }
 
         public bool ReceivePunch(Vector2 v)
@@ -142,6 +148,6 @@ namespace Mechanics {
             return true;
         }
 
-        public void SetBeingGrappled(bool b) => _beingGrappled = b;
+        public void SetBeingGrappled(bool b) => BeingGrappled = b;
     }
 }
