@@ -5,21 +5,29 @@ namespace Combat
 {
     public class GoombaAI : Brain<GoombaInput, GoombaBehavior>
     {
-        private int _direction = -1;
-
+        public int Direction { get; private set; }
+        [SerializeField] private float moveSpeed;
+        
         private void FixedUpdate()
         {
             if (input.BeingGrappled()) return;
             
             if (input.GetGroundedStatus())
             {
-                behavior.MoveDirection(_direction);
+                if (Direction > 0 && input.GetRightWallDistance() < 1) Direction = -1;
+                else if (Direction <= 0 && input.GetLeftWallDistance() < 1) Direction = 1;
             }
 
-            if (input.WillFallOff(_direction))
+            if (input.WillFallOff(Direction))
             {
-                _direction *= -1;
+                Direction *= -1;
             }
+        }
+
+        public float ProcessVelocityX(float velocityX, bool grounded, bool beingGrappled)
+        {
+            if (!grounded || beingGrappled) return velocityX;
+            return Direction * moveSpeed;
         }
     }
 }

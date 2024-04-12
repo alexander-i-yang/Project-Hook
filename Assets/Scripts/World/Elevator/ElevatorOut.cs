@@ -27,7 +27,6 @@ namespace World
         {
             _animator = GetComponent<Animator>();
             _sr = GetComponent<SpriteRenderer>();
-            _sr.sortingLayerName = "VFX";
         }
 
         void Start()

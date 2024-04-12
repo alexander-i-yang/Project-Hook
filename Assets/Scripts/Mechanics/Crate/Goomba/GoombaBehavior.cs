@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Combat
 {
     
-    [RequireComponent(typeof(Actor))]
+    [RequireComponent(typeof(IControllable))]
     public class GoombaBehavior : MonoBehaviour, IBehavior
     {
         private IControllable _controllable;
@@ -13,11 +13,6 @@ namespace Combat
         private void Awake()
         {
             _controllable = GetComponent<IControllable>();
-        }
-
-        public void MoveDirection(int direction)
-        {
-            _controllable.Walk(direction);
         }
     }
 

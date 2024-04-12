@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 
 namespace Mechanics {
     [RequireComponent(typeof(CrateStateMachine))]
-    public class Crate : Actor, IPunchable, IControllable
+    public class Crate : Actor, IPunchable
     {
 
         [SerializeField] private float _groundedFrictionAccel;
@@ -18,6 +18,7 @@ namespace Mechanics {
         public float AirborneFrictionAccel => _airborneFrictionAccel;
         
         private CrateStateMachine _stateMachine;
+        private GoombaAI _aiBrain;
 
         public bool BeingGrappled { get; private set; }
 
@@ -31,6 +32,7 @@ namespace Mechanics {
         protected void Awake()
         {
             _stateMachine = GetComponent<CrateStateMachine>();
+            _aiBrain = GetComponent<GoombaAI>();
         }
 
         public override bool Collidable(PhysObj collideWith)
@@ -57,8 +59,9 @@ namespace Mechanics {
         void FixedUpdate()
         {
             _stateMachine.CurrState.SetGrounded(IsGrounded(), IsMovingUp);
+            if (_aiBrain != null) velocityX = _aiBrain.ProcessVelocityX(velocityX, IsGrounded(), BeingGrappled);
             ApplyVelocity(ResolveJostle());
-            velocityX = _stateMachine.ApplyXFriction(velocityX);
+            velocityX = _stateMachine.ApplyXFriction(velocityX); ;
             MoveTick();
         }
 
@@ -133,11 +136,6 @@ namespace Mechanics {
         public override void Fall()
         {
             if (!BeingGrappled) base.Fall();
-        }
-
-        public void Walk(int direction)
-        {
-            velocityX = 50 * direction;
         }
 
         public bool ReceivePunch(Vector2 v)
