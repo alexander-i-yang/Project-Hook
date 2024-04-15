@@ -18,7 +18,7 @@ namespace Player
 
         [SerializeField] private UnityEvent firstInput;
 
-        private void OnEnable()
+        public void OnEnable()
         {
             if (controls == null)
             {
@@ -34,7 +34,7 @@ namespace Player
             #endif
         }
 
-        private void OnDisable()
+        public void OnDisable()
         {
             inputActions.Pause.performed -= OnPause;
             #if UNITY_EDITOR
