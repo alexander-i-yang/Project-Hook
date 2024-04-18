@@ -2,6 +2,7 @@
   "dependencies": {
     "com.domybest.mybox": "https://github.com/Deadcows/MyBox.git",
     "com.theuncleofmistersir.alexs-starter-kit": "https://github.com/alexander-i-yang/alexs-starter-kit.git",
+    "com.unity.ai.navigation": "1.1.5",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.feature.2d": "2.0.0",
     "com.unity.ide.rider": "3.0.26",
