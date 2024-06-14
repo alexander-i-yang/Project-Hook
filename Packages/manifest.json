@@ -2,6 +2,7 @@
   "dependencies": {
     "com.domybest.mybox": "https://github.com/Deadcows/MyBox.git",
     "com.theuncleofmistersir.alexs-starter-kit": "https://github.com/alexander-i-yang/alexs-starter-kit.git",
+    "com.unity.ai.navigation": "1.1.5",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.feature.2d": "2.0.0",
     "com.unity.ide.rider": "3.0.26",
@@ -15,7 +16,6 @@
     "com.unity.toolchain.linux-x86_64": "2.0.6",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.9.1",
-    "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
     "com.unity.modules.assetbundle": "1.0.0",

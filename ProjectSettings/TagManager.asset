@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: NavMesh
+    uniqueID: 3258350495
+    locked: 0
   - name: Grapple
     uniqueID: 3898004579
     locked: 0
